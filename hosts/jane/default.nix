@@ -7,7 +7,7 @@
 
 {
   nixpkgs.hostPlatform = system;
-  networking.hostName = "nilou";
+  networking.hostName = "jane";
 
   imports = [
     ./hardware.nix
@@ -41,7 +41,8 @@
     (mod "misc/security")
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")
+    (mod "misc/ios")
 
-    (home "nilou")
+    (home "jane")
   ];
 }

@@ -34,7 +34,7 @@ in
       };
 
       settings = {
-        monitor = cfg.monitors ++ [ ", preferred, auto, 1" ];
+        monitor = cfg.monitors ++ [ ", highres, auto, 1" ];
       };
     };
 

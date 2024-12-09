@@ -93,12 +93,6 @@
       };
     };
 
-    device = {
-      name = "elan06fa:00-04f3:31dd-touchpad";
-      sensitivity = -0.1;
-      accel_profile = "adpative";
-    };
-
     gestures = {
       workspace_swipe = true;
       workspace_swipe_distance = 400;
