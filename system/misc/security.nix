@@ -24,5 +24,10 @@
 
   services.gnome.gnome-keyring.enable = true;
   services.dbus.packages = with pkgs; [ gcr ];
-  security.pam.services.hyprlock.enableGnomeKeyring = true;
+
+  security.pam.services = {
+    # TODO FIX HYPRLOCK GKR
+    #login.enableGnomeKeyring = true;
+    hyprlock.enableGnomeKeyring = true;
+  };
 }

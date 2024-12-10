@@ -22,7 +22,7 @@ let
       path = "${image}";
 
       blur_passes = 3;
-      blue_size = 6;
+      blur_size = 6;
     };
 
     input-field = {

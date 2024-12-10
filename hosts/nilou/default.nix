@@ -22,6 +22,7 @@
     (mod "network/default")
     (mod "network/cloudflare-dns")
     (mod "network/firewall")
+    (mod "network/wireless")
 
     (mod "bluetooth/default")
 
