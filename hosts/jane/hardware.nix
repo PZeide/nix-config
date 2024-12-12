@@ -9,13 +9,13 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    inputs.nixos-hardware.nixosModules.lenovo-legion-15ach6h
+    (inputs.nixos-hardware.nixosModules.lenovo-legion-15ach6h + "/hybrid")
   ];
 
-  # TODO remove DDG specialisation
+  # TODO Add WakaTime API key
 
   # Beta drivers don't contains the Gdk bug
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   boot = {
     kernelModules = [ "kvm-amd" ];

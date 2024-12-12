@@ -18,7 +18,6 @@
           show_icon_when_single = true;
           show_sub_when_single = true;
           weight = 5;
-          actions = true;
           prioritize_new = true;
         };
 

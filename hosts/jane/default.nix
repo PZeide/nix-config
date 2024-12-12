@@ -12,7 +12,6 @@
   imports = [
     ./hardware.nix
     (mod "core")
-    (mod "cachix/default")
 
     (mod "boot/default")
     (mod "boot/secure-boot")
@@ -22,7 +21,6 @@
     (mod "network/default")
     (mod "network/cloudflare-dns")
     (mod "network/firewall")
-    (mod "network/wireless")
 
     (mod "bluetooth/default")
 

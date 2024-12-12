@@ -46,10 +46,6 @@
           src = autopair.src;
         }
       ];
-
-      shellAliases = {
-        g = "git";
-      };
     };
 
     # Bash is still our login shell so we use a script to start fish if requirements are met

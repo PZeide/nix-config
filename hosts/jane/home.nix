@@ -25,6 +25,7 @@
     (homeMod "apps/vscodium")
     (homeMod "apps/nautilus")
     (homeMod "apps/walker")
+    (homeMod "apps/neovim")
 
     (homeMod "apps/bundle/terminal")
     (homeMod "apps/bundle/daily")

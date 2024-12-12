@@ -44,7 +44,7 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.45.2";
+      url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -54,8 +54,7 @@
     };
 
     hyprsplit = {
-      # Use commit b98cc80aab041677cd7648f6e44c18e8f36fa907 because there is an issue with flakes recently
-      url = "github:shezdy/hyprsplit?ref=b98cc80aab041677cd7648f6e44c18e8f36fa907";
+      url = "github:shezdy/hyprsplit";
       inputs.hyprland.follows = "hyprland";
     };
 
@@ -66,6 +65,16 @@
 
     walker = {
       url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    neve = {
+      url = "github:redyf/Neve";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
