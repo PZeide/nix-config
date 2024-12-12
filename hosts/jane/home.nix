@@ -21,6 +21,7 @@
 
     (homeMod "apps/hyprpaper")
     (homeMod "apps/hyprlock")
+    (homeMod "apps/hypridle")
     (homeMod "apps/kitty")
     (homeMod "apps/vscodium")
     (homeMod "apps/nautilus")
@@ -61,6 +62,8 @@
       }
     ];
   };
+
+  config.home.hypridle.dimBacklight = true;
 
   config.home.vscodium = {
     colorTheme = "GitHub Dark Dimmed";

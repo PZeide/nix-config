@@ -21,6 +21,7 @@
 
     (homeMod "apps/hyprpaper")
     (homeMod "apps/hyprlock")
+    (homeMod "apps/hypridle")
     (homeMod "apps/kitty")
     (homeMod "apps/vscodium")
     (homeMod "apps/nautilus")

@@ -6,8 +6,8 @@
     # System inputs
     #
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
