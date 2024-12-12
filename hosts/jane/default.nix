@@ -16,8 +16,6 @@
     (mod "boot/default")
     (mod "boot/secure-boot")
 
-    (mod "swap/zram-swap")
-
     (mod "network/default")
     (mod "network/cloudflare-dns")
     (mod "network/firewall")
@@ -37,6 +35,7 @@
 
     (mod "shell/fish")
 
+    (mod "misc/zram-swap")
     (mod "misc/security")
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")
