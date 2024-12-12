@@ -30,9 +30,9 @@ in
   };
 
   config = {
-    home.packages = [
-      pkgs.nixfmt-rfc-style
-      pkgs.nil
+    home.packages = with pkgs; [
+      nixfmt-rfc-style
+      nil
     ];
 
     programs.vscode = {

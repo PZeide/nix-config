@@ -2,7 +2,7 @@
 
 {
   home = {
-    packages = with pkgs; [ grc ];
+    packages = [ pkgs.grc ];
 
     activation = {
       createTideConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

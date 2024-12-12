@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   lib,
@@ -7,7 +8,12 @@
 }:
 
 let
+  cfg = config.home.hyprland;
+
   hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+  wpctl = "${pkgs.wireplumber}/bin/wpctl";
+  playerctl = "${lib.getExe pkgs.playerctl}";
+  brillo = "${lib.getExe pkgs.brillo}";
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -15,8 +21,6 @@ in
 
     bind =
       [
-        # Control binds
-
         "$mainMod, V, togglefloating," # Toggle floating of the active window
         "$mainMod, F, fullscreen," # Toggle fullscreen of the active window
         "$mainMod, A, togglesplit," # Toggle split direction of the active window
@@ -40,11 +44,7 @@ in
 
         "$mainMod, S, split:swapactiveworkspaces, current+1" # Swap active workspaces
 
-        "$mainMod, L, exec, ${lib.getExe pkgs.hyprlock} || ${hyprctl} dispatch exit" # Lock
-
-        # Media binds
-
-        # App binds
+        "$mainMod, L, exec, loginctl lock-session" # Lock
 
         "$mainMod, SPACE, exec, ${lib.getExe inputs.walker.packages.${system}.default}"
         "$mainMod, Q, exec, ${lib.getExe pkgs.kitty}" # Terminal
@@ -78,5 +78,26 @@ in
       "$mainMod, mouse:272, movewindow" # Move active window (left click)
       "$mainMod, mouse:273, resizewindow" # Resize active window (right click)
     ];
+
+    bindl = [
+      ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+
+      ", XF86AudioPlay, exec, ${playerctl} play-pause"
+      ", XF86AudioPlay, exec, ${playerctl} play-pause"
+      ", XF86AudioNext, exec, ${playerctl} next"
+      ", XF86AudioPrev, exec, ${playerctl} previous"
+      ", XF86AudioStop, exec, ${playerctl} stop"
+    ];
+
+    bindel =
+      [
+        ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+      ]
+      ++ lib.optionals (cfg.backlightBinds) [
+        ", XF86MonBrightnessUp, exec, ${brillo} -u 100 -A 2"
+        ", XF86MonBrightnessDown, exec, ${brillo} -u 100 -U 2"
+      ];
   };
 }

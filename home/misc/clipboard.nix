@@ -14,13 +14,12 @@
     Unit = {
       Description = "wl-clip-persist";
       After = [ "graphical-session.target" ];
-      Wants = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
 
     Service = {
-      Type = "simple";
       ExecStart = "${lib.getExe pkgs.wl-clip-persist} --clipboard regular";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 1;
       TimeoutStopSec = 10;
     };

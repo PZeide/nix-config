@@ -14,9 +14,6 @@
 
   # TODO Add WakaTime API key
 
-  # Beta drivers don't contains the Gdk bug
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
-
   boot = {
     kernelModules = [ "kvm-amd" ];
 

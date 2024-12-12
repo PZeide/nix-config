@@ -1,8 +1,5 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
-let
-  cfg = config.home.hyprland;
-in
 {
   imports = [
     ./hyprland/general.nix
@@ -13,10 +10,18 @@ in
 
   options.home.hyprland = with lib; {
     monitors = mkOption {
-      type = types.listOf types.str;
+      type = with types; listOf str;
       default = [ ", preferred, auto, 1" ];
       description = ''
         Monitors configuration of Hyprland.
+      '';
+    };
+
+    backlightBinds = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Enable backlight controls binds.
       '';
     };
   };
@@ -31,10 +36,6 @@ in
         variables = [ "--all" ];
 
         enableXdgAutostart = true;
-      };
-
-      settings = {
-        monitor = cfg.monitors ++ [ ", highres, auto, 1" ];
       };
     };
 

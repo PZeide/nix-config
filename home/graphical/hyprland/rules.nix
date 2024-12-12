@@ -8,6 +8,9 @@
     layerrule = [
       "blur, walker"
       "ignorealpha, walker"
+
+      "blur, syshud"
+      "ignorealpha, syshud"
     ];
   };
 }

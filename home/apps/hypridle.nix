@@ -7,8 +7,9 @@
 }:
 
 let
-  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
   cfg = config.home.hypridle;
+
+  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
 in
 {
   options.home.hypridle = with lib; {
@@ -22,10 +23,6 @@ in
   };
 
   config = {
-    home.packages = lib.mkIf cfg.dimBacklight [
-      pkgs.brightnessctl
-    ];
-
     services.hypridle = {
       enable = true;
 
@@ -53,8 +50,8 @@ in
           ++ lib.optionals (cfg.dimBacklight) [
             {
               timeout = 180;
-              on-timeout = "${lib.getExe pkgs.brightnessctl} -s set 20%";
-              on-resume = "${lib.getExe pkgs.brightnessctl} -r";
+              on-timeout = "${lib.getExe pkgs.brillo} -O && ${lib.getExe pkgs.brillo} -u 10000 -S 20%";
+              on-resume = "${lib.getExe pkgs.brillo} -I";
             }
           ];
       };

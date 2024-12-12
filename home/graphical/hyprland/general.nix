@@ -1,5 +1,12 @@
+{ config, ... }:
+
+let
+  cfg = config.home.hyprland;
+in
 {
   wayland.windowManager.hyprland.settings = {
+    monitor = cfg.monitors ++ [ ", highres, auto, 1" ];
+
     general = {
       border_size = 3;
       gaps_in = 6;
@@ -68,8 +75,6 @@
         "fade, 1, 3, md3_decel"
         "layersIn, 1, 3, menu_decel, slide"
         "layersOut, 1, 1.6, menu_accel"
-        "fadeLayersIn, 1, 2, menu_decel"
-        "fadeLayersOut, 1, 4.5, menu_accel"
         "workspaces, 1, 7, menu_decel, slide"
         "specialWorkspace, 1, 3, md3_decel, slidevert"
       ];

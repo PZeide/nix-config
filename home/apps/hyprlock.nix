@@ -160,9 +160,6 @@ in
       Description = "hyprlock";
       After = [ "graphical-session-pre.target" ];
       PartOf = [ "graphical-session.target" ];
-      X-Restart-Triggers = [
-        "${config.xdg.configFile."hypr/hyprlock-wallpaper.conf".source}"
-      ];
     };
 
     Service = {

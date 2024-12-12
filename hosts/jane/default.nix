@@ -37,6 +37,7 @@
 
     (mod "misc/zram-swap")
     (mod "misc/security")
+    (mod "misc/backlight")
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")
     (mod "misc/ios")
