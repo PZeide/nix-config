@@ -1,10 +1,4 @@
-{
-  modulesPath,
-  inputs,
-  config,
-  lib,
-  ...
-}:
+{ modulesPath, inputs, ... }:
 
 {
   imports = [
@@ -16,6 +10,8 @@
 
   boot = {
     kernelModules = [ "kvm-amd" ];
+
+    kernelParams = [ "mt7921e.disable_aspm=y" ];
 
     initrd = {
       availableKernelModules = [
