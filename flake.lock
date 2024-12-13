@@ -1259,22 +1259,6 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5487e69da40cbd611ab2cadee0b4637225f7cfae.tar.gz"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1734041257,
-        "narHash": "sha256-0ySBHHb8ygNYW3yv9T+Q2R3Zhj5+1pCTuwMpch4I6O0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "6da8776012a3a685af064caa9eef431585cc7543",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1730741070,
@@ -1500,7 +1484,6 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim_2",
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "stylix": "stylix",

@@ -41,6 +41,8 @@
     "eDP-1, 1920x1080@144, 0x0, 1"
   ];
 
+  config.home.hyprland.backlightBinds = true;
+
   config.wayland.windowManager.hyprland.settings = {
     input = {
       # Required for different device layout
@@ -73,4 +75,5 @@
   };
 
   config.home.gtk.bookmarks = [ "file:///mnt/data Data" ];
+  config.home.gtk.iconAccent = "red";
 }

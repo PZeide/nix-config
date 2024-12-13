@@ -15,12 +15,35 @@ let
 in
 {
   options.home.gtk = with lib; {
+    iconAccent = mkOption {
+      type = types.enum [
+        "rosewater"
+        "maroon"
+        "pink"
+        "teal"
+        "peach"
+        "sapphire"
+        "red"
+        "flamingo"
+        "green"
+        "mauve"
+        "sky"
+        "yellow"
+        "blue"
+        "lavender"
+      ];
+      default = "blue";
+      description = ''
+        Accent color of icon theme (applied to folders).
+      '';
+    };
+
     bookmarks = mkOption {
       type = with types; listOf str;
+      default = [ ];
       description = ''
         List of bookmarks in the file browser.
       '';
-      default = [ ];
     };
   };
 
@@ -28,8 +51,12 @@ in
     gtk = {
       enable = true;
       iconTheme = {
-        package = pkgs.papirus-icon-theme;
-        name = "Papirus";
+        package = pkgs.catppuccin-papirus-folders.override {
+          flavor = "mocha";
+          accent = cfg.iconAccent;
+        };
+
+        name = "Papirus-Dark";
       };
 
       gtk3.bookmarks = cfg.bookmarks;

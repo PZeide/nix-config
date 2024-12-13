@@ -48,4 +48,5 @@
   };
 
   config.home.gtk.bookmarks = [ "file:///mnt/data Data" ];
+  config.home.gtk.iconAccent = "sapphire";
 }
