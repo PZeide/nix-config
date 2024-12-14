@@ -16,6 +16,8 @@ variant:
 
     extraSpecialArgs = {
       inherit inputs variant system;
+      inherit (config.age) secrets;
+
       user = "${config.main.core.defaultUser}";
       homeMod = m: ../../home/${m}.nix;
     };

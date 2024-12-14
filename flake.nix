@@ -14,6 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
     #
     # User inputs
     #
@@ -38,14 +46,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland.url = "github:hyprwm/Hyprland";
+
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "hyprland/nixpkgs";
+        hyprlang.follows = "hyprland/hyprlang";
+      };
     };
 
     hyprspace = {
@@ -63,10 +71,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    walker.url = "github:abenz1267/walker";
 
     nixvim = {
       url = "github:nix-community/nixvim";

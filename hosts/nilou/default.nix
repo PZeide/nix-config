@@ -36,6 +36,7 @@
     (mod "shell/fish")
 
     (mod "misc/zram-swap")
+    (mod "misc/secrets")
     (mod "misc/security")
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")

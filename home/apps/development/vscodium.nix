@@ -47,6 +47,8 @@ in
       extensions =
         with inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
         [
+          wakatime.vscode-wakatime
+
           # Formatter
           esbenp.prettier-vscode
 

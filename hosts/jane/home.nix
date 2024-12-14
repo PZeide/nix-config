@@ -25,10 +25,12 @@
     (homeMod "apps/hypridle")
     (homeMod "apps/syshud")
     (homeMod "apps/kitty")
-    (homeMod "apps/vscodium")
     (homeMod "apps/nautilus")
     (homeMod "apps/walker")
-    (homeMod "apps/neovim")
+
+    (homeMod "apps/development/wakatime")
+    (homeMod "apps/development/vscodium")
+    (homeMod "apps/development/neovim")
 
     (homeMod "apps/bundle/terminal")
     (homeMod "apps/bundle/daily")
