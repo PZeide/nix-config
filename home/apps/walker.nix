@@ -1,13 +1,20 @@
-{ config, inputs, ... }:
+{
+  config,
+  lib,
+  inputs,
+  system,
+  ...
+}:
 
 {
   imports = [ inputs.walker.homeManagerModules.default ];
 
   programs.walker = {
     enable = true;
-    runAsService = true;
 
     config = {
+      use_uwsm = true;
+
       activation_mode = {
         labels = "123456789";
       };
@@ -150,9 +157,7 @@
             margin-right: 5px;
           }
 
-          #spinner {
-
-          }
+          #spinner {}
 
           #typeahead {
             opacity: 0.5;
@@ -184,11 +189,9 @@
             padding-right: 10px;
           }
 
-          #textwrapper {
-          }
+          #textwrapper {}
 
-          #label {
-          }
+          #label {}
 
           #sub {
             opacity: 0.5;
@@ -208,6 +211,26 @@
             opacity: 0.5;
           }
         '';
+    };
+  };
+
+  systemd.user.services.walker = {
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+
+    Unit = {
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+      Description = "Walker";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${lib.getExe inputs.walker.packages."${system}".default} --gapplication-service";
+      Restart = "always";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
     };
   };
 }

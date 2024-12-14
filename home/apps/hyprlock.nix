@@ -158,7 +158,7 @@ in
     Unit = {
       ConditionEnvironment = "WAYLAND_DISPLAY";
       Description = "hyprlock";
-      After = [ "graphical-session-pre.target" ];
+      After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
 

@@ -56,5 +56,7 @@ in
           ];
       };
     };
+
+    systemd.user.services.hypridle.Unit.After = lib.mkForce [ "graphical-session.target" ];
   };
 }

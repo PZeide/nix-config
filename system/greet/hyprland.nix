@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -8,7 +9,7 @@
   services.greetd.settings =
     let
       session = {
-        command = "${lib.getExe config.programs.hyprland.package}";
+        command = "${lib.getExe pkgs.uwsm} start hyprland-uwsm.desktop";
         user = "${config.main.core.defaultUser}";
       };
     in

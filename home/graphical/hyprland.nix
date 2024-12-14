@@ -30,13 +30,6 @@
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-
-      systemd = {
-        enable = true;
-        variables = [ "--all" ];
-
-        enableXdgAutostart = true;
-      };
     };
 
     # Hint Electron apps to use Wayland

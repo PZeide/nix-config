@@ -10,7 +10,8 @@
 let
   cfg = config.home.hyprland;
 
-  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+  wrapUwsm = app: "${lib.getExe pkgs.uwsm} app -- ${app}";
+
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
   playerctl = "${lib.getExe pkgs.playerctl}";
   brillo = "${lib.getExe pkgs.brillo}";
@@ -46,10 +47,10 @@ in
 
         "$mainMod, L, exec, loginctl lock-session" # Lock
 
-        "$mainMod, SPACE, exec, ${lib.getExe inputs.walker.packages.${system}.default}"
-        "$mainMod, Q, exec, ${lib.getExe pkgs.kitty}" # Terminal
-        "$mainMod, E, exec, ${lib.getExe pkgs.nautilus}" # File explorer
-        "$mainMod, B, exec, zen" # Browser
+        "$mainMod, SPACE, exec, ${wrapUwsm (lib.getExe inputs.walker.packages.${system}.default)}"
+        "$mainMod, Q, exec, ${wrapUwsm (lib.getExe pkgs.kitty)}" # Terminal
+        "$mainMod, E, exec, ${wrapUwsm (lib.getExe pkgs.nautilus)}" # File explorer
+        "$mainMod, B, exec, ${wrapUwsm "zen"}" # Browser
       ]
       ++ map (i: "$mainMod, ${toString i}, split:workspace, ${toString i}") [
         1
@@ -93,11 +94,11 @@ in
     bindel =
       [
         ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 2%+"
       ]
       ++ lib.optionals (cfg.backlightBinds) [
-        ", XF86MonBrightnessUp, exec, ${brillo} -u 100 -A 2"
-        ", XF86MonBrightnessDown, exec, ${brillo} -u 100 -U 2"
+        ", XF86MonBrightnessUp, exec, ${brillo} -u 100000 -A 2"
+        ", XF86MonBrightnessDown, exec, ${brillo} -u 100000 -U 2"
       ];
   };
 }
