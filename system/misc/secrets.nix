@@ -21,10 +21,5 @@ in
         group = "users";
       };
     };
-
-    identityPaths = [
-      "/home/${config.main.core.defaultUser}/.ssh/id_rsa"
-      "/home/${config.main.core.defaultUser}/.ssh/id_ed25519"
-    ];
   };
 }

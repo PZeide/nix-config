@@ -41,6 +41,7 @@
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")
     (mod "misc/ios")
+    (mod "misc/openssh")
 
     (home "nilou")
   ];

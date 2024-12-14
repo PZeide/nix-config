@@ -27,6 +27,7 @@
     (homeMod "apps/kitty")
     (homeMod "apps/nautilus")
     (homeMod "apps/walker")
+    (homeMod "apps/cider")
 
     (homeMod "apps/development/wakatime")
     (homeMod "apps/development/vscodium")
