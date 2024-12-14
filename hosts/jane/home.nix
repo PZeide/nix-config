@@ -16,6 +16,7 @@
     (homeMod "misc/cursor")
     (homeMod "misc/gtk")
     (homeMod "misc/clipboard")
+    (homeMod "misc/security")
 
     (homeMod "graphical/hyprland")
 
