@@ -12,6 +12,14 @@
     seahorse
     overskride
 
+    # Utilities
+    gnome-calculator
+    gnome-disk-utility
+    loupe
+
+    # Other
     vesktop
   ];
+
+  programs.obs-studio.enable = true;
 }

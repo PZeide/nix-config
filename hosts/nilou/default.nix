@@ -42,6 +42,7 @@
     (mod "misc/podman")
     (mod "misc/ios")
     (mod "misc/openssh")
+    (mod "misc/udisks2")
 
     (home "nilou")
   ];

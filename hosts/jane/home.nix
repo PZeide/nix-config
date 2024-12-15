@@ -17,6 +17,7 @@
     (homeMod "misc/gtk")
     (homeMod "misc/clipboard")
     (homeMod "misc/security")
+    (homeMod "misc/udiskie")
 
     (homeMod "graphical/hyprland")
 
@@ -28,6 +29,7 @@
     (homeMod "apps/nautilus")
     (homeMod "apps/walker")
     (homeMod "apps/cider")
+    (homeMod "apps/mpv")
 
     (homeMod "apps/development/wakatime")
     (homeMod "apps/development/vscodium")
