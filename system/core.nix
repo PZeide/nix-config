@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  inputs,
   pkgs,
   ...
 }:
@@ -54,13 +55,20 @@ in
   config = {
     system.stateVersion = "24.05";
 
-    nixpkgs.config.allowUnfree = true;
     hardware.enableRedistributableFirmware = true;
     boot.kernelPackages = cfg.kernel;
 
     time.timeZone = cfg.timeZone;
     i18n.defaultLocale = cfg.defaultLocale;
     console.keyMap = cfg.consoleKeyMap;
+
+    nixpkgs = {
+      config.allowUnfree = true;
+
+      overlays = [
+        inputs.nur.overlays.default
+      ];
+    };
 
     nix = {
       optimise = {

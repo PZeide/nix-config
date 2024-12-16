@@ -26,6 +26,7 @@
     (homeMod "apps/hypridle")
     (homeMod "apps/syshud")
     (homeMod "apps/kitty")
+    (homeMod "apps/zen/default")
     (homeMod "apps/nautilus")
     (homeMod "apps/walker")
     (homeMod "apps/cider")

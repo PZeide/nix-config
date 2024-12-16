@@ -13,9 +13,4 @@
     portalPackage = inputs.hyprland.packages."${system}".xdg-desktop-portal-hyprland;
     withUWSM = true;
   };
-
-  # TEMP
-  environment.systemPackages = [
-    inputs.zen-browser.packages."${system}".specific
-  ];
 }

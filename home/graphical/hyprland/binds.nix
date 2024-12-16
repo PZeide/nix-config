@@ -50,7 +50,7 @@ in
         "$mainMod, SPACE, exec, ${wrapUwsm (lib.getExe inputs.walker.packages.${system}.default)}"
         "$mainMod, Q, exec, ${wrapUwsm (lib.getExe pkgs.kitty)}" # Terminal
         "$mainMod, E, exec, ${wrapUwsm (lib.getExe pkgs.nautilus)}" # File explorer
-        "$mainMod, B, exec, ${wrapUwsm "zen"}" # Browser
+        "$mainMod, B, exec, ${wrapUwsm (lib.getExe inputs.zen-browser.packages."${system}".specific)}" # Browser
       ]
       ++ map (i: "$mainMod, ${toString i}, split:workspace, ${toString i}") [
         1

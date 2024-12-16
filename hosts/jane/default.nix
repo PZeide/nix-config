@@ -45,6 +45,8 @@
     (mod "misc/openssh")
     (mod "misc/udisks2")
 
+    (mod "laptop/tlp")
+
     (home "jane")
   ];
 }

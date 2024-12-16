@@ -6,8 +6,6 @@
     (inputs.nixos-hardware.nixosModules.lenovo-legion-15ach6h + "/hybrid")
   ];
 
-  # TODO Add WakaTime API key
-
   boot = {
     kernelModules = [ "kvm-amd" ];
 
