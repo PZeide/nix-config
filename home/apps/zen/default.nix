@@ -6,12 +6,28 @@
   ...
 }:
 
+let
+  zen-browser = inputs.zen-browser.packages."${system}".specific.overrideAttrs (
+    finalAttrs: previousAttrs: {
+      pname = "zen";
+
+      passthru = {
+        inherit (pkgs) gtk3; # needed in the wrapper
+        libName = "zen";
+        requireSigning = false;
+        allowAddonSideload = true;
+      };
+    }
+  );
+
+  wrapped-zen-browser = pkgs.wrapFirefox zen-browser { };
+in
 {
   imports = [ ./module ];
 
   programs.zen-browser = {
     enable = true;
-    package = inputs.zen-browser.packages."${system}".specific;
+    package = wrapped-zen-browser;
 
     policies = {
       AutofillAddressEnabled = true;
