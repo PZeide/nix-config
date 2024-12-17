@@ -65,9 +65,7 @@ in
     nixpkgs = {
       config.allowUnfree = true;
 
-      overlays = [
-        inputs.nur.overlays.default
-      ];
+      overlays = [ inputs.nur.overlays.default ];
     };
 
     nix = {

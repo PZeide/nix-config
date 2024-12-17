@@ -1,33 +1,14 @@
 {
   pkgs,
   lib,
-  inputs,
-  system,
   ...
 }:
 
-let
-  zen-browser = inputs.zen-browser.packages."${system}".specific.overrideAttrs (
-    finalAttrs: previousAttrs: {
-      pname = "zen";
-
-      passthru = {
-        inherit (pkgs) gtk3; # needed in the wrapper
-        libName = "zen";
-        requireSigning = false;
-        allowAddonSideload = true;
-      };
-    }
-  );
-
-  wrapped-zen-browser = pkgs.wrapFirefox zen-browser { };
-in
 {
-  imports = [ ./module ];
+  imports = [ ./home-manager.nix ];
 
   programs.zen-browser = {
     enable = true;
-    package = wrapped-zen-browser;
 
     policies = {
       AutofillAddressEnabled = true;
@@ -99,40 +80,28 @@ in
       };
     };
 
-    profiles.default = {
-      isDefault = true;
-      containersForce = true;
+    /*
+      profiles.default = {
+        isDefault = true;
 
-      containers = {
-        personal = {
-          color = "blue";
-          icon = "chill";
-          id = 1;
-        };
+            search = {
+              force = true;
+              default = "Google";
+                engines = {
+                  "Google".metaData.alias = "@g";
 
-        work = {
-          color = "yellow";
-          icon = "briefcase";
-          id = 2;
-        };
+                  "DuckDuckGo".metaData.hidden = true;
+                  "Qwant".metaData.hidden = true;
+                  "Wikipedia (en)".metaData.hidden = true;
+                };
+
+            };
+
+          settings = {
+            "extensions.autoDisableScopes" = 0;
+          };
+
       };
-
-      search = {
-        force = true;
-        default = "Google";
-
-        engines = {
-          "Google".metaData.alias = "@g";
-
-          "DuckDuckGo".metaData.hidden = true;
-          "Qwant".metaData.hidden = true;
-          "Wikipedia (en)".metaData.hidden = true;
-        };
-      };
-
-      settings = {
-        "extensions.autoDisableScopes" = 0;
-      };
-    };
+    */
   };
 }
