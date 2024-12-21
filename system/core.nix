@@ -62,11 +62,7 @@ in
     i18n.defaultLocale = cfg.defaultLocale;
     console.keyMap = cfg.consoleKeyMap;
 
-    nixpkgs = {
-      config.allowUnfree = true;
-
-      overlays = [ inputs.nur.overlays.default ];
-    };
+    nixpkgs.config.allowUnfree = true;
 
     nix = {
       optimise = {

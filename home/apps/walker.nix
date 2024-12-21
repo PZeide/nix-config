@@ -13,7 +13,7 @@
     enable = true;
 
     config = {
-      use_uwsm = true;
+      app_launch_prefix = "uwsm app -- ";
 
       activation_mode = {
         labels = "123456789";
@@ -98,6 +98,7 @@
 
               scroll = {
                 list = {
+                  marker_color = config.lib.stylix.colors.withHashtag.base09;
                   min_height = 500;
                   max_height = 500;
 

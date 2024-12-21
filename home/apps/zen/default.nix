@@ -1,11 +1,21 @@
 {
+  config,
   pkgs,
   lib,
   ...
 }:
 
+let
+  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+    ublock-origin
+    skip-redirect
+    bitwarden
+    sponsorblock
+    tabliss
+  ];
+in
 {
-  imports = [ ./home-manager.nix ];
+  imports = [ ./module ];
 
   programs.zen-browser = {
     enable = true;
@@ -31,35 +41,20 @@
         Fingerprinting = true;
       };
 
-      OverrideFirstRunPage = "tabliss";
-      OverridePostUpdatePage = "tabliss";
-
-      ExtensionsSettings = builtins.listToAttrs (
-        builtins.map
-          (
-            e:
-            lib.nameValuePair e.addonId {
-              installation_mode = "force_installed";
-              install_url = "file://${e.src}";
-              updates_disabled = true;
-            }
-          )
-          (
-            with pkgs.nur.repos.rycee.firefox-addons;
-            [
-              ublock-origin
-              skip-redirect
-              bitwarden
-              sponsorblock
-              tabliss
-            ]
-          )
+      ExtensionSettings = builtins.listToAttrs (
+        builtins.map (
+          e:
+          lib.nameValuePair e.addonId {
+            installation_mode = "force_installed";
+            install_url = "file://${e.src}";
+            updates_disabled = true;
+          }
+        ) (extensions)
       );
 
       "3rdparty".Extensions."uBlock0@raymondhill.net" = {
         adminSettings = {
           selectedFilterLists = [
-            "user-filters"
             "ublock-filters"
             "ublock-badware"
             "ublock-privacy"
@@ -80,28 +75,31 @@
       };
     };
 
-    /*
-      profiles.default = {
-        isDefault = true;
+    profiles.default = {
+      isDefault = true;
 
-            search = {
-              force = true;
-              default = "Google";
-                engines = {
-                  "Google".metaData.alias = "@g";
+      search = {
+        force = true;
+        default = "Google";
+        engines = {
+          "Google".metaData.alias = "@g";
 
-                  "DuckDuckGo".metaData.hidden = true;
-                  "Qwant".metaData.hidden = true;
-                  "Wikipedia (en)".metaData.hidden = true;
-                };
-
-            };
-
-          settings = {
-            "extensions.autoDisableScopes" = 0;
-          };
-
+          "DuckDuckGo".metaData.hidden = true;
+          "Qwant".metaData.hidden = true;
+          "Wikipedia (en)".metaData.hidden = true;
+        };
       };
-    */
+
+      settings = with config.lib.stylix.colors.withHashtag; {
+        "extensions.autoDisableScopes" = 0;
+
+        "zen.welcome-screen.seen" = true;
+        "zen.theme.accent-color" = base0B;
+        "zen.theme.color-prefs.amoled" = true;
+        "zen.theme.color-prefs.use-workspace-colors" = false;
+        "zen.urlbar.behavior" = "float";
+        "zen.view.use-single-toolbar" = false;
+      };
+    };
   };
 }

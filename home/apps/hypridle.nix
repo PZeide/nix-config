@@ -1,15 +1,11 @@
 {
   config,
-  inputs,
-  pkgs,
   lib,
   ...
 }:
 
 let
   cfg = config.home.hypridle;
-
-  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
 in
 {
   options.home.hypridle = with lib; {
@@ -28,19 +24,19 @@ in
 
       settings = {
         general = {
-          lock_cmd = "pidof hyprlock || ${lib.getExe pkgs.hyprlock}";
+          lock_cmd = "pidof hyprlock || hyprlock";
           unlock_cmd = "pkill -USR1 hyprlock";
 
           before_sleep_cmd = "loginctl lock-session";
-          after_sleep_cmd = "${hyprctl} dispatch dpms on";
+          after_sleep_cmd = "hyprctl dispatch dpms on";
         };
 
         listener =
           [
             {
               timeout = 300;
-              on-timeout = "${hyprctl} dispatch dpms off && loginctl lock-session";
-              on-resume = "${hyprctl} dispatch dpms on";
+              on-timeout = "hyprctl dispatch dpms off && loginctl lock-session";
+              on-resume = "hyprctl dispatch dpms on";
             }
             {
               timeout = 600;
@@ -50,8 +46,8 @@ in
           ++ lib.optionals (cfg.dimBacklight) [
             {
               timeout = 180;
-              on-timeout = "${lib.getExe pkgs.brillo} -O && ${lib.getExe pkgs.brillo} -u 10000 -S 20%";
-              on-resume = "${lib.getExe pkgs.brillo} -I";
+              on-timeout = "brillo -O && brillo -u 10000 -S 20%";
+              on-resume = "brillo -I";
             }
           ];
       };

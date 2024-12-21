@@ -1,7 +1,5 @@
-{ inputs, ... }:
-
 let
-  mkFirefoxModule = import "${inputs.home-manager}/modules/programs/firefox/mkFirefoxModule.nix";
+  mkFirefoxModule = import ./mkFirefoxModule.nix;
 in
 {
   imports = [

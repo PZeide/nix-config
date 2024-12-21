@@ -1,20 +1,14 @@
 {
   config,
   pkgs,
-  inputs,
   lib,
-  system,
   ...
 }:
 
 let
   cfg = config.home.hyprland;
 
-  wrapUwsm = app: "${lib.getExe pkgs.uwsm} app -- ${app}";
-
-  wpctl = "${pkgs.wireplumber}/bin/wpctl";
-  playerctl = "${lib.getExe pkgs.playerctl}";
-  brillo = "${lib.getExe pkgs.brillo}";
+  wrapUwsm = app: "uwsm app -- ${app}";
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -47,10 +41,10 @@ in
 
         "$mainMod, L, exec, loginctl lock-session" # Lock
 
-        "$mainMod, SPACE, exec, ${wrapUwsm (lib.getExe inputs.walker.packages.${system}.default)}"
-        "$mainMod, Q, exec, ${wrapUwsm (lib.getExe pkgs.kitty)}" # Terminal
-        "$mainMod, E, exec, ${wrapUwsm (lib.getExe pkgs.nautilus)}" # File explorer
-        "$mainMod, B, exec, ${wrapUwsm (lib.getExe inputs.zen-browser.packages."${system}".default)}" # Browser
+        "$mainMod, SPACE, exec, ${wrapUwsm "walker"}"
+        "$mainMod, Q, exec, ${wrapUwsm "kitty"}" # Terminal
+        "$mainMod, E, exec, ${wrapUwsm "nautilus"}" # File explorer
+        "$mainMod, B, exec, ${wrapUwsm "zen"}" # Browser
       ]
       ++ map (i: "$mainMod, ${toString i}, split:workspace, ${toString i}") [
         1
@@ -81,24 +75,24 @@ in
     ];
 
     bindl = [
-      ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-      ", XF86AudioPlay, exec, ${playerctl} play-pause"
-      ", XF86AudioPlay, exec, ${playerctl} play-pause"
-      ", XF86AudioNext, exec, ${playerctl} next"
-      ", XF86AudioPrev, exec, ${playerctl} previous"
-      ", XF86AudioStop, exec, ${playerctl} stop"
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioNext, exec, playerctl next"
+      ", XF86AudioPrev, exec, playerctl previous"
+      ", XF86AudioStop, exec, playerctl stop"
     ];
 
     bindel =
       [
-        ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 2%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 2%+"
       ]
       ++ lib.optionals (cfg.backlightBinds) [
-        ", XF86MonBrightnessUp, exec, ${brillo} -u 100000 -A 2"
-        ", XF86MonBrightnessDown, exec, ${brillo} -u 100000 -U 2"
+        ", XF86MonBrightnessUp, exec, brillo -u 100000 -A 2"
+        ", XF86MonBrightnessDown, exec, brillo -u 100000 -U 2"
       ];
   };
 }

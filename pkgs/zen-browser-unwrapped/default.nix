@@ -1,3 +1,5 @@
+# Original file: https://github.com/0x006E/dotfiles/blob/main/pkgs/zen-browser-unwrapped/default.nix
+
 {
   lib,
   stdenv,
@@ -17,20 +19,18 @@
 }:
 
 let
-
   mozillaPlatforms = {
     "i686-linux" = "linux-i686";
     "x86_64-linux" = "linux-x86_64";
   };
-
 in
 stdenv.mkDerivation rec {
-  pname = "zen-browser-bin-unwrapped";
-  version = "1.0.2-b.1";
+  pname = "zen-browser-unwrapped";
+  version = "1.0.2-b.3";
 
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-specific.tar.bz2";
-    hash = "sha256-ntQGKZm3vE66E3abYaroOTlFFkN8oNcnGd9P0CnDxWU=";
+    hash = "sha256-1kZTP05WuGIsxzcYYxIKJJd1OwhV5oacUbO56yADrL8=";
   };
 
   nativeBuildInputs = [

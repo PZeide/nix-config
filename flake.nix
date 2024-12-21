@@ -87,11 +87,6 @@
       url = "github:redyf/Neve";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -111,6 +106,9 @@
 
           modules = modules ++ [
             (import ./pkgs)
+            {
+              nixpkgs.overlays = [ inputs.nur.overlays.default ];
+            }
           ];
         };
     in
