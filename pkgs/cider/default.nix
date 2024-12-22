@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
 
 pkgs.appimageTools.wrapType2 rec {
   pname = "cider";

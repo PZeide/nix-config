@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -20,7 +19,7 @@ in
         "$mainMod, F, fullscreen," # Toggle fullscreen of the active window
         "$mainMod, A, togglesplit," # Toggle split direction of the active window
         "$mainMod, C, killactive," # Close active window
-        "$mainMod SHIFT, M, exit," # Force quit Hyprland
+        "$mainMod SHIFT, M, exec, uwsm stop" # Force quit Hyprland
 
         "$mainMod, left, movefocus, l" # Move focus left
         "$mainMod, right, movefocus, r" # Move focus right
