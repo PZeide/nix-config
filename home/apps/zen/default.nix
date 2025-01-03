@@ -100,6 +100,8 @@ in
         "zen.urlbar.behavior" = "float";
         "zen.view.use-single-toolbar" = false;
       };
+
+      extensions = extensions;
     };
   };
 }

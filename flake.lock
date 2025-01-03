@@ -985,15 +985,15 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1735905921,
-        "narHash": "sha256-XiHmqLmJJplLkw5fw70bW9sOmqoXrh8kJCDnESkJsnU=",
-        "owner": "myamusashi",
+        "lastModified": 1734671517,
+        "narHash": "sha256-rTKZlNZP13zIy8eyHiTbCN15rON0FG9S8zxRE7jH+Ak=",
+        "owner": "KZDKM",
         "repo": "Hyprspace",
-        "rev": "e70a7b7c24432852ac5a7ad50646596823a04d98",
+        "rev": "6d49cb495c3b0364fb6c4b50ab4c04a864aa6c43",
         "type": "github"
       },
       "original": {
-        "owner": "myamusashi",
+        "owner": "KZDKM",
         "repo": "Hyprspace",
         "type": "github"
       }
