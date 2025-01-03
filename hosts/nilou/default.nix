@@ -31,7 +31,8 @@
     (mod "graphical/hyprland")
 
     (mod "gaming/optimizations")
-    (mod "gaming/apps")
+    #TODO
+    #(mod "gaming/apps")
 
     (mod "shell/fish")
 
@@ -40,6 +41,7 @@
     (mod "misc/security")
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")
+    (mod "misc/waydroid")
     (mod "misc/ios")
     (mod "misc/openssh")
     (mod "misc/udisks2")

@@ -41,6 +41,7 @@
     (mod "misc/backlight")
     (mod "misc/nautilus-helpers")
     (mod "misc/podman")
+    (mod "misc/waydroid")
     (mod "misc/ios")
     (mod "misc/openssh")
     (mod "misc/udisks2")

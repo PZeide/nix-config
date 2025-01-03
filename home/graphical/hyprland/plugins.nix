@@ -1,4 +1,8 @@
-{ inputs, system, ... }:
+{
+  inputs,
+  system,
+  ...
+}:
 
 {
   wayland.windowManager.hyprland = {

@@ -1,86 +1,185 @@
-# Original file: https://github.com/0x006E/dotfiles/blob/main/pkgs/zen-browser-unwrapped/default.nix
+# Original file: https://github.com/0x006E/dotfiles
+#                https://github.com/Gurjaka/zen-browser-nix
 
 {
   lib,
+  libGL,
+  libGLU,
+  libevent,
+  libffi,
+  libjpeg,
+  libpng,
+  libstartup_notification,
+  libvpx,
+  libwebp,
+  fetchzip,
   stdenv,
-  fetchurl,
-  wrapGAppsHook3,
-  autoPatchelfHook,
-  alsa-lib,
-  curl,
-  dbus-glib,
+  fontconfig,
+  libxkbcommon,
+  zlib,
+  freetype,
   gtk3,
-  libXtst,
+  libxml2,
+  dbus,
+  xcb-util-cursor,
+  alsa-lib,
+  libpulseaudio,
+  pango,
+  atk,
+  cairo,
+  gdk-pixbuf,
+  glib,
+  udev,
   libva,
+  mesa,
+  libnotify,
+  cups,
   pciutils,
+  ffmpeg,
+  libglvnd,
   pipewire,
-  adwaita-icon-theme,
-  patchelfUnstable, # have to use patchelfUnstable to support --no-clobber-old-sections
+  speechd,
+  libxcb,
+  libX11,
+  libXcursor,
+  libXrandr,
+  libXi,
+  libXext,
+  libXcomposite,
+  libXdamage,
+  libXfixes,
+  libXScrnSaver,
+  makeWrapper,
+  copyDesktopItems,
+  wrapGAppsHook,
 }:
 
-let
-  mozillaPlatforms = {
-    "i686-linux" = "linux-i686";
-    "x86_64-linux" = "linux-x86_64";
-  };
-in
 stdenv.mkDerivation rec {
   pname = "zen-browser-unwrapped";
-  version = "1.0.2-b.3";
+  version = "1.0.2-b.5";
 
-  src = fetchurl {
-    url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-specific.tar.bz2";
-    hash = "sha256-1kZTP05WuGIsxzcYYxIKJJd1OwhV5oacUbO56yADrL8=";
-  };
+  src =
+    let
+      repo = "https://github.com/zen-browser/desktop";
+      archive = {
+        name = "zen";
+        extension = "tar.bz2";
+        fullname = "${archive.name}.linux-x86_64.${archive.extension}";
+      };
+
+      url = lib.strings.concatStringsSep "/" [
+        repo
+        "releases/download"
+        version
+        archive.fullname
+      ];
+    in
+    fetchzip {
+      inherit url;
+      inherit (archive) extension;
+      hash = "sha256-sS9phyr97WawxB2AZAwcXkvO3xAmv8k4C8b8Qw364PY=";
+    };
+
+  runtimeLibs = [
+    libGL
+    libGLU
+    libevent
+    libffi
+    libjpeg
+    libpng
+    libstartup_notification
+    libvpx
+    libwebp
+    stdenv.cc.cc
+    fontconfig
+    libxkbcommon
+    zlib
+    freetype
+    gtk3
+    libxml2
+    dbus
+    xcb-util-cursor
+    alsa-lib
+    libpulseaudio
+    pango
+    atk
+    cairo
+    gdk-pixbuf
+    glib
+    udev
+    libva
+    mesa
+    libnotify
+    cups
+    pciutils
+    ffmpeg
+    libglvnd
+    pipewire
+    speechd
+    libxcb
+    libX11
+    libXcursor
+    libXrandr
+    libXi
+    libXext
+    libXcomposite
+    libXdamage
+    libXfixes
+    libXScrnSaver
+  ];
+
+  desktopSrc = ./.;
 
   nativeBuildInputs = [
-    wrapGAppsHook3
-    autoPatchelfHook
-    patchelfUnstable
+    makeWrapper
+    copyDesktopItems
+    wrapGAppsHook
   ];
-
-  buildInputs = [
-    gtk3
-    adwaita-icon-theme
-    alsa-lib
-    dbus-glib
-    libXtst
-  ];
-
-  runtimeDependencies = [
-    curl
-    libva.out
-    pciutils
-  ];
-
-  appendRunpaths = [
-    "${pipewire}/lib"
-  ];
-
-  # zen uses "relrhack" to manually process relocations from a fixed offset
-  patchelfFlags = [ "--no-clobber-old-sections" ];
 
   installPhase = ''
-    mkdir -p "$prefix/lib/${pname}"
-    cp -r * "$prefix/lib/${pname}"
+    mkdir -p $out/{bin,opt/zen} && cp -r $src/* $out/opt/zen
+    ln -s $out/opt/zen/zen $out/bin/zen
 
-    mkdir -p "$out/bin"
-    ln -s "$prefix/lib/${pname}/zen" "$out/bin/zen"
+    install -D $desktopSrc/zen.desktop $out/share/applications/zen.desktop
 
-    install -D browser/chrome/icons/default/default16.png $out/share/icons/hicolor/16x16/apps/zen.png
-    install -D browser/chrome/icons/default/default32.png $out/share/icons/hicolor/32x32/apps/zen.png
-    install -D browser/chrome/icons/default/default48.png $out/share/icons/hicolor/48x48/apps/zen.png
-    install -D browser/chrome/icons/default/default64.png $out/share/icons/hicolor/64x64/apps/zen.png
-    install -D browser/chrome/icons/default/default128.png $out/share/icons/hicolor/128x128/apps/zen.png
+    for i in 16 32 48 64 128; do
+        install -Dm 644 $src/browser/chrome/icons/default/default$i.png \
+          $out/share/icons/hicolor/$ix$i/apps/zen.png
+    done
   '';
+
+  fixupPhase =
+    let
+      ld-lib-path = lib.makeLibraryPath runtimeLibs;
+    in
+    ''
+      chmod 755 $out/bin/zen $out/opt/zen/*
+      interpreter=$(cat $NIX_CC/nix-support/dynamic-linker)
+
+      for bin in zen zen-bin; do
+         patchelf --set-interpreter "$interpreter" $out/opt/zen/$bin
+         wrapProgram $out/opt/zen/$bin \
+             --set LD_LIBRARY_PATH "${ld-lib-path}" \
+             --set MOZ_LEGACY_PROFILES 1 \
+             --set MOZ_ALLOW_DOWNGRADE 1 \
+             --set MOZ_APP_LAUNCHER zen \
+             --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
+      done;
+
+      for bin in glxtest updater vaapitest; do
+          patchelf --set-interpreter "$interpreter" $out/opt/zen/$bin
+          wrapProgram $out/opt/zen/$bin \
+              --set LD_LIBRARY_PATH "${ld-lib-path}"
+      done;
+    '';
 
   meta = {
     mainProgram = "zen";
-    description = "Firefox based browser with a focus on privacy and customization (binary package)";
-    homepage = "https://www.zen-browser.app/";
-    license = lib.licenses.mpl20;
-    maintainers = [ ];
-    platforms = builtins.attrNames mozillaPlatforms;
+    description = "Experience tranquillity while browsing the web without people tracking you!";
+    homepage = "https://zen-browser.app";
+    downloadPage = "https://zen-browser.app/download/";
+    changelog = "https://github.com/zen-browser/desktop/releases";
+    platforms = lib.platforms.linux;
   };
 
   passthru = {

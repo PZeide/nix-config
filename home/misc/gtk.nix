@@ -62,6 +62,14 @@ in
       gtk3.bookmarks = cfg.bookmarks;
     };
 
+    dconf = {
+      settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+        };
+      };
+    };
+
     xdg.configFile = {
       "gtk-3.0/gtk.css".source = lib.mkForce gtkCss;
       "gtk-4.0/gtk.css".source = lib.mkForce gtkCss;

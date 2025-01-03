@@ -45,16 +45,16 @@
   };
 
   fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/1BFDEF816C5A1CDD";
+    device = "/dev/disk/by-uuid/8E82CA0E82C9FAAB";
     fsType = "ntfs3";
-    options = [
+    options = [ 
       "uid=1000"
       "gid=1000"
       "dmask=007"
       "fmask=117"
       "nohidden"
       "sys_immutable"
-      "windows_names"
+      "windows_names" 
     ];
   };
 }

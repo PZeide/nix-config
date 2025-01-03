@@ -6,12 +6,12 @@
 
 pkgs.appimageTools.wrapType2 rec {
   pname = "cider";
-  version = "2.5.0";
+  version = "2.0.1";
 
   src = pkgs.requireFile {
-    name = "Cider-Linux.AppImage";
+    name = "Cider-${version}-x64.AppImage";
     url = "https://taproom.cider.sh";
-    sha256 = "ad34856992b98a7718c6a50796475232608ae242b737bdaa459512a432b7aea8";
+    hash = "sha256-XdyW2O5LC+/dGosSYVz5IkAxi2taVBrXXHTbWZCNnn8=";
   };
 
   nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -26,9 +26,9 @@ pkgs.appimageTools.wrapType2 rec {
       wrapProgram $out/bin/${pname} \
          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
 
-      install -m 444 -D ${contents}/cider.desktop $out/share/applications/${pname}.desktop
+      install -m 444 -D ${contents}/Cider.desktop $out/share/applications/${pname}.desktop
       substituteInPlace $out/share/applications/${pname}.desktop \
-        --replace-warn 'Exec=AppRun --no-sandbox' 'Exec=${pname}'
+        --replace-warn 'Exec=Cider %U' 'Exec=${pname} %U'
       cp -r ${contents}/usr/share/icons $out/share
     '';
 

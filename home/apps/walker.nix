@@ -75,6 +75,8 @@
         force_keyboard_focus = true;
         placeholder = "Search...";
       };
+
+      terminal = "kitty";
     };
 
     theme = {

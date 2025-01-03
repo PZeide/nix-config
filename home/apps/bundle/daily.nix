@@ -19,6 +19,7 @@
 
     # Other
     vesktop
+    obsidian
   ];
 
   programs.obs-studio.enable = true;
