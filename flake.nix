@@ -61,8 +61,8 @@
       };
     };
 
-    hyprspace = {
-      url = "github:KZDKM/Hyprspace";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
 

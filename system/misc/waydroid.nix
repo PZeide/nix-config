@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   waydroidConfig = pkgs.writeText "waydroid.cfg" ''

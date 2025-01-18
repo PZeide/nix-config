@@ -61,6 +61,10 @@ in
           vue.volar
           graphql.vscode-graphql
           graphql.vscode-graphql-syntax
+
+          # Flutter dev
+          dart-code.dart-code
+          dart-code.flutter
         ]
         ++ (pkgs.lib.optionals (cfg.colorThemePackage != null) [ cfg.colorThemePackage ]);
 

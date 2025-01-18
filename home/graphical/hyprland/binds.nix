@@ -31,7 +31,7 @@ in
         "$mainMod SHIFT, up, movewindow, u" # Move active window up
         "$mainMod SHIFT, down, movewindow, d" # Move active window down
 
-        "$mainMod, Tab, overview:toggle," # Show workspaces overview
+        "$mainMod, Tab, hyprexpo:expo, toggle" # Show workspaces overview
 
         "$mainMod, mouse_down, split:workspace, r+1" # Go to next workspace
         "$mainMod, mouse_up, split:workspace, r-1" # Go to previous workspace

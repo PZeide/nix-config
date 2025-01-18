@@ -34,7 +34,7 @@
 
     (homeMod "apps/development/wakatime")
     (homeMod "apps/development/vscodium")
-    (homeMod "apps/development/neovim")
+    #(homeMod "apps/development/neovim")
 
     (homeMod "apps/bundle/terminal")
     (homeMod "apps/bundle/daily")

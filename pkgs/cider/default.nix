@@ -6,12 +6,12 @@
 
 pkgs.appimageTools.wrapType2 rec {
   pname = "cider";
-  version = "2.0.1";
+  version = "2.0.2";
 
   src = pkgs.requireFile {
     name = "Cider-${version}-x64.AppImage";
     url = "https://taproom.cider.sh";
-    hash = "sha256-XdyW2O5LC+/dGosSYVz5IkAxi2taVBrXXHTbWZCNnn8=";
+    hash = "sha256-Jkn5DQob0RCsBnOtsU8RqAg0w/zn8BqOdv2XoGxCCkg=";
   };
 
   nativeBuildInputs = [ pkgs.makeWrapper ];

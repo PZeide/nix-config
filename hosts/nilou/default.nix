@@ -31,8 +31,7 @@
     (mod "graphical/hyprland")
 
     (mod "gaming/optimizations")
-    #TODO
-    #(mod "gaming/apps")
+    (mod "gaming/apps")
 
     (mod "shell/fish")
 
