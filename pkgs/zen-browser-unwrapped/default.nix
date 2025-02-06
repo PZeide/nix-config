@@ -56,7 +56,7 @@
 
 stdenv.mkDerivation rec {
   pname = "zen-browser-unwrapped";
-  version = "1.6b";
+  version = "1.7.4b";
 
   src =
     let
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
     fetchzip {
       inherit url;
       inherit (archive) extension;
-      hash = "sha256-7Z7PZMTmPhB4Sx9+YXpWTkhcBsblzkgWyIJvNTSTNSU=";
+      hash = "sha256-hiGb2oyAueKa6Xs6BvtEmgPTRlOXvJ5YDseS8kZ1VbQ=";
     };
 
   runtimeLibs = [
