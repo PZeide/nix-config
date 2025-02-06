@@ -9,7 +9,7 @@ let
   extensions = with pkgs.nur.repos.rycee.firefox-addons; [
     ublock-origin
     skip-redirect
-    bitwarden
+    proton-pass
     sponsorblock
     tabliss
   ];

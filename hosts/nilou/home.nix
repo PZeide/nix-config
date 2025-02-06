@@ -29,7 +29,6 @@
     (homeMod "apps/zen/default")
     (homeMod "apps/nautilus")
     (homeMod "apps/walker")
-    (homeMod "apps/cider")
     (homeMod "apps/mpv")
 
     (homeMod "apps/development/wakatime")

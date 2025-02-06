@@ -19,7 +19,10 @@
 
     # Other
     vesktop
-    obsidian
+    proton-pass
+    protonmail-desktop
+    protonvpn-gui
+    # cider
   ];
 
   programs.obs-studio.enable = true;

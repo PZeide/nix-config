@@ -78,15 +78,8 @@
 
     walker.url = "github:abenz1267/walker";
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    neve = {
-      url = "github:redyf/Neve";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim";
+    neve.url = "github:redyf/Neve";
   };
 
   outputs =

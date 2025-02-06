@@ -5,12 +5,9 @@
   pkgs,
   system,
   ...
-}:
-
-let
+}: let
   cfg = config.home.vscodium;
-in
-{
+in {
   options.home.vscodium = with lib; {
     colorTheme = mkOption {
       type = types.str;
@@ -31,8 +28,8 @@ in
 
   config = {
     home.packages = with pkgs; [
-      nixfmt-rfc-style
-      nil
+      alejandra
+      nixd
     ];
 
     programs.vscode = {
@@ -44,8 +41,7 @@ in
 
       mutableExtensionsDir = false;
 
-      extensions =
-        with inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
+      extensions = with inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
         [
           wakatime.vscode-wakatime
 
@@ -65,8 +61,11 @@ in
           # Flutter dev
           dart-code.dart-code
           dart-code.flutter
+
+          # Rust dev
+          rust-lang.rust-analyzer
         ]
-        ++ (pkgs.lib.optionals (cfg.colorThemePackage != null) [ cfg.colorThemePackage ]);
+        ++ (pkgs.lib.optionals (cfg.colorThemePackage != null) [cfg.colorThemePackage]);
 
       userSettings = with config.stylix.fonts; {
         "breadcrumbs.enabled" = true;
@@ -116,16 +115,12 @@ in
         "workbench.list.smoothScrolling" = true;
 
         "nix.enableLanguageServer" = true;
-        "nix.hiddenLanguageServerErrors" = [
-          "textDocument/formatting"
-          "textDocument/documentSymbol"
-        ];
-        "nix.serverPath" = lib.getExe pkgs.nil;
+        "nix.serverPath" = lib.getExe pkgs.nixd;
         "nix.serverSettings" = {
-          "nil" = {
+          "nixd" = {
             "formatting" = {
               "command" = [
-                (lib.getExe pkgs.nixfmt-rfc-style)
+                (lib.getExe pkgs.alejandra)
               ];
             };
           };
