@@ -36,9 +36,11 @@
     };
   };
 
-  # Optional fonts
+  # Additional fonts
   home.packages = with pkgs; [
     noto-fonts-cjk-sans
     nerd-fonts.symbols-only
+    # Used implicitly on some websites without downloading it (i.e: Microsoft :))
+    roboto
   ];
 }
