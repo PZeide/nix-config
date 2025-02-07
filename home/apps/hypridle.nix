@@ -43,7 +43,7 @@ in {
           ++ lib.optionals (cfg.dimBacklight) [
             {
               timeout = 180;
-              on-timeout = "brillo -O && brillo -u 10000 -S 20%";
+              on-timeout = "brillo -O && brillo -u 500000 -S 20%";
               on-resume = "brillo -I";
             }
           ];
