@@ -116,6 +116,10 @@ in {
 
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = lib.getExe pkgs.nixd;
+        "nix.hiddenLanguageServerErrors" = [
+          "textDocument/formatting"
+          "textDocument/definition"
+        ];
         "nix.serverSettings" = {
           "nixd" = {
             "formatting" = {

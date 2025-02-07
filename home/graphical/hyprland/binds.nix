@@ -2,14 +2,11 @@
   config,
   lib,
   ...
-}:
-
-let
+}: let
   cfg = config.home.hyprland;
 
   wrapUwsm = app: "uwsm app -- ${app}";
-in
-{
+in {
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
 
@@ -40,7 +37,7 @@ in
 
         "$mainMod, L, exec, loginctl lock-session" # Lock
 
-        "$mainMod, SPACE, exec, ${wrapUwsm "walker"}"
+        "$mainMod, SPACE, exec, ${wrapUwsm "anyrun"}"
         "$mainMod, Q, exec, ${wrapUwsm "kitty"}" # Terminal
         "$mainMod, E, exec, ${wrapUwsm "nautilus"}" # File explorer
         "$mainMod, B, exec, ${wrapUwsm "zen"}" # Browser

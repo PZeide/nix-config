@@ -2,14 +2,12 @@
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   home = {
-    packages = [ pkgs.grc ];
+    packages = [pkgs.grc];
 
     activation = {
-      createTideConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      createTideConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD ${pkgs.fish}/bin/fish -c "tide configure \
           --auto \
           --style=Lean \

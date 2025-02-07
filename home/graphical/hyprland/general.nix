@@ -1,11 +1,8 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   cfg = config.home.hyprland;
-in
-{
+in {
   wayland.windowManager.hyprland.settings = {
-    monitor = cfg.monitors ++ [ ", highres, auto, 1" ];
+    monitor = cfg.monitors ++ [", highres, auto, 1"];
 
     general = {
       border_size = 3;
@@ -124,6 +121,15 @@ in
 
     xwayland = {
       force_zero_scaling = true;
+    };
+
+    render = {
+      direct_scanout = true;
+    };
+
+    ecosystem = {
+      no_update_news = true;
+      no_donation_nag = true;
     };
   };
 }

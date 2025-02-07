@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   nautilusEnv = pkgs.buildEnv {
     name = "nautilus-env";
 
@@ -10,15 +8,14 @@ let
       nautilus-open-any-terminal
     ];
   };
-in
-{
+in {
   home.packages = with pkgs; [
     nautilusEnv
     adwaita-icon-theme
   ];
 
   xdg.mimeApps.defaultApplications = {
-    "inode/directory" = [ "nautilus.desktop;org.gnome.Nautilus.desktop" ];
+    "inode/directory" = ["nautilus.desktop;org.gnome.Nautilus.desktop"];
   };
 
   dconf.settings = {

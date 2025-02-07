@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # Terminal tools
     playerctl
@@ -22,7 +20,7 @@
     proton-pass
     protonmail-desktop
     protonvpn-gui
-    # cider
+    cider-taproom
   ];
 
   programs.obs-studio.enable = true;

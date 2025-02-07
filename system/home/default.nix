@@ -1,13 +1,10 @@
-variant:
-{
+variant: {
   inputs,
   config,
   system,
   ...
-}:
-
-{
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+}: {
+  imports = [inputs.home-manager.nixosModules.home-manager];
 
   home-manager = {
     useUserPackages = true;
@@ -18,20 +15,20 @@ variant:
       inherit inputs variant system;
       inherit (config.age) secrets;
 
-      user = "${config.main.core.defaultUser}";
+      user = config.system.core.defaultUser;
       homeMod = m: ../../home/${m}.nix;
     };
 
-    users."${config.main.core.defaultUser}" = {
-      imports = [ ../../hosts/${variant}/home.nix ];
+    users.${config.system.core.defaultUser} = {
+      imports = [../../hosts/${variant}/home.nix];
 
       programs.home-manager.enable = true;
 
       home = {
         stateVersion = config.system.stateVersion;
 
-        username = "${config.main.core.defaultUser}";
-        homeDirectory = "/home/${config.main.core.defaultUser}";
+        username = config.system.core.defaultUser;
+        homeDirectory = "/home/${config.system.core.defaultUser}";
       };
     };
   };

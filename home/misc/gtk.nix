@@ -3,17 +3,14 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.home.gtk;
 
   gtkCss = config.lib.stylix.colors {
     template = ./gtk.mustache;
     extension = "css";
   };
-in
-{
+in {
   options.home.gtk = with lib; {
     iconAccent = mkOption {
       type = types.enum [
@@ -40,7 +37,7 @@ in
 
     bookmarks = mkOption {
       type = with types; listOf str;
-      default = [ ];
+      default = [];
       description = ''
         List of bookmarks in the file browser.
       '';

@@ -2,18 +2,16 @@
   modulesPath,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (inputs.nixos-hardware.nixosModules.lenovo-legion-15ach6h + "/hybrid")
   ];
 
   boot = {
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = ["kvm-amd"];
 
-    kernelParams = [ "mt7921e.disable_aspm=y" ];
+    kernelParams = ["mt7921e.disable_aspm=y"];
 
     initrd = {
       availableKernelModules = [
@@ -30,7 +28,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5f911220-0283-4b64-9813-fcd429b5456c";
     fsType = "ext4";
-    options = [ "noatime" ];
+    options = ["noatime"];
   };
 
   fileSystems."/boot" = {

@@ -3,7 +3,6 @@
   lib,
   ...
 }:
-
 pkgs.appimageTools.wrapType2 rec {
   pname = "waydroid-helper";
   version = "0.1.2";
@@ -13,25 +12,23 @@ pkgs.appimageTools.wrapType2 rec {
     hash = "sha256-VMgwsy4STIWNAkit2N1uK443WiV5f2HzBTxaGtJCh64=";
   };
 
-  nativeBuildInputs = [ pkgs.makeWrapper ];
+  nativeBuildInputs = [pkgs.makeWrapper];
 
-  extraInstallCommands =
-    let
-      fullName = "com.jaoushingan.WaydroidHelper";
+  extraInstallCommands = let
+    fullName = "com.jaoushingan.WaydroidHelper";
 
-      contents = pkgs.appimageTools.extract {
-        inherit version src pname;
-      };
-    in
-    ''
-      wrapProgram $out/bin/${pname}
+    contents = pkgs.appimageTools.extract {
+      inherit version src pname;
+    };
+  in ''
+    wrapProgram $out/bin/${pname}
 
-      install -m 444 -D ${contents}/${fullName}.desktop $out/share/applications/${pname}.desktop
-      cp -r ${contents}/usr/share/icons $out/share
-    '';
+    install -m 444 -D ${contents}/${fullName}.desktop $out/share/applications/${pname}.desktop
+    cp -r ${contents}/usr/share/icons $out/share
+  '';
 
-  extraPkgs =
-    pkgs: with pkgs; [
+  extraPkgs = pkgs:
+    with pkgs; [
       gtk4
       libadwaita
     ];
@@ -40,6 +37,6 @@ pkgs.appimageTools.wrapType2 rec {
     description = "Waydroid Helper is a graphical user interface application written in Python using PyGObject.";
     license = lib.licenses.gpl3Only;
     mainProgram = "waydroid-helper";
-    platforms = [ "x86_64-linux" ];
+    platforms = ["x86_64-linux"];
   };
 }

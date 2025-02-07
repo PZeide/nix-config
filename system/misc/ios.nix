@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.usbmuxd.enable = true;
 
   environment.systemPackages = with pkgs; [

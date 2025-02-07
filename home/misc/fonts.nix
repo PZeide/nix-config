@@ -2,9 +2,7 @@
   pkgs,
   inputs,
   ...
-}:
-
-{
+}: {
   stylix.fonts = {
     serif = {
       package = inputs.apple-fonts.packages.${pkgs.system}.ny;
@@ -31,10 +29,10 @@
     enable = true;
 
     defaultFonts = {
-      serif = [ "New York" ];
-      sansSerif = [ "SF Pro Text" ];
-      monospace = [ "Iosevka" ];
-      emoji = [ "Noto Color Emoji" ];
+      serif = ["New York"];
+      sansSerif = ["SF Pro Text"];
+      monospace = ["Iosevka"];
+      emoji = ["Noto Color Emoji"];
     };
   };
 

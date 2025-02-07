@@ -2,12 +2,9 @@
   config,
   lib,
   ...
-}:
-
-let
+}: let
   cfg = config.home.hypridle;
-in
-{
+in {
   options.home.hypridle = with lib; {
     dimBacklight = mkOption {
       type = types.bool;
@@ -53,6 +50,6 @@ in
       };
     };
 
-    systemd.user.services.hypridle.Unit.After = lib.mkForce [ "graphical-session.target" ];
+    systemd.user.services.hypridle.Unit.After = lib.mkForce ["graphical-session.target"];
   };
 }

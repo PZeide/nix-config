@@ -3,13 +3,10 @@
   lib,
   inputs,
   ...
-}:
-
-let
+}: let
   cfg = config.home.core;
-in
-{
-  imports = [ inputs.stylix.homeManagerModules.stylix ];
+in {
+  imports = [inputs.stylix.homeManagerModules.stylix];
 
   options.home.core = with lib; {
     wallpaper = mkOption {

@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   imports = [
     ./hyprland/general.nix
     ./hyprland/binds.nix
@@ -11,7 +9,7 @@
   options.home.hyprland = with lib; {
     monitors = mkOption {
       type = with types; listOf str;
-      default = [ ", preferred, auto, 1" ];
+      default = [", preferred, auto, 1"];
       description = ''
         Monitors configuration of Hyprland.
       '';

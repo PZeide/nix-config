@@ -1,9 +1,7 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   hardware.brillo.enable = true;
 
-  users.users."${config.main.core.defaultUser}" = {
-    extraGroups = [ "video" ];
+  users.users.${config.system.core.defaultUser} = {
+    extraGroups = ["video"];
   };
 }

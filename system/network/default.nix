@@ -1,9 +1,7 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   networking.networkmanager.enable = true;
 
-  users.users."${config.main.core.defaultUser}" = {
-    extraGroups = [ "networkmanager" ];
+  users.users.${config.system.core.defaultUser} = {
+    extraGroups = ["networkmanager"];
   };
 }

@@ -4,9 +4,7 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
 
   generateConfig' = image: {
@@ -98,49 +96,48 @@ let
     ];
 
     /*
-      label = [
-        {
-          # Day-Month-Date
-          monitor = "";
-          text = ''cmd[update:1000] echo -e "$(date +"%A, %B %d")"'';
-          color = base07;
-          font_size = 28;
-          font_family = fonts.sansSerif.name + " Bold";
-          position = "0, 490";
-          halign = "center";
-          valign = "center";
-        }
-        # Time
-        {
-          monitor = "";
-          text = ''cmd[update:1000] echo "<span>$(date +"%I:%M")</span>"'';
-          color = base07;
-          font_size = 160;
-          font_family = "steelfish outline regular";
-          position = "0, 370";
-          halign = "center";
-          valign = "center";
-        }
-        # USER
-        {
-          monitor = "";
-          text = "    $USER";
-          color = base07;
-          outline_thickness = 2;
-          dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
-          dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
-          dots_center = true;
-          font_size = 18;
-          font_family = fonts.sansSerif.name + " Bold";
-          position = "0, -180";
-          halign = "center";
-          valign = "center";
-        }
-      ];
+    label = [
+      {
+        # Day-Month-Date
+        monitor = "";
+        text = ''cmd[update:1000] echo -e "$(date +"%A, %B %d")"'';
+        color = base07;
+        font_size = 28;
+        font_family = fonts.sansSerif.name + " Bold";
+        position = "0, 490";
+        halign = "center";
+        valign = "center";
+      }
+      # Time
+      {
+        monitor = "";
+        text = ''cmd[update:1000] echo "<span>$(date +"%I:%M")</span>"'';
+        color = base07;
+        font_size = 160;
+        font_family = "steelfish outline regular";
+        position = "0, 370";
+        halign = "center";
+        valign = "center";
+      }
+      # USER
+      {
+        monitor = "";
+        text = "    $USER";
+        color = base07;
+        outline_thickness = 2;
+        dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
+        dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
+        dots_center = true;
+        font_size = 18;
+        font_family = fonts.sansSerif.name + " Bold";
+        position = "0, -180";
+        halign = "center";
+        valign = "center";
+      }
+    ];
     */
   };
-in
-{
+in {
   programs.hyprlock = {
     enable = true;
     settings = generateConfig' "screenshot";
@@ -152,14 +149,14 @@ in
 
   systemd.user.services.hyprlock = {
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = ["graphical-session.target"];
     };
 
     Unit = {
       ConditionEnvironment = "WAYLAND_DISPLAY";
       Description = "hyprlock";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
+      After = ["graphical-session.target"];
+      PartOf = ["graphical-session.target"];
     };
 
     Service = {

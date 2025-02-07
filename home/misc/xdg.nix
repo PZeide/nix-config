@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   xdg = {
     userDirs = {
       enable = true;
@@ -14,5 +12,5 @@
     '';
   };
 
-  home.packages = [ pkgs.xdg-terminal-exec ];
+  home.packages = [pkgs.xdg-terminal-exec];
 }

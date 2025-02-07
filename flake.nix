@@ -2,10 +2,6 @@
   description = "Zeide's NixOS configuration | @PZeide";
 
   inputs = {
-    #
-    # System inputs
-    #
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
@@ -27,19 +23,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #
-    # User inputs
-    #
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
     stylix = {
       url = "github:danth/stylix";
@@ -71,49 +60,43 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    walker.url = "github:abenz1267/walker";
+    anyrun.url = "github:fufexan/anyrun/launch-prefix";
 
     nixvim.url = "github:nix-community/nixvim";
     neve.url = "github:redyf/Neve";
   };
 
-  outputs =
-    { nixpkgs, ... }@inputs:
-    let
-      nixosSystem' =
-        system: modules:
+  outputs = {nixpkgs, ...} @ inputs: let
+    nixosSystem' = system: host:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
 
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          specialArgs = {
-            mod = module: ./system/${module}.nix;
-            home = variant: import (./system/home/default.nix) variant;
-            inherit inputs system;
-          };
-
-          modules = modules ++ [
-            (import ./pkgs)
-            {
-              nixpkgs.overlays = [ inputs.nur.overlays.default ];
-            }
-          ];
+        specialArgs = {
+          mod = module: ./system/${module}.nix;
+          home = variant: import ./system/home/default.nix variant;
+          inherit inputs system;
         };
-    in
-    {
-      nixosConfigurations = {
-        nilou = nixosSystem' "x86_64-linux" [
-          ./hosts/nilou
-        ];
 
-        jane = nixosSystem' "x86_64-linux" [
-          ./hosts/jane
+        modules = [
+          ./hosts/${host}
+          inputs.nur.modules.nixos.default
+          (import ./pkgs)
         ];
       };
+  in {
+    nixosConfigurations = {
+      nilou = nixosSystem' "x86_64-linux" "nilou";
+      jane = nixosSystem' "x86_64-linux" "jane";
     };
+  };
 }

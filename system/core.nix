@@ -3,13 +3,10 @@
   lib,
   pkgs,
   ...
-}:
-
-let
-  cfg = config.main.core;
-in
-{
-  options.main.core = with lib; {
+}: let
+  cfg = config.system.core;
+in {
+  options.system.core = with lib; {
     defaultUser = mkOption {
       type = types.str;
       default = "thibaud";
@@ -76,25 +73,29 @@ in
           "flakes"
         ];
 
-        trusted-users = [ "${cfg.defaultUser}" ];
+        trusted-users = [cfg.defaultUser];
+
+        builders-use-substitutes = true;
 
         substituters = [
           "https://hyprland.cachix.org"
           "https://nix-gaming.cachix.org"
-          "https://walker-git.cachix.org"
+          "https://anyrun.cachix.org"
+          "https://fufexan.cachix.org"
         ];
 
         trusted-public-keys = [
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
           "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-          "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
+          "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
+          "fufexan.cachix.org-1:LwCDjCJNJQf5XD2BV+yamQIMZfcKWR9ISIFy5curUsY="
         ];
       };
     };
 
-    users.users."${cfg.defaultUser}" = {
+    users.users.${cfg.defaultUser} = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = ["wheel"];
     };
   };
 }

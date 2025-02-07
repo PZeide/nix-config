@@ -3,9 +3,7 @@
   inputs,
   system,
   ...
-}:
-
-{
+}: {
   imports = [
     (homeMod "core")
 
@@ -28,7 +26,7 @@
     (homeMod "apps/kitty")
     (homeMod "apps/zen/default")
     (homeMod "apps/nautilus")
-    (homeMod "apps/walker")
+    (homeMod "apps/anyrun")
     (homeMod "apps/mpv")
 
     (homeMod "apps/development/wakatime")
@@ -80,6 +78,6 @@
       inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.github.github-vscode-theme;
   };
 
-  config.home.gtk.bookmarks = [ "file:///mnt/data Data" ];
+  config.home.gtk.bookmarks = ["file:///mnt/data Data"];
   config.home.gtk.iconAccent = "red";
 }

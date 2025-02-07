@@ -3,9 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-
-let
+}: let
   extensions = with pkgs.nur.repos.rycee.firefox-addons; [
     ublock-origin
     skip-redirect
@@ -13,9 +11,8 @@ let
     sponsorblock
     tabliss
   ];
-in
-{
-  imports = [ ./module ];
+in {
+  imports = [./hm-module.nix];
 
   programs.zen-browser = {
     enable = true;
@@ -44,12 +41,13 @@ in
       ExtensionSettings = builtins.listToAttrs (
         builtins.map (
           e:
-          lib.nameValuePair e.addonId {
-            installation_mode = "force_installed";
-            install_url = "file://${e.src}";
-            updates_disabled = true;
-          }
-        ) (extensions)
+            lib.nameValuePair e.addonId {
+              installation_mode = "force_installed";
+              install_url = "file://${e.src}";
+              updates_disabled = true;
+            }
+        )
+        extensions
       );
 
       "3rdparty".Extensions."uBlock0@raymondhill.net" = {

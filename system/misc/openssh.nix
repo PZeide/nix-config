@@ -2,13 +2,10 @@
   config,
   lib,
   ...
-}:
-
-let
-  cfg = config.main.openssh;
-in
-{
-  options.main.openssh = with lib; {
+}: let
+  cfg = config.system.openssh;
+in {
+  options.system.openssh = with lib; {
     openFirewall = mkOption {
       type = types.bool;
       default = false;

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   virtualisation = {
     containers.enable = true;
 
@@ -11,11 +9,11 @@
 
       autoPrune = {
         enable = true;
-        flags = [ "--all" ];
+        flags = ["--all"];
         dates = "weekly";
       };
     };
   };
 
-  environment.systemPackages = with pkgs; [ docker-compose ];
+  environment.systemPackages = with pkgs; [docker-compose];
 }

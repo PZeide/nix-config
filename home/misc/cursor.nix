@@ -3,9 +3,7 @@
   system,
   pkgs,
   ...
-}:
-
-{
+}: {
   home = {
     packages = [
       inputs.rose-pine-hyprcursor.packages.${system}.default

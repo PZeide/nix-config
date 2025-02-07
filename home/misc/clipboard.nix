@@ -2,9 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   home.packages = with pkgs; [
     wl-clipboard
     wl-clip-persist
@@ -12,13 +10,13 @@
 
   systemd.user.services.wl-clip-persist = {
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = ["graphical-session.target"];
     };
 
     Unit = {
       Description = "wl-clip-persist";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
+      After = ["graphical-session.target"];
+      PartOf = ["graphical-session.target"];
     };
 
     Service = {

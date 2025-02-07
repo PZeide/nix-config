@@ -3,9 +3,7 @@
   home,
   system,
   ...
-}:
-
-{
+}: {
   nixpkgs.hostPlatform = system;
   networking.hostName = "nilou";
 

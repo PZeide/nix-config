@@ -2,9 +2,7 @@
   modulesPath,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-hardware.nixosModules.common-cpu-intel
@@ -15,7 +13,7 @@
   ];
 
   boot = {
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = ["kvm-intel"];
 
     initrd = {
       availableKernelModules = [
@@ -32,7 +30,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/64c2222d-822a-4152-9b99-f622dc11e778";
     fsType = "ext4";
-    options = [ "noatime" ];
+    options = ["noatime"];
   };
 
   fileSystems."/boot" = {
@@ -47,14 +45,14 @@
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/8E82CA0E82C9FAAB";
     fsType = "ntfs3";
-    options = [ 
+    options = [
       "uid=1000"
       "gid=1000"
       "dmask=007"
       "fmask=117"
       "nohidden"
       "sys_immutable"
-      "windows_names" 
+      "windows_names"
     ];
   };
 }

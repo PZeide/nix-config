@@ -6,7 +6,6 @@ let
     nilou
     jane
   ];
-in
-{
+in {
   "wakatime-key.age".publicKeys = all;
 }
