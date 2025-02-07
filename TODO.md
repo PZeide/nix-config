@@ -2,9 +2,6 @@
 
 ### Todo ☐
 
-- [ ] Fix fonts
-  - [ ] Use a SF for as the default serif font
-  - [ ] Search missing fonts for MS login page
 - [ ] Configure udiskie
 - [ ] Fix hyprlock start with hypridle (hyprland-lock-notify?)
 - [ ] Fix gaming
@@ -18,3 +15,6 @@
 ### In Progress ⏲
 
 ### Completed Column ✓
+
+- [x] Fix fonts
+  - [x] Search missing fonts for MS login page
