@@ -11,6 +11,7 @@
 - [ ] Hyprland visual refresh
   - [ ] Border and general colors
   - [ ] Groups ?
+- [ ] AGS bar
 
 ### In Progress ⏲
 
