@@ -18,6 +18,7 @@ in {
 
     decoration = {
       rounding = 20;
+      rounding_power = 3.5;
 
       shadow = {
         enabled = true;
@@ -130,6 +131,11 @@ in {
     ecosystem = {
       no_update_news = true;
       no_donation_nag = true;
+    };
+
+    experimental = {
+      hdr = true;
+      xx_color_management_v4 = true;
     };
   };
 }

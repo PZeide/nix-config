@@ -41,7 +41,7 @@
   config.home.core.wallpaper = ../../assets/wallpapers/nilou.jpg;
 
   config.home.hyprland.monitors = [
-    "DP-1, 2560x1440@240, 0x0, 1.25"
+    "DP-1, 2560x1440@240, 0x0, 1.25, bitdepth, 10"
     "DP-2, 1920x1080@144, -1920x80, 1"
   ];
 
