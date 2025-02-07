@@ -2,6 +2,8 @@
   config,
   pkgs,
   lib,
+  inputs,
+  system,
   ...
 }: let
   extensions = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -10,6 +12,7 @@
     proton-pass
     sponsorblock
     tabliss
+    kagi-search
   ];
 in {
   imports = [./hm-module.nix];
@@ -17,58 +20,62 @@ in {
   programs.zen-browser = {
     enable = true;
 
-    policies = {
-      AutofillAddressEnabled = true;
-      AutofillCreditCardEnabled = false;
-      DisableAppUpdate = true;
-      DisableFeedbackCommands = true;
-      DisableFirefoxAccounts = true;
-      DisableFirefoxStudies = true;
-      DisablePocket = true;
-      DisableSetDesktopBackground = true;
-      DisableTelemetry = true;
-      DontCheckDefaultBrowser = true;
-      NoDefaultBookmarks = true;
-      OfferToSaveLogins = false;
+    package = pkgs.wrapFirefox inputs.zen-browser.packages.${system}.zen-browser-unwrapped {
+      pname = "zen-browser";
 
-      EnableTrackingProtection = {
-        Value = true;
-        Locked = true;
-        Cryptomining = true;
-        Fingerprinting = true;
-      };
+      extraPolicies = {
+        AutofillAddressEnabled = true;
+        AutofillCreditCardEnabled = false;
+        DisableAppUpdate = true;
+        DisableFeedbackCommands = true;
+        DisableFirefoxAccounts = true;
+        DisableFirefoxStudies = true;
+        DisablePocket = true;
+        DisableSetDesktopBackground = true;
+        DisableTelemetry = true;
+        DontCheckDefaultBrowser = true;
+        NoDefaultBookmarks = true;
+        OfferToSaveLogins = false;
 
-      ExtensionSettings = builtins.listToAttrs (
-        builtins.map (
-          e:
-            lib.nameValuePair e.addonId {
-              installation_mode = "force_installed";
-              install_url = "file://${e.src}";
-              updates_disabled = true;
-            }
-        )
-        extensions
-      );
+        EnableTrackingProtection = {
+          Value = true;
+          Locked = true;
+          Cryptomining = true;
+          Fingerprinting = true;
+        };
 
-      "3rdparty".Extensions."uBlock0@raymondhill.net" = {
-        adminSettings = {
-          selectedFilterLists = [
-            "ublock-filters"
-            "ublock-badware"
-            "ublock-privacy"
-            "ublock-unbreak"
-            "ublock-quick-fixes"
-            "ublock-annoyances"
-            "easylist"
-            "easylist-annoyances"
-            "easylist-chat"
-            "easylist-newsletters"
-            "easylist-notifications"
-            "easyprivacy"
-            "urlhaus-1"
-            "plowe-0"
-            "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
-          ];
+        ExtensionSettings = builtins.listToAttrs (
+          builtins.map (
+            e:
+              lib.nameValuePair e.addonId {
+                installation_mode = "force_installed";
+                install_url = "file://${e.src}";
+                updates_disabled = true;
+              }
+          )
+          extensions
+        );
+
+        "3rdparty".Extensions."uBlock0@raymondhill.net" = {
+          adminSettings = {
+            selectedFilterLists = [
+              "ublock-filters"
+              "ublock-badware"
+              "ublock-privacy"
+              "ublock-unbreak"
+              "ublock-quick-fixes"
+              "ublock-annoyances"
+              "easylist"
+              "easylist-annoyances"
+              "easylist-chat"
+              "easylist-newsletters"
+              "easylist-notifications"
+              "easyprivacy"
+              "urlhaus-1"
+              "plowe-0"
+              "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
+            ];
+          };
         };
       };
     };
@@ -78,10 +85,17 @@ in {
 
       search = {
         force = true;
-        default = "Google";
+        default = "Kagi";
+        privateDefault = "Kagi";
         engines = {
-          "Google".metaData.alias = "@g";
+          "Kagi" = {
+            urls = [{template = "https://kagi.com/search?q={searchTerms}";}];
+            definedAliases = ["@k"];
+            iconUpdateURL = "https://kagi.com/favicon.ico";
+            updateInterval = 24 * 60 * 60 * 1000;
+          };
 
+          "Google".metaData.hidden = true;
           "DuckDuckGo".metaData.hidden = true;
           "Qwant".metaData.hidden = true;
           "Wikipedia (en)".metaData.hidden = true;
@@ -90,6 +104,7 @@ in {
 
       settings = with config.lib.stylix.colors.withHashtag; {
         "extensions.autoDisableScopes" = 0;
+        "signon.showAutoCompleteFooter" = 0;
 
         "zen.welcome-screen.seen" = true;
         "zen.theme.accent-color" = base0B;

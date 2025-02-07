@@ -50,7 +50,7 @@ in {
   ];
 
   config = {
-    programs.zen-browser.package = inputs.zen-browser.packages.${system}.default;
+    programs.zen-browser.package = lib.mkDefault inputs.zen-browser.packages.${system}.default;
 
     # Workaround for profiles INI making profiles unloadable
     home.file."${cfg.configPath}/profiles.ini" = lib.mkForce (lib.mkIf (cfg.profiles != {}) {text = profilesIni;});
