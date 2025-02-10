@@ -36,6 +36,8 @@
     (homeMod "apps/bundle/terminal")
     (homeMod "apps/bundle/daily")
     (homeMod "apps/bundle/development")
+
+    (homeMod "apps/games/osu")
   ];
 
   config.home.core.wallpaper = ../../assets/wallpapers/nilou.jpg;
