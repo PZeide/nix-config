@@ -74,6 +74,11 @@
 
     nixvim.url = "github:nix-community/nixvim";
     neve.url = "github:redyf/Neve";
+
+    aagl = {
+      url = "github:ezKEa/aagl-gtk-on-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: let

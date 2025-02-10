@@ -82,6 +82,7 @@ in {
           "https://nix-gaming.cachix.org"
           "https://anyrun.cachix.org"
           "https://fufexan.cachix.org"
+          "https://ezkea.cachix.org"
         ];
 
         trusted-public-keys = [
@@ -89,6 +90,7 @@ in {
           "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
           "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
           "fufexan.cachix.org-1:LwCDjCJNJQf5XD2BV+yamQIMZfcKWR9ISIFy5curUsY="
+          "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
         ];
       };
     };
