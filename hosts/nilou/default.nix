@@ -30,7 +30,6 @@
 
     (mod "gaming/optimizations")
     (mod "gaming/apps")
-    (mod "gaming/games/hoyoverse")
 
     (mod "shell/fish")
 
