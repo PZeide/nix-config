@@ -6,7 +6,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (inputs.nixos-hardware.nixosModules.lenovo-legion-15ach6h + "/hybrid")
-    (inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable)  
   ];
 
   boot = {

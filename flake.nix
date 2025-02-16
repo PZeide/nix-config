@@ -74,6 +74,8 @@
 
     nixvim.url = "github:nix-community/nixvim";
     neve.url = "github:redyf/Neve";
+
+    ashell.url = "github:MalpenZibo/ashell";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let

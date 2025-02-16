@@ -22,6 +22,7 @@
     (homeMod "apps/hyprpaper")
     (homeMod "apps/hyprlock")
     (homeMod "apps/hypridle")
+    (homeMod "apps/ashell")
     (homeMod "apps/syshud")
     (homeMod "apps/kitty")
     (homeMod "apps/zen/default")
