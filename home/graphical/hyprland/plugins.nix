@@ -12,6 +12,7 @@
     settings.plugin = {
       hyprsplit = {
         num_workspaces = 9;
+        persistent_workspaces = true;
       };
 
       hyprexpo = {
