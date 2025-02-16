@@ -28,6 +28,7 @@
     (homeMod "apps/nautilus")
     (homeMod "apps/anyrun")
     (homeMod "apps/mpv")
+    (homeMod "apps/obs")
 
     (homeMod "apps/development/wakatime")
     (homeMod "apps/development/vscodium")
@@ -36,6 +37,8 @@
     (homeMod "apps/bundle/terminal")
     (homeMod "apps/bundle/daily")
     (homeMod "apps/bundle/development")
+
+    (homeMod "apps/games/osu")
   ];
 
   config.home.core.wallpaper = ../../assets/wallpapers/jane.jpg;

@@ -22,6 +22,4 @@
     protonvpn-gui
     cider-taproom
   ];
-
-  programs.obs-studio.enable = true;
 }

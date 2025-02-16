@@ -28,6 +28,7 @@
     (homeMod "apps/nautilus")
     (homeMod "apps/anyrun")
     (homeMod "apps/mpv")
+    (homeMod "apps/obs")
 
     (homeMod "apps/development/wakatime")
     (homeMod "apps/development/vscodium")

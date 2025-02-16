@@ -45,24 +45,31 @@ in {
         [
           wakatime.vscode-wakatime
 
-          # Formatter
+          # Misc
           esbenp.prettier-vscode
+          tamasfe.even-better-toml
 
-          # Nix dev
+          # Tauri
+          tauri-apps.tauri-vscode
+
+          # Nix
           jnoortheen.nix-ide
 
-          # Web dev
+          # JS
           dbaeumer.vscode-eslint
           bradlc.vscode-tailwindcss
           vue.volar
+          prisma.prisma
+
+          # GraphQL
           graphql.vscode-graphql
           graphql.vscode-graphql-syntax
 
-          # Flutter dev
+          # Flutter
           dart-code.dart-code
           dart-code.flutter
 
-          # Rust dev
+          # Rust
           rust-lang.rust-analyzer
         ]
         ++ (pkgs.lib.optionals (cfg.colorThemePackage != null) [cfg.colorThemePackage]);
