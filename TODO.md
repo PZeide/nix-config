@@ -12,6 +12,7 @@
   - [ ] Border and general colors
   - [ ] Groups ?
 - [ ] AGS bar
+- [ ] EasyEffects
 
 ### In Progress ⏲
 
