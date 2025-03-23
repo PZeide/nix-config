@@ -5,6 +5,16 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,21 +28,17 @@
       };
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-gaming.url = "github:fufexan/nix-gaming";
 
     stylix = {
       url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
 
     apple-fonts = {
@@ -42,12 +48,9 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    rose-pine-hyprcursor = {
-      url = "github:ndom91/rose-pine-hyprcursor";
-      inputs = {
-        nixpkgs.follows = "hyprland/nixpkgs";
-        hyprlang.follows = "hyprland/hyprlang";
-      };
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
 
     hyprland-plugins = {
@@ -55,9 +58,44 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    hyprsplit = {
-      url = "github:shezdy/hyprsplit";
-      inputs.hyprland.follows = "hyprland";
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs = {
+        hyprlang.follows = "hyprland/hyprlang";
+        hyprutils.follows = "hyprland/hyprutils";
+        nixpkgs.follows = "hyprland/nixpkgs";
+        systems.follows = "hyprland/systems";
+      };
+    };
+
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs = {
+        hyprgraphics.follows = "hyprland/hyprgraphics";
+        hyprlang.follows = "hyprland/hyprlang";
+        hyprutils.follows = "hyprland/hyprutils";
+        nixpkgs.follows = "hyprland/nixpkgs";
+        systems.follows = "hyprland/systems";
+      };
+    };
+
+    hyprpaper = {
+      url = "github:hyprwm/hyprpaper";
+      inputs = {
+        hyprgraphics.follows = "hyprland/hyprgraphics";
+        hyprlang.follows = "hyprland/hyprlang";
+        hyprutils.follows = "hyprland/hyprutils";
+        nixpkgs.follows = "hyprland/nixpkgs";
+        systems.follows = "hyprland/systems";
+      };
+    };
+
+    rose-pine-hyprcursor = {
+      url = "github:ndom91/rose-pine-hyprcursor";
+      inputs = {
+        nixpkgs.follows = "hyprland/nixpkgs";
+        hyprlang.follows = "hyprland/hyprlang";
+      };
     };
 
     zen-browser = {
@@ -70,12 +108,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    anyrun.url = "github:fufexan/anyrun/launch-prefix";
-
-    nixvim.url = "github:nix-community/nixvim";
-    neve.url = "github:redyf/Neve";
-
-    ashell.url = "github:MalpenZibo/ashell";
+    anyrun = {
+      url = "github:fufexan/anyrun/launch-prefix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
@@ -84,15 +120,23 @@
         inherit system;
 
         specialArgs = {
-          mod = module: ./system/${module}.nix;
-          home = variant: import ./system/home/default.nix variant;
-          inherit inputs system;
+          inherit
+            inputs
+            system
+            host
+            ;
+
+          asset = file: ./assets/${file};
         };
 
         modules = [
-          ./hosts/${host}
           inputs.nur.modules.nixos.default
-          (import ./pkgs)
+          inputs.agenix.nixosModules.default
+          inputs.home-manager.nixosModules.home-manager
+          ./packages
+          ./modules
+          ./hosts/${host}/hardware.nix
+          ./hosts/${host}/system.nix
         ];
       };
   in {

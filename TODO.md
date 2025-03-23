@@ -12,7 +12,16 @@
   - [ ] Border and general colors
   - [ ] Groups ?
 - [ ] AGS bar
-- [ ] EasyEffects
+- [ ] Use -git hypridle, hyprlock, hyprpaper etc...
+- [ ] Check if tlp is available without explicit through nixos-hardware
+- [ ] Apps:
+  - [ ] LACT
+  - [ ] EasyEffects
+- [ ] Thumbnails nautilus?
+- [ ] Still needs ? environment.pathsToLink = [
+      "/share/nautilus-python/extensions"
+      ];
+- [ ] Gamescope ENV ? https://github.com/Zhaith-Izaliel/zhaith-nixos-configuration/blob/master/modules/system/games/gamescope.nix
 
 ### In Progress ⏲
 

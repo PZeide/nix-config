@@ -4,14 +4,7 @@
   system,
   ...
 }: {
-  nixpkgs.hostPlatform = system;
-  networking.hostName = "jane";
-
   imports = [
-    ./hardware.nix
-
-    (mod "core")
-
     (mod "boot/default")
     (mod "boot/secure-boot")
 
