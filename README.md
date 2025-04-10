@@ -1,0 +1,1 @@
+# Zeide's NixOS configuration

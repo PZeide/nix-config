@@ -133,7 +133,7 @@
     };
 
     zeide-shell = {
-      url = "path:shell";
+      url = "github:PZeide/nix-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

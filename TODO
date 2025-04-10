@@ -1,0 +1,31 @@
+
+Todo:
+  Features:
+    ☐ FEAT - EasyEffects with declarative configuration
+    ☐ FEAT - Nautilus with declarative bookmarks
+    ☐ FEAT - Nautilus thumbnail support
+    ☐ FEAT - Replace xdg-open with app2unit
+    ☐ FEAT - XDG user directories
+    ☐ FEAT - XDG default applications
+    ☐ FEAT - OBS Studio
+    ☐ FEAT - mpv
+    ☐ FEAT - Daily apps
+    ☐ FEAT - Fully-working Gaming environment
+      ☐ Gamescope
+      ☐ Gamemode
+      ☐ Full Wayland
+
+  Bugs:
+    ☐ BUG - Not fully sleeping with hypridle @low
+
+  Updates:
+    ☐ UPDT - waydroid-helper - unstable
+
+In Progress:
+  ☐ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
+
+Cancelled:
+
+
+Archive:
+  ✔ BUG - Missing fonts
