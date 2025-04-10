@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  osConfig,
   ...
 }: {
   options.zeide.graphical.hyprland = with lib; {
@@ -53,6 +54,13 @@
     selfConfig = config.zeide.graphical.hyprland;
   in
     lib.mkIf selfConfig.enable {
+      assertions = [
+        {
+          assertion = osConfig.zeide.graphical.hyprland.enable;
+          message = "osConfig.zeide.graphical.hyprland.enable is required to enable hyprland in home.";
+        }
+      ];
+
       stylix.targets.hyprland.enable = true;
 
       xdg.configFile."uwsm/env-hyprland".text = ''
@@ -73,9 +81,9 @@
         xwayland.enable = true;
         systemd.enable = false;
 
-        # Use system packages
-        package = null;
-        portalPackage = null;
+        # Use system-wide packages
+        package = osConfig.programs.hyprland.package;
+        portalPackage = osConfig.programs.hyprland.portalPackage;
 
         settings = {
           general = {
