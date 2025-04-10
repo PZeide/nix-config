@@ -160,7 +160,7 @@
       clipboard.enable = true;
       keyring.enable = true;
       udiskie.enable = true;
-      wakatine.enable = true;
+      wakatime.enable = true;
     };
   };
 }
