@@ -31,6 +31,37 @@ in {
 
         settings = {
           theme = themeName;
+
+          editor = {
+            mouse = false;
+            middle-click-paste = false;
+            line-number = "relative";
+            color-modes = true;
+
+            lsp = {
+              enable = true;
+              display-inlay-hints = true;
+            };
+
+            cursor-shape = {
+              normal = "block";
+              insert = "bar";
+              select = "block";
+            };
+
+            whitespace.render = {
+              space = "all";
+              nbsb = "all";
+              tab = "all";
+              newline = "none";
+            };
+
+            indent-guides = {
+              render = true;
+              character = "▏";
+              skip-levels = 1;
+            };
+          };
         };
 
         themes = {
