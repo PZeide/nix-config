@@ -24,12 +24,12 @@
     lib.mkIf selfConfig.enable {
       assertions = [
         {
-          assertion = !(config.timeZone != null && config.enableAutomaticTimezone);
+          assertion = !(selfConfig.timeZone != null && selfConfig.enableAutomaticTimezone);
           message = "osConfig.zeide.time.timeZone cannot be set when automatic timezone are enabled.";
         }
         {
-          assertion = !config.enableAutomaticTimeZone || config.zeide.location.enable;
-          message = "osConfig.zeide.location.enable is required to enable automatic timezone.";
+          assertion = !selfConfig.enableAutomaticTimeZone || config.zeide.services.location.enable;
+          message = "osConfig.zeide.services.location.enable is required to enable automatic timezone.";
         }
       ];
 

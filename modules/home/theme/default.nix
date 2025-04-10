@@ -9,7 +9,7 @@
   options.zeide.theme = with lib; {
     wallpaper = mkOption {
       type = with types; coercedTo package toString path;
-      default = asset wallpapers/rem.jpg;
+      default = asset "wallpapers/rem.jpg";
       description = ''
         Wallpaper image used to generate color palette and theming.
       '';
@@ -29,7 +29,12 @@
     };
   };
 
-  imports = [inputs.stylix.homeManagerModules.stylix];
+  imports = [
+    ./cursor.nix
+    ./gtk.nix
+
+    inputs.stylix.homeManagerModules.stylix
+  ];
 
   config = let
     selfConfig = config.zeide.theme;
@@ -42,11 +47,11 @@
       polarity = selfConfig.polarity;
 
       # If system-wide fonts config is enabled, use the fonts from there.
-      fonts = lib.mkIf osConfig.zeide.fonts.enable {
-        serif = osConfig.zeide.fonts.serif;
-        sansSerif = osConfig.zeide.fonts.sansSerif;
-        monospace = osConfig.zeide.fonts.monospace;
-        emoji = osConfig.zeide.fonts.emoji;
+      fonts = lib.mkIf osConfig.zeide.graphical.fonts.enable {
+        serif = osConfig.zeide.graphical.fonts.serif;
+        sansSerif = osConfig.zeide.graphical.fonts.sansSerif;
+        monospace = osConfig.zeide.graphical.fonts.monospace;
+        emoji = osConfig.zeide.graphical.fonts.emoji;
       };
     };
   };

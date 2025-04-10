@@ -12,7 +12,7 @@
       enable = mkEnableOption "hyprexpo plugin";
       backgroundColor = mkOption {
         type = types.str;
-        default = config.lib.stylix.colors.base01;
+        default = config.lib.stylix.colors.base00;
         description = ''
           Background color shown between windows.
         '';
@@ -36,12 +36,9 @@
 
         hyprexpo = lib.mkIf selfConfig.hyprexpo.enable {
           columns = 3;
-          gap_size = 4;
+          gap_size = 3;
           bg_col = "rgb(${selfConfig.hyprexpo.backgroundColor})";
-
-          enable_gesture = true;
-          gesture_distance = 300;
-          gesture_positive = false;
+          workspace_method = "first m~1";
         };
       };
     };

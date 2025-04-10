@@ -38,6 +38,9 @@
     };
 
     services.gnome.gnome-keyring.enable = selfConfig.enableKeyring;
-    security.pam.services = config.security.pam.services // lib.genAttrs selfConfig.unlockKeyringServices (name: true);
+    security.pam.services = lib.genAttrs selfConfig.unlockKeyringServices (service: {
+      name = service;
+      enableGnomeKeyring = true;
+    });
   };
 }

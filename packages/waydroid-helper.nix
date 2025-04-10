@@ -35,8 +35,9 @@ pkgs.appimageTools.wrapType2 rec {
 
   meta = {
     description = "Waydroid Helper is a graphical user interface application written in Python using PyGObject.";
-    license = lib.licenses.gpl3Only;
+    homepage = "https://github.com/ayasa520/waydroid-helper";
+    license = lib.licenses.gpl3;
     mainProgram = "waydroid-helper";
-    platforms = ["x86_64-linux"];
+    platforms = lib.platforms.linux;
   };
 }

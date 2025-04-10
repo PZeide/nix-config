@@ -2,6 +2,7 @@
   config,
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   options.zeide.audio = with lib; {
@@ -15,6 +16,8 @@
     selfConfig = config.zeide.audio;
   in
     lib.mkIf selfConfig.enable {
+      environment.systemPackages = [pkgs.playerctl];
+
       services.pipewire = {
         enable = true;
 

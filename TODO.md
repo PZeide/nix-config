@@ -22,6 +22,13 @@
       "/share/nautilus-python/extensions"
       ];
 - [ ] Gamescope ENV ? https://github.com/Zhaith-Izaliel/zhaith-nixos-configuration/blob/master/modules/system/games/gamescope.nix
+- [ ] npins https://github.com/JManch/nixos
+- [ ] waydroid-hlper unstable build
+- [ ] app2unit replace xdg-open ?
+- [ ] Walker theming
+- [ ] Hyprlock config
+- [ ] VSCodium TODO plugin
+- [ ] XDF Auto START
 
 ### In Progress ⏲
 

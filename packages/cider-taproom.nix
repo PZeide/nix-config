@@ -34,6 +34,6 @@ pkgs.appimageTools.wrapType2 rec {
     homepage = "https://cider.sh";
     license = lib.licenses.unfree;
     mainProgram = "cider";
-    platforms = ["x86_64-linux"];
+    platforms = lib.platforms.linux;
   };
 }

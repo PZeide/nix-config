@@ -5,6 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,11 +63,18 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hyprsplit = {
+      url = "github:shezdy/hyprsplit";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     hypridle = {
       url = "github:hyprwm/hypridle";
       inputs = {
         hyprlang.follows = "hyprland/hyprlang";
         hyprutils.follows = "hyprland/hyprutils";
+        hyprland-protocols.follows = "hyprland/hyprland-protocols";
+        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
         nixpkgs.follows = "hyprland/nixpkgs";
         systems.follows = "hyprland/systems";
       };
@@ -74,6 +86,7 @@
         hyprgraphics.follows = "hyprland/hyprgraphics";
         hyprlang.follows = "hyprland/hyprlang";
         hyprutils.follows = "hyprland/hyprutils";
+        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
         nixpkgs.follows = "hyprland/nixpkgs";
         systems.follows = "hyprland/systems";
       };
@@ -85,6 +98,17 @@
         hyprgraphics.follows = "hyprland/hyprgraphics";
         hyprlang.follows = "hyprland/hyprlang";
         hyprutils.follows = "hyprland/hyprutils";
+        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
+        nixpkgs.follows = "hyprland/nixpkgs";
+        systems.follows = "hyprland/systems";
+      };
+    };
+
+    hyprpicker = {
+      url = "github:hyprwm/hyprpicker";
+      inputs = {
+        hyprutils.follows = "hyprland/hyprutils";
+        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
         nixpkgs.follows = "hyprland/nixpkgs";
         systems.follows = "hyprland/systems";
       };
@@ -99,7 +123,7 @@
     };
 
     zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
+      url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -108,8 +132,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    anyrun = {
-      url = "github:fufexan/anyrun/launch-prefix";
+    zeide-shell = {
+      url = "path:shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -130,6 +154,7 @@
         };
 
         modules = [
+          inputs.nix-index-database.nixosModules.nix-index
           inputs.nur.modules.nixos.default
           inputs.agenix.nixosModules.default
           inputs.home-manager.nixosModules.home-manager

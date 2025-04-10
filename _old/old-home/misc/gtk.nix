@@ -6,7 +6,7 @@
 }: let
   cfg = config.home.gtk;
 
-  gtkCss = config.lib.stylix.colors {
+  gtkCss = lib.stylix.colors {
     template = ./gtk.mustache;
     extension = "css";
   };

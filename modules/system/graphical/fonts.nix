@@ -20,7 +20,7 @@
     };
   };
 in {
-  options.zeide.fonts = with lib; {
+  options.zeide.graphical.fonts = with lib; {
     enable = mkEnableOption "system-wide font config";
 
     disableProblematicDefault = mkOption {
@@ -83,11 +83,11 @@ in {
   };
 
   config = let
-    selfConfig = config.zeide.fonts;
+    selfConfig = config.zeide.graphical.fonts;
   in
     lib.mkIf selfConfig.enable {
       fonts = {
-        enableDefaultFonts = false;
+        enableDefaultPackages = false;
         enableGhostscriptFonts = false;
 
         packages = selfConfig.extraFonts;

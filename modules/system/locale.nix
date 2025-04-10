@@ -28,7 +28,7 @@
 
     consoleKeyMap = mkOption {
       type = types.str;
-      default = "us-intl";
+      default = "us-acentos";
       description = ''
         TTY keymap to use. Graphical environments are unaffected by this option.
       '';
@@ -39,10 +39,10 @@
     selfConfig = config.zeide.locale;
   in
     lib.mkIf selfConfig.enable {
+      console.keyMap = selfConfig.consoleKeyMap;
       i18n = {
         defaultLocale = selfConfig.defaultLocale;
         supportedLocales = selfConfig.supportedLocales;
-        consoleKeyMap = selfConfig.consoleKeyMap;
       };
     };
 }

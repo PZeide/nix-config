@@ -13,6 +13,15 @@
         Name of the (non-root) user to create.
       '';
     };
+
+    description = mkOption {
+      type = types.str;
+      default = "Thibaud";
+      description = ''
+        Description of the (non-root) user to create.
+        Typically the user full name.
+      '';
+    };
   };
 
   imports = [
@@ -21,7 +30,6 @@
     ./graphical
     ./nix
     ./services
-
     ./audio.nix
     ./bluetooth.nix
     ./bootloader.nix
@@ -46,7 +54,11 @@
 
     users.users.${selfConfig.user} = {
       isNormalUser = true;
+      description = selfConfig.description;
       extraGroups = ["wheel"];
     };
+
+    # git is required for flakes to work so here it is
+    programs.git.enable = true;
   };
 }

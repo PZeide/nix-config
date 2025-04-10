@@ -13,7 +13,7 @@
   in {
     wakatime-key = {
       file = secret "wakatime-key.age";
-      owner = config.core.user;
+      owner = config.zeide.user;
       group = "users";
     };
   };

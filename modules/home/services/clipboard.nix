@@ -16,7 +16,7 @@
 
       systemd.user.services.wl-clip-persist = {
         Unit = {
-          Description = "wl-clip-persist persistent clipboard";
+          Description = "wl-clip-persist";
           After = ["graphical-session.target"];
           PartOf = ["graphical-session.target"];
           ConditionEnvironment = "WAYLAND_DISPLAY";
@@ -30,7 +30,7 @@
           TimeoutStopSec = 10;
         };
 
-        Install.WantedBy = "graphical-session.target";
+        Install.WantedBy = ["graphical-session.target"];
       };
     };
 }

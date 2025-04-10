@@ -1,88 +1,166 @@
 {
-  homeMod,
+  asset,
+  lib,
+  pkgs,
   inputs,
   system,
   ...
 }: {
-  imports = [
-    (homeMod "core")
+  zeide = {
+    theme = {
+      wallpaper = asset "wallpapers/rem.jpg";
 
-    (homeMod "shell/fish")
-
-    (homeMod "misc/xdg")
-    (homeMod "misc/fonts")
-    (homeMod "misc/cursor")
-    (homeMod "misc/gtk")
-    (homeMod "misc/clipboard")
-    (homeMod "misc/security")
-    (homeMod "misc/udiskie")
-
-    (homeMod "graphical/hyprland")
-
-    (homeMod "apps/hyprpaper")
-    (homeMod "apps/hyprlock")
-    (homeMod "apps/hypridle")
-    (homeMod "apps/ashell")
-    (homeMod "apps/syshud")
-    (homeMod "apps/kitty")
-    (homeMod "apps/zen/default")
-    (homeMod "apps/nautilus")
-    (homeMod "apps/anyrun")
-    (homeMod "apps/mpv")
-    (homeMod "apps/obs")
-
-    (homeMod "apps/development/wakatime")
-    (homeMod "apps/development/vscodium")
-    (homeMod "apps/development/neovim")
-    (homeMod "apps/development/jetbrains")
-
-    (homeMod "apps/bundle/terminal")
-    (homeMod "apps/bundle/daily")
-    (homeMod "apps/bundle/development")
-
-    (homeMod "apps/games/osu")
-  ];
-
-  config.home.core.wallpaper = ../../assets/wallpapers/jane.jpg;
-  config.home.core.polarity = "dark";
-
-  config.home.hyprland.monitors = [
-    "eDP-1, 1920x1080@144, 0x0, 1"
-  ];
-
-  config.home.hyprland.backlightBinds = true;
-
-  config.wayland.windowManager.hyprland.settings = {
-    input = {
-      # Required for different device layout
-      resolve_binds_by_sym = true;
+      gtk = {
+        enable = true;
+        iconFlavor = "mocha";
+        iconAccent = "sapphire";
+      };
     };
 
-    device = [
-      # Use different layout for my laptop keyboard (fr)
-      {
-        name = "ite-tech.-inc.-ite-device(8910)-keyboard";
-        kb_layout = "fr";
-        kb_variant = "";
-      }
+    graphical = {
+      hyprland = {
+        enable = true;
+        monitors = ["eDP-1, 1920x1080@144, 0x0, 1"];
+        keyboardLayout = "us";
+        keyboardVariant = "intl";
 
-      # Reduce touchpad sensitivity and use adaptive accel profile
-      {
-        name = "elan06fa:00-04f3:31dd-touchpad";
-        sensitivity = -0.1;
-        accel_profile = "adpative";
-      }
-    ];
+        perDeviceConfigurations = [
+          {
+            name = "ite-tech.-inc.-ite-device(8910)-keyboard";
+            kb_layout = "fr";
+            kb_variant = "";
+          }
+          {
+            name = "elan06fa:00-04f3:31dd-mouse";
+            accel_profile = "adpative";
+          }
+        ];
+
+        binds.extra = let
+          wrapAppUnit = app: "${lib.getExe pkgs.app2unit} -s a -- ${app}";
+        in [
+          "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
+          "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
+          "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
+        ];
+
+        plugins = {
+          hyprsplit.enable = true;
+          hyprexpo.enable = true;
+        };
+
+        companions = {
+          hyprpaper.enable = true;
+          hypridle.enable = true;
+          hyprlock = {
+            enable = true;
+            autostartOnGraphical = true;
+          };
+          hyprpicker.enable = true;
+          zeide-shell.enable = true;
+        };
+      };
+    };
+
+    shell.fish.enable = true;
+
+    programs = {
+      cli = {
+        essentials.enable = true;
+        fastfetch.enable = true;
+        development.enable = true;
+      };
+
+      helix = {
+        enable = true;
+        theme = {
+          # https://github.com/helix-editor/helix/blob/master/runtime/themes/bogster.toml
+          inherits = "bogster";
+
+          "ui.background" = {
+            bg = "none";
+          };
+
+          "ui.linenr" = {
+            fg = "bogster-fg0";
+          };
+
+          "ui.statusline" = {
+            fg = "bogster-fg1";
+            bg = "none";
+          };
+
+          "ui.statusline.inactive" = {
+            fg = "bogster-fg0";
+            bg = "none";
+          };
+
+          "ui.popup" = {
+            bg = "none";
+          };
+
+          "ui.window" = {
+            bg = "none";
+          };
+
+          "ui.help" = {
+            bg = "none";
+            fg = "bogster-fg1";
+          };
+
+          "ui.statusline.normal" = {
+            fg = "bogster-base1";
+            bg = "none";
+            modifiers = ["bold"];
+          };
+
+          "ui.statusline.insert" = {
+            fg = "bogster-base1";
+            bg = "none";
+            modifiers = ["bold"];
+          };
+
+          "ui.statusline.select" = {
+            fg = "bogster-base1";
+            bg = "none";
+            modifiers = ["bold"];
+          };
+
+          "ui.menu" = {
+            fg = "bogster-fg1";
+            bg = "none";
+          };
+
+          "ui.menu.selected" = {
+            bg = "bogster-base3";
+          };
+        };
+      };
+
+      kitty.enable = true;
+
+      vscodium = {
+        enable = true;
+
+        colorTheme = {
+          name = "Bearded Theme Aquarelle Lilac";
+          package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
+        };
+
+        iconTheme = {
+          name = "bearded-icons";
+          package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedicons;
+        };
+      };
+
+      zen-browser.enable = true;
+    };
+
+    services = {
+      clipboard.enable = true;
+      keyring.enable = true;
+      udiskie.enable = true;
+      wakatine.enable = true;
+    };
   };
-
-  config.home.hypridle.dimBacklight = true;
-
-  config.home.vscodium = {
-    colorTheme = "GitHub Dark Dimmed";
-    colorThemePackage =
-      inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.github.github-vscode-theme;
-  };
-
-  config.home.gtk.bookmarks = ["file:///mnt/data Data"];
-  config.home.gtk.iconAccent = "red";
 }

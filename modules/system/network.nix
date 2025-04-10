@@ -39,11 +39,6 @@
         enable = true;
         domains = ["~."];
 
-        dnssec =
-          if selfConfig.enableQuad9Dns
-          then "true"
-          else "allow-downgrade";
-
         dnsovertls =
           if selfConfig.enableQuad9Dns
           then "true"

@@ -4,14 +4,13 @@
   ...
 }: {
   options.zeide.shell = with lib; {
-    enable = mkEnableOption "shell config with fish, required alongside home configuration for completions";
+    fishIntegration = mkEnableOption "fish shell integration, required alongside home configuration for completions";
   };
 
   config = let
     selfConfig = config.zeide.shell;
-  in
-    lib.mkIf selfConfig.enable {
-      # Enable vendor completions provided by nixpkgs
-      programs.fish.enable = true;
-    };
+  in {
+    # Enable vendor completions provided by nixpkgs
+    programs.fish.enable = lib.mkIf selfConfig.fishIntegration true;
+  };
 }

@@ -40,7 +40,7 @@
 
         lanzaboote = lib.mkIf selfConfig.enableSecureBoot {
           enable = true;
-          pkiBundle = "/etc/secureboot";
+          pkiBundle = "/var/lib/sbctl";
         };
       };
     };
