@@ -132,7 +132,7 @@
 
         Service = {
           Type = "simple";
-          ExecStart = "${lib.getExe pkgs.hyprlock} --immediate-render -c ${
+          ExecStart = "${lib.getExe pkgs.hyprlock} -c ${
             pkgs.writeText "hyprlock-autostart.conf" "${autostartConfig}"
           }";
           # Immediately exit hyprland if hyprlock-autostart fail
