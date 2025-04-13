@@ -91,6 +91,15 @@
 
               # Python
               ms-python.python
+
+              # DotNet
+              ms-dotnettools.csharp
+              ms-dotnettools.csdevkit
+
+              # Azure
+              ms-azuretools.vscode-azureresourcegroups
+              ms-azuretools.vscode-cosmosdb
+              ms-azuretools.vscode-azurefunctions
             ]
             ++ (lib.optionals (selfConfig.colorTheme.package != null) [selfConfig.colorTheme.package])
             ++ (lib.optionals (selfConfig.iconTheme.package != null) [selfConfig.iconTheme.package]);
