@@ -8,12 +8,13 @@
 }: {
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/rem.jpg";
+      wallpaper = asset "wallpapers/jane-2.jpg";
+      polarity = "dark";
 
       gtk = {
         enable = true;
         iconFlavor = "mocha";
-        iconAccent = "sapphire";
+        iconAccent = "red";
       };
     };
 
@@ -74,7 +75,8 @@
       helix = {
         enable = true;
         theme = {
-          # https://github.com/helix-editor/helix/blob/master/runtime/themes/bogster.toml
+          # https://github.com/helix-editor/helix/blob/master/runtime/themes/hex_steel.toml
+          # TODO use hex_steel
           inherits = "bogster";
 
           "ui.background" = {
@@ -143,7 +145,7 @@
         enable = true;
 
         colorTheme = {
-          name = "Bearded Theme Aquarelle Lilac";
+          name = "Bearded Theme Black & Ruby";
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
         };
 
