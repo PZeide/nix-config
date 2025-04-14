@@ -7,6 +7,7 @@
 }: {
   options.zeide.programs.nautilus = with lib; {
     enable = mkEnableOption "nautilus file explorer";
+    enableVideoThumbnailer = mkEnableOption "video thumbnailer (powerered by ffmpeg-thumbnailer)";
 
     openTerminalAction = mkOption {
       type = with types; nullOr str;
@@ -28,11 +29,21 @@
   config = let
     selfConfig = config.zeide.programs.nautilus;
 
+    # To allow the "Audio and Video Properties" to work correctly
+    nautilusWithGst = pkgs.nautilus.overrideAttrs (super: {
+      buildInputs =
+        super.buildInputs
+        ++ (with pkgs.gst_all_1; [
+          gst-plugins-good
+          gst-plugins-bad
+        ]);
+    });
+
     nautilusEnv = pkgs.buildEnv {
       name = "nautilus-env";
 
       paths = with pkgs; [
-        nautilus
+        nautilusWithGst
         nautilus-python
         nautilus-open-any-terminal
       ];
@@ -47,7 +58,7 @@
       ];
 
       home = {
-        packages = [nautilusEnv];
+        packages = [nautilusEnv] ++ lib.optional selfConfig.enableVideoThumbnailer pkgs.ffmpegthumbnailer;
 
         sessionVariables = {
           NAUTILUS_4_EXTENSION_DIR = "${nautilusEnv}/lib/nautilus/extensions-4";
@@ -59,5 +70,7 @@
           "terminal" = selfConfig.openTerminalAction;
         };
       };
+
+      gtk.gtk3.bookmarks = selfConfig.bookmarks;
     };
 }

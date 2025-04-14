@@ -81,6 +81,7 @@
 
       nautilus = {
         enable = true;
+        enableVideoThumbnailer = true;
         openTerminalAction = "kitty";
         bookmarks = ["file:///mnt/data"];
       };

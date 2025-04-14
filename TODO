@@ -2,10 +2,10 @@
 Todo:
   Features:
     ☐ FEAT - EasyEffects with declarative configuration
-    ☐ FEAT - Nautilus thumbnail support
     ☐ FEAT - Replace xdg-open with app2unit
     ☐ FEAT - OBS Studio
     ☐ FEAT - mpv
+    ☐ FEAT - Starship.rs instead of tide
     ☐ FEAT - Daily apps
     ☐ FEAT - Full Matugen mode
     ☐ FEAT - Fully-working Gaming environment
@@ -30,3 +30,5 @@ Archive:
   ✔ FEAT - Nautilus with declarative bookmarks
   ✔ FEAT - XDG user directories
   ✔ FEAT - XDG default applications
+  ✔ BUG - Nautilus "Audio and Video Properties" pane GST error @low
+  ✔ FEAT - Nautilus thumbnail support
