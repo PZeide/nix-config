@@ -74,72 +74,15 @@
 
       helix = {
         enable = true;
-        theme = {
-          # https://github.com/helix-editor/helix/blob/master/runtime/themes/hex_steel.toml
-          # TODO use hex_steel
-          inherits = "bogster";
-
-          "ui.background" = {
-            bg = "none";
-          };
-
-          "ui.linenr" = {
-            fg = "bogster-fg0";
-          };
-
-          "ui.statusline" = {
-            fg = "bogster-fg1";
-            bg = "none";
-          };
-
-          "ui.statusline.inactive" = {
-            fg = "bogster-fg0";
-            bg = "none";
-          };
-
-          "ui.popup" = {
-            bg = "none";
-          };
-
-          "ui.window" = {
-            bg = "none";
-          };
-
-          "ui.help" = {
-            bg = "none";
-            fg = "bogster-fg1";
-          };
-
-          "ui.statusline.normal" = {
-            fg = "bogster-base1";
-            bg = "none";
-            modifiers = ["bold"];
-          };
-
-          "ui.statusline.insert" = {
-            fg = "bogster-base1";
-            bg = "none";
-            modifiers = ["bold"];
-          };
-
-          "ui.statusline.select" = {
-            fg = "bogster-base1";
-            bg = "none";
-            modifiers = ["bold"];
-          };
-
-          "ui.menu" = {
-            fg = "bogster-fg1";
-            bg = "none";
-          };
-
-          "ui.menu.selected" = {
-            bg = "bogster-base3";
-          };
-        };
+        theme = builtins.fromTOML (builtins.readFile (asset "helix/themes/kaolin-dark-transparent.toml"));
       };
 
       kitty.enable = true;
+
+      nautilus = {
+        enable = true;
+        openTerminalAction = "kitty";
+      };
 
       vscodium = {
         enable = true;
