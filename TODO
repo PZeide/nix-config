@@ -4,8 +4,6 @@ Todo:
     ☐ FEAT - EasyEffects with declarative configuration
     ☐ FEAT - Nautilus thumbnail support
     ☐ FEAT - Replace xdg-open with app2unit
-    ☐ FEAT - XDG user directories
-    ☐ FEAT - XDG default applications
     ☐ FEAT - OBS Studio
     ☐ FEAT - mpv
     ☐ FEAT - Daily apps
@@ -23,10 +21,12 @@ Todo:
 
 In Progress:
   ☐ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
-  ☐ FEAT - Nautilus with declarative bookmarks
 
 Cancelled:
 
 
 Archive:
   ✔ BUG - Missing fonts
+  ✔ FEAT - Nautilus with declarative bookmarks
+  ✔ FEAT - XDG user directories
+  ✔ FEAT - XDG default applications

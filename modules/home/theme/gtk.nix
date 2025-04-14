@@ -57,7 +57,7 @@
     selfConfig = config.zeide.theme.gtk;
 
     gtkCss = config.lib.stylix.colors {
-      template = asset "gtk/gtk.mustache";
+      template = asset "gtk/theme.mustache";
       extension = "css";
     };
   in

@@ -8,7 +8,7 @@
 }: {
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/jane-2.jpg";
+      wallpaper = asset "wallpapers/jane.jpg";
       polarity = "dark";
 
       gtk = {
@@ -107,6 +107,23 @@
       keyring.enable = true;
       udiskie.enable = true;
       wakatime.enable = true;
+
+      xdg = {
+        enableUserDirs = true;
+        defaultApps = {
+          browser = ["zen-beta.desktop"];
+          text = ["org.gnome.TextEditor.desktop"];
+          image = ["imv-dir.desktop"];
+          audio = ["mpv.desktop"];
+          video = ["mpv.desktop"];
+          directory = ["nemo.desktop"];
+          office = ["libreoffice.desktop"];
+          pdf = ["org.gnome.Evince.desktop"];
+          terminal = ["kitty.desktop"];
+          archive = ["org.gnome.FileRoller.desktop"];
+          discord = ["webcord.desktop"];
+        };
+      };
     };
   };
 }

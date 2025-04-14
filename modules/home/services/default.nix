@@ -4,5 +4,6 @@
     ./keyring.nix
     ./udiskie.nix
     ./wakatime.nix
+    ./xdg.nix
   ];
 }
