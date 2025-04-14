@@ -58,7 +58,13 @@
       ];
 
       home = {
-        packages = [nautilusEnv] ++ lib.optional selfConfig.enableVideoThumbnailer pkgs.ffmpegthumbnailer;
+        packages = with pkgs;
+          [
+            nautilusEnv
+            # Used to open default apps in terminal
+            xdg-terminal-exec
+          ]
+          ++ lib.optional selfConfig.enableVideoThumbnailer ffmpegthumbnailer;
 
         sessionVariables = {
           NAUTILUS_4_EXTENSION_DIR = "${nautilusEnv}/lib/nautilus/extensions-4";
