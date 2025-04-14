@@ -49,13 +49,6 @@ in {
               select = "block";
             };
 
-            whitespace.render = {
-              space = "all";
-              nbsb = "all";
-              tab = "all";
-              newline = "none";
-            };
-
             indent-guides = {
               render = true;
               character = "▏";
