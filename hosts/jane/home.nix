@@ -82,6 +82,7 @@
       nautilus = {
         enable = true;
         openTerminalAction = "kitty";
+        bookmarks = ["file:///mnt/data"];
       };
 
       vscodium = {

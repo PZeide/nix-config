@@ -15,6 +15,14 @@
         Terminal to open with 'Open in terminal' action.
       '';
     };
+
+    bookmarks = mkOption {
+      type = with types; listOf str;
+      default = [];
+      description = ''
+        A list of bookmarks shown in the sidebar.
+      '';
+    };
   };
 
   config = let
