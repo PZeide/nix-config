@@ -123,7 +123,7 @@
     };
 
     zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
+      url = "github:maximoffua/zen-browser.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

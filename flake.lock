@@ -581,27 +581,6 @@
         "type": "github"
       }
     },
-    "home-manager_2": {
-      "inputs": {
-        "nixpkgs": [
-          "zen-browser",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1743604125,
-        "narHash": "sha256-ZD61DNbsBt1mQbinAaaEqKaJk2RFo9R/j+eYWeGMx7A=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "180fd43eea296e62ae68e079fcf56aba268b9a1a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "hyprcursor": {
       "inputs": {
         "hyprlang": [
@@ -1837,22 +1816,21 @@
     },
     "zen-browser": {
       "inputs": {
-        "home-manager": "home-manager_2",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1744237067,
-        "narHash": "sha256-lgJFMxjkT1UAT1oDVjYxXEf+3HJkV4HDFhv1ja/sSLw=",
-        "owner": "0xc000022070",
-        "repo": "zen-browser-flake",
-        "rev": "a6c570c926025db925d82282463ac3c9b399b63f",
+        "lastModified": 1744604424,
+        "narHash": "sha256-CRAcIrtni4Ly8HUao6dyW6wT4b8GZJxWyDeZbKV+a2Q=",
+        "owner": "maximoffua",
+        "repo": "zen-browser.nix",
+        "rev": "79cf285ee63cc599d105a9bbccb2c32cd2f856d4",
         "type": "github"
       },
       "original": {
-        "owner": "0xc000022070",
-        "repo": "zen-browser-flake",
+        "owner": "maximoffua",
+        "repo": "zen-browser.nix",
         "type": "github"
       }
     }

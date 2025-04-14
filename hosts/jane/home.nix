@@ -42,7 +42,7 @@
         in [
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
-          "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
+          "$mainMod, B, exec, ${wrapAppUnit "zen"}"
         ];
 
         plugins = {
@@ -124,7 +124,7 @@
       xdg = {
         enableUserDirs = true;
         defaultApps = {
-          browser = ["zen-beta.desktop"];
+          browser = ["zen.desktop"];
           text = ["Helix.desktop"];
           image = ["org.gnome.Loupe.desktop"];
           audio = ["mpv.desktop"];
