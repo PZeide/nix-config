@@ -15,6 +15,7 @@
         List of PAM services that will automatically unlock gnome keyring.
       '';
     };
+    fixNautilusExtensions = mkEnableOption "fix to allow nautilus extensions";
   };
 
   config = let
@@ -42,5 +43,9 @@
       name = service;
       enableGnomeKeyring = true;
     });
+
+    environment.pathsToLink = lib.mkIf selfConfig.fixNautilusExtensions [
+      "/share/nautilus-python/extensions"
+    ];
   };
 }

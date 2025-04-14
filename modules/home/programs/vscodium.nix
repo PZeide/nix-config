@@ -1,9 +1,7 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
-  system,
   ...
 }: {
   options.zeide.programs.vscodium = with lib; {
@@ -60,8 +58,12 @@
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
 
-          extensions = with inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
-            [
+          extensions =
+            (with pkgs.vscode-extensions; [
+              ms-dotnettools.csharp
+              ms-dotnettools.vscode-dotnet-runtime
+            ])
+            ++ (with pkgs.vscode-marketplace; [
               # General
               wakatime.vscode-wakatime
               maattdd.gitless
@@ -93,14 +95,14 @@
               ms-python.python
 
               # DotNet
-              ms-dotnettools.csharp
-              ms-dotnettools.csdevkit
+              #ms-dotnettools.csharp
+              #ms-dotnettools.vscode-dotnet-runtime
 
               # Azure
               ms-azuretools.vscode-azureresourcegroups
               ms-azuretools.vscode-cosmosdb
               ms-azuretools.vscode-azurefunctions
-            ]
+            ])
             ++ (lib.optionals (selfConfig.colorTheme.package != null) [selfConfig.colorTheme.package])
             ++ (lib.optionals (selfConfig.iconTheme.package != null) [selfConfig.iconTheme.package]);
 

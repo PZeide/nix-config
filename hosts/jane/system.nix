@@ -98,6 +98,7 @@
         enablePolkit = true;
         enableKeyring = true;
         unlockKeyringServices = ["hyprlock"];
+        fixNautilusExtensions = true;
       };
 
       ios.enable = true;

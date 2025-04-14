@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: {
   options.zeide.nix = with lib; {
@@ -29,6 +30,7 @@
     nixpkgs = {
       inherit system;
       config.allowUnfree = true;
+      overlays = [inputs.nix-vscode-extensions.overlays.default];
     };
 
     nix = {

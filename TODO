@@ -2,7 +2,6 @@
 Todo:
   Features:
     ☐ FEAT - EasyEffects with declarative configuration
-    ☐ FEAT - Nautilus with declarative bookmarks
     ☐ FEAT - Nautilus thumbnail support
     ☐ FEAT - Replace xdg-open with app2unit
     ☐ FEAT - XDG user directories
@@ -24,6 +23,7 @@ Todo:
 
 In Progress:
   ☐ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
+  ☐ FEAT - Nautilus with declarative bookmarks
 
 Cancelled:
 
