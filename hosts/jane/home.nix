@@ -72,6 +72,18 @@
         development.enable = true;
       };
 
+      daily = {
+        seahorse.enable = true;
+        mission-center.enable = true;
+        overskride.enable = true;
+        nm-applet.enable = true;
+        disk-utility.enable = true;
+        loupe.enable = true;
+        file-roller.enable = true;
+        papers.enable = true;
+        pods.enable = true;
+      };
+
       helix = {
         enable = true;
         theme = builtins.fromTOML (builtins.readFile (asset "helix/themes/kaolin-dark-transparent.toml"));
@@ -113,16 +125,16 @@
         enableUserDirs = true;
         defaultApps = {
           browser = ["zen-beta.desktop"];
-          text = ["org.gnome.TextEditor.desktop"];
-          image = ["imv-dir.desktop"];
+          text = ["Helix.desktop"];
+          image = ["org.gnome.Loupe.desktop"];
           audio = ["mpv.desktop"];
           video = ["mpv.desktop"];
-          directory = ["nemo.desktop"];
-          office = ["libreoffice.desktop"];
-          pdf = ["org.gnome.Evince.desktop"];
+          directory = ["org.gnome.Nautilus.desktop"];
+          office = [];
+          pdf = ["org.gnome.Papers.desktop"];
           terminal = ["kitty.desktop"];
           archive = ["org.gnome.FileRoller.desktop"];
-          discord = ["webcord.desktop"];
+          discord = [];
         };
       };
     };
