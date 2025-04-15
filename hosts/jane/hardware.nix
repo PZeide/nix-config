@@ -47,11 +47,11 @@
     options = [
       "uid=1000"
       "gid=1000"
-      "dmask=007"
-      "fmask=117"
+      "fmask=133"
+      "dmask=022"
       "nohidden"
-      "sys_immutable"
       "windows_names"
+      "x-gvfs-show"
     ];
   };
 }

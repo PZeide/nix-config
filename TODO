@@ -4,9 +4,9 @@ Todo:
     ☐ FEAT - EasyEffects with declarative configuration
     ☐ FEAT - Replace xdg-open with app2unit
     ☐ FEAT - OBS Studio
-    ☐ FEAT - mpv
+    ☐ FEAT - mpv (stylix?)
+    ☐ FEAT - QT Theming
     ☐ FEAT - Starship.rs instead of tide
-    ☐ FEAT - Full Matugen mode
     ☐ FEAT - Fully-working Gaming environment
       ☐ Gamescope
       ☐ Gamemode
@@ -24,7 +24,7 @@ In Progress:
   ☐ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
 
 Cancelled:
-
+  ✘ FEAT - Full Matugen mode
 
 Archive:
   ✔ BUG - Missing fonts
