@@ -58,12 +58,8 @@
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
 
-          extensions =
-            (with pkgs.vscode-extensions; [
-              ms-dotnettools.csharp
-              ms-dotnettools.vscode-dotnet-runtime
-            ])
-            ++ (with pkgs.vscode-marketplace; [
+          extensions = with pkgs.vscode-marketplace;
+            [
               # General
               wakatime.vscode-wakatime
               maattdd.gitless
@@ -93,16 +89,7 @@
 
               # Python
               ms-python.python
-
-              # DotNet
-              #ms-dotnettools.csharp
-              #ms-dotnettools.vscode-dotnet-runtime
-
-              # Azure
-              ms-azuretools.vscode-azureresourcegroups
-              ms-azuretools.vscode-cosmosdb
-              ms-azuretools.vscode-azurefunctions
-            ])
+            ]
             ++ (lib.optionals (selfConfig.colorTheme.package != null) [selfConfig.colorTheme.package])
             ++ (lib.optionals (selfConfig.iconTheme.package != null) [selfConfig.iconTheme.package]);
 
