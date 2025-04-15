@@ -58,7 +58,7 @@
             autostartOnGraphical = true;
           };
           hyprpicker.enable = true;
-          zeide-shell.enable = true;
+          zeide-shell.enable = false;
         };
       };
     };
@@ -66,6 +66,13 @@
     shell.fish.enable = true;
 
     programs = {
+      starship = {
+        enable = true;
+        enableNerdIcons = true;
+      };
+
+      zen-browser.enable = true;
+
       cli = {
         essentials.enable = true;
         fastfetch.enable = true;
@@ -95,7 +102,7 @@
         enable = true;
         enableVideoThumbnailer = true;
         openTerminalAction = "kitty";
-        bookmarks = ["file:///mnt/data"];
+        bookmarks = [];
       };
 
       vscodium = {
@@ -111,8 +118,6 @@
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedicons;
         };
       };
-
-      zen-browser.enable = true;
     };
 
     services = {

@@ -6,7 +6,6 @@ Todo:
     ☐ FEAT - OBS Studio
     ☐ FEAT - mpv (stylix?)
     ☐ FEAT - QT Theming
-    ☐ FEAT - Starship.rs instead of tide
     ☐ FEAT - Fully-working Gaming environment
       ☐ Gamescope
       ☐ Gamemode
@@ -34,3 +33,4 @@ Archive:
   ✔ BUG - Nautilus "Audio and Video Properties" pane GST error @low
   ✔ FEAT - Nautilus thumbnail support
   ✔ FEAT - Daily apps
+  ✔ FEAT - Starship.rs instead of tide

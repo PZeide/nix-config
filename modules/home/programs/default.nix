@@ -1,5 +1,6 @@
 {
   imports = [
+    ./starship
     ./zen-browser
     ./cli.nix
     ./daily.nix

@@ -12,21 +12,6 @@
     selfConfig = config.zeide.shell.fish;
   in
     lib.mkIf selfConfig.enable {
-      home.activation = {
-        createTideConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-          $DRY_RUN_CMD ${pkgs.fish}/bin/fish -c "tide configure \
-            --auto \
-            --style=Lean \
-            --prompt_colors='16 colors' \
-            --show_time='12-hour format' \
-            --lean_prompt_height='Two lines' \
-            --prompt_connection=Disconnected \
-            --prompt_spacing=Sparse \
-            --icons='Few icons' \
-            --transient=Yes"
-        '';
-      };
-
       programs = {
         fish = {
           enable = true;
@@ -39,10 +24,6 @@
             {
               name = "grc";
               src = grc.src;
-            }
-            {
-              name = "tide";
-              src = tide.src;
             }
             {
               name = "pisces";
