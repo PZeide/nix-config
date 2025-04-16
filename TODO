@@ -19,7 +19,7 @@ Todo:
     ☐ UPDT - waydroid-helper - unstable
 
 In Progress:
-  ☐ FEAT - Zen Browser modified
+
 
 Cancelled:
   ✘ FEAT - Full Matugen mode
@@ -35,3 +35,4 @@ Archive:
   ✔ FEAT - Daily apps
   ✔ FEAT - Starship.rs instead of tide
   ✔ BUG - Clocksource is HPET on Legion laptop @high
+  ✔ FEAT - Zen Browser modified

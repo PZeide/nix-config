@@ -1822,11 +1822,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744604424,
-        "narHash": "sha256-CRAcIrtni4Ly8HUao6dyW6wT4b8GZJxWyDeZbKV+a2Q=",
+        "lastModified": 1744777229,
+        "narHash": "sha256-nBh3uEBqVPqKEHK6J0uECmXI9OcuLQImyiwGTvP2DCU=",
         "owner": "maximoffua",
         "repo": "zen-browser.nix",
-        "rev": "79cf285ee63cc599d105a9bbccb2c32cd2f856d4",
+        "rev": "2320b15cae3267af98367a807c1e9b48d8d9289e",
         "type": "github"
       },
       "original": {

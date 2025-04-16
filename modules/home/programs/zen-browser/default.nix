@@ -1,4 +1,5 @@
 {
+  asset,
   config,
   lib,
   pkgs,
@@ -23,7 +24,10 @@
     ];
   in
     lib.mkIf selfConfig.enable {
-      home.file.".zen/default/chrome/pineapple-fried".source = "${inputs.zen-pineapple-fried}/pineapple-fried";
+      home.file = {
+        ".zen/default/chrome/pineapple-fried".source = "${inputs.zen-pineapple-fried}/pineapple-fried";
+        ".zen/default/zen-themes.json".source = asset "zen/zen-themes.json";
+      };
 
       programs.zen-browser = {
         enable = true;
@@ -85,8 +89,26 @@
           };
         };
 
-        profiles.default = {
+        profiles.default = with config.lib.stylix.colors.withHashtag; {
           isDefault = true;
+
+          userChrome = ''
+            @import "pineapple-fried/pineapple-fried.css";
+
+            :root {
+              --zen-themed-toolbar-bg-transparent: ${base00}96 !important;
+            }
+
+            .titlebar-close {
+              display: none !important;
+            }
+
+            #zen-sidebar-top-buttons {
+              display: none !important;
+            }
+          '';
+
+          userContent = builtins.readFile "${inputs.zen-pineapple-fried}/pineapple-fried/zen-new-tabs/zen-new-tabs.css";
 
           search = {
             force = true;
@@ -107,12 +129,15 @@
             };
           };
 
-          settings = with config.lib.stylix.colors.withHashtag; {
+          settings = {
             #  Downloads first go to the operating system's temp directory before final location
             "browser.download.start_downloads_in_tmp_dir" = true;
 
             # Allow transparent browser if no background is defined
             "browser.tabs.allow_transparent_browser" = true;
+
+            # Disable weather on new tab page
+            "browser.newtabpage.activity-stream.showWeather" = false;
 
             # Attempts to reject cookies where possible and ignores other types of banners
             "cookiebanners.service.mode" = 1;
@@ -126,6 +151,12 @@
 
             # Disabling Zen welcome screen
             "zen.welcome-screen.seen" = true;
+
+            # Enable Linux transparency
+            "zen.widget.linux.transparency" = true;
+
+            # Don't grey out windows when not active
+            "zen.view.grey-out-inactive-windows" = false;
 
             # Set zen preferences
             "zen.theme.accent-color" = base0B;
