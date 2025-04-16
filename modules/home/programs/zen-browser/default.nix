@@ -106,15 +106,32 @@
           };
 
           settings = with config.lib.stylix.colors.withHashtag; {
-            "extensions.autoDisableScopes" = 0;
-            "signon.showAutoCompleteFooter" = 0;
+            #  Downloads first go to the operating system's temp directory before final location
+            "browser.download.start_downloads_in_tmp_dir" = true;
 
+            # Allow transparent browser if no background is defined
+            "browser.tabs.allow_transparent_browser" = true;
+
+            # Attempts to reject cookies where possible and ignores other types of banners
+            "cookiebanners.service.mode" = 1;
+            "cookiebanners.service.mode.privateBrowsing" = 1;
+
+            # Decreases minimum interval between content reflows
+            "content.notify.interval" = 100000;
+
+            # Disabling installing extensions
+            "extensions.autoDisableScopes" = 0;
+
+            # Disabling Zen welcome screen
             "zen.welcome-screen.seen" = true;
+
+            # Set zen preferences
             "zen.theme.accent-color" = base0B;
             "zen.theme.color-prefs.amoled" = true;
             "zen.theme.color-prefs.use-workspace-colors" = false;
-            "zen.urlbar.behavior" = "float";
+            "zen.urlbar.behavior" = "normal";
             "zen.view.use-single-toolbar" = false;
+            "zen.urlbar.replace-newtab" = false;
           };
 
           extensions.packages = extensions;

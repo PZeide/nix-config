@@ -10,7 +10,6 @@ Todo:
       ☐ Gamescope
       ☐ Gamemode
       ☐ Full Wayland
-    ☐ FEAT - zen-browser full declarative
     ☐ FEAT - screenshot shortcut with selector + annotation tool
 
   Bugs:
@@ -20,10 +19,11 @@ Todo:
     ☐ UPDT - waydroid-helper - unstable
 
 In Progress:
-  ☐ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
+  ☐ FEAT - Zen Browser modified
 
 Cancelled:
   ✘ FEAT - Full Matugen mode
+  ✘ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
 
 Archive:
   ✔ BUG - Missing fonts
