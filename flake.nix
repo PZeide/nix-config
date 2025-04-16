@@ -127,6 +127,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-pineapple-fried = {
+      url = "github:TheBigWazz/Pineapple-Fried";
+      flake = false;
+    };
+
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";

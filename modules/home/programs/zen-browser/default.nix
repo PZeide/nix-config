@@ -23,6 +23,8 @@
     ];
   in
     lib.mkIf selfConfig.enable {
+      home.file.".zen/default/chrome/pineapple-fried".source = "${inputs.zen-pineapple-fried}/pineapple-fried";
+
       programs.zen-browser = {
         enable = true;
         package = pkgs.wrapFirefox inputs.zen-browser.packages.${system}.zen-browser-unwrapped {

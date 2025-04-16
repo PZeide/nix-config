@@ -1345,7 +1345,8 @@
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "stylix": "stylix",
         "zeide-shell": "zeide-shell",
-        "zen-browser": "zen-browser"
+        "zen-browser": "zen-browser",
+        "zen-pineapple-fried": "zen-pineapple-fried"
       }
     },
     "rose-pine-hyprcursor": {
@@ -1831,6 +1832,22 @@
       "original": {
         "owner": "maximoffua",
         "repo": "zen-browser.nix",
+        "type": "github"
+      }
+    },
+    "zen-pineapple-fried": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744654135,
+        "narHash": "sha256-YMOkqHpOt2Qv16D55bNVJItnMVguIwLQkxJwDlom4Kc=",
+        "owner": "TheBigWazz",
+        "repo": "Pineapple-Fried",
+        "rev": "8e25beb1fba828cde8da9299db4c80d2c1f88b16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TheBigWazz",
+        "repo": "Pineapple-Fried",
         "type": "github"
       }
     }
