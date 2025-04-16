@@ -12,7 +12,8 @@
   boot = {
     kernelModules = ["kvm-amd"];
 
-    kernelParams = ["mt7921e.disable_aspm=y"];
+    # On my Legion 5 laptop, the tsc clocksource is stated as "unreliable" but that causes performance issues, disable hpet and force tsc
+    kernelParams = ["mt7921e.disable_aspm=y" "tsc=reliable" "clocksource=tsc" "nohpet"];
 
     initrd = {
       availableKernelModules = [

@@ -34,3 +34,4 @@ Archive:
   ✔ FEAT - Nautilus thumbnail support
   ✔ FEAT - Daily apps
   ✔ FEAT - Starship.rs instead of tide
+  ✔ BUG - Clocksource is HPET on Legion laptop @high
