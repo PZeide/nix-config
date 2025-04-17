@@ -38,7 +38,7 @@
         ];
 
         binds.extra = let
-          wrapAppUnit = app: "${lib.getExe pkgs.app2unit} -s a -- ${app}";
+          wrapAppUnit = app: "${lib.getExe pkgs.zeide.app2unit} -s a -- ${app}";
         in [
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"

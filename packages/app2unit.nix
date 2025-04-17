@@ -5,6 +5,7 @@
 pkgs.stdenvNoCC.mkDerivation {
   pname = "app2unit";
   version = "0-unstable-44b5da8";
+
   src = pkgs.fetchFromGitHub {
     owner = "Vladimir-csp";
     repo = "app2unit";

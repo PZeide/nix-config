@@ -32,8 +32,8 @@ pkgs.appimageTools.wrapType2 rec {
   meta = {
     description = "Powerful music player that allows you listen to your favorite tracks with style";
     homepage = "https://cider.sh";
-    license = lib.licenses.unfree;
     mainProgram = "cider";
+    license = lib.licenses.unfree;
     platforms = lib.platforms.linux;
   };
 }
