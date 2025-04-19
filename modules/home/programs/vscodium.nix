@@ -67,8 +67,10 @@
               fabiospampinato.vscode-todo-plus
 
               # Formatters
+              biomejs.biome
               esbenp.prettier-vscode
               tamasfe.even-better-toml
+              redhat.vscode-yaml
 
               # Nix
               jnoortheen.nix-ide
@@ -95,28 +97,36 @@
 
           userSettings = let
             formattersConfig = {
-              javascript = "esbenp.prettier-vscode";
-              javascriptreact = "esbenp.prettier-vscode";
-              typescript = "esbenp.prettier-vscode";
-              typescriptreact = "esbenp.prettier-vscode";
-              json = "esbenp.prettier-vscode";
-              jsonc = "esbenp.prettier-vscode";
-              json5 = "esbenp.prettier-vscode";
-              css = "esbenp.prettier-vscode";
+              javascript = "biomejs.biome";
+              javascriptreact = "biomejs.biome";
+              typescript = "biomejs.biome";
+              typescriptreact = "biomejs.biome";
+              astro = "biomejs.biome";
+              svelte = "biomejs.biome";
+              vue = "biomejs.biome";
+              tailwind = "biomejs.biome";
+              json = "biomejs.biome";
+              jsonc = "biomejs.biome";
+              css = "biomejs.biome";
+              graphql = "biomejs.biome";
+              html = "esbenp.prettier-vscode";
               postcss = "esbenp.prettier-vscode";
               less = "esbenp.prettier-vscode";
               scss = "esbenp.prettier-vscode";
-              graphql = "esbenp.prettier-vscode";
-              markdown = "esbenp.prettier-vscode";
-              mdx = "esbenp.prettier-vscode";
-              html = "esbenp.prettier-vscode";
-              handlebars = "esbenp.prettier-vscode";
-              vue = "esbenp.prettier-vscode";
-              yaml = "esbenp.prettier-vscode";
+              toml = "tamasfe.even-better-toml";
+              yaml = "redhat.vscode-yaml";
             };
           in
             with config.stylix.fonts;
               {
+                # Force configure lsp paths to avoid issues
+                "biome.lsp.bin" = lib.getExe pkgs.biome;
+                "prettier.prettierPath" = "${pkgs.nodePackages.prettier}/lib/node_modules/prettier/";
+                "nix.serverPath" = lib.getExe pkgs.nixd;
+                "nix.serverSettings"."nixd"."formatting"."command" = [
+                  (lib.getExe pkgs.alejandra)
+                ];
+
                 "breadcrumbs.enabled" = true;
 
                 "editor.colorDecorators" = true;
@@ -160,13 +170,9 @@
                 "workbench.list.smoothScrolling" = true;
 
                 "nix.enableLanguageServer" = true;
-                "nix.serverPath" = lib.getExe pkgs.nixd;
                 "nix.hiddenLanguageServerErrors" = [
                   "textDocument/formatting"
                   "textDocument/definition"
-                ];
-                "nix.serverSettings"."nixd"."formatting"."command" = [
-                  (lib.getExe pkgs.alejandra)
                 ];
 
                 "workbench.colorCustomizations" = {
