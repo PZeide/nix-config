@@ -4,14 +4,13 @@
   lib,
   pkgs,
   inputs,
-  system,
   ...
 }: {
   options.zeide.programs.zen-browser = with lib; {
     enable = mkEnableOption "zen browser";
   };
 
-  imports = [./hm-module.nix];
+  imports = [inputs.zen-browser.homeModules.beta];
 
   config = let
     selfConfig = config.zeide.programs.zen-browser;
@@ -31,60 +30,59 @@
 
       programs.zen-browser = {
         enable = true;
-        package = pkgs.wrapFirefox inputs.zen-browser.packages.${system}.zen-browser-unwrapped {
-          extraPolicies = {
-            AutofillAddressEnabled = true;
-            AutofillCreditCardEnabled = false;
-            DisableAppUpdate = true;
-            DisableFeedbackCommands = true;
-            DisableFirefoxAccounts = true;
-            DisableFirefoxStudies = true;
-            DisablePocket = true;
-            DisableSetDesktopBackground = true;
-            DisableTelemetry = true;
-            DontCheckDefaultBrowser = true;
-            NoDefaultBookmarks = true;
-            OfferToSaveLogins = false;
 
-            EnableTrackingProtection = {
-              Value = true;
-              Locked = true;
-              Cryptomining = true;
-              Fingerprinting = true;
-            };
+        policies = {
+          AutofillAddressEnabled = true;
+          AutofillCreditCardEnabled = false;
+          DisableAppUpdate = true;
+          DisableFeedbackCommands = true;
+          DisableFirefoxAccounts = true;
+          DisableFirefoxStudies = true;
+          DisablePocket = true;
+          DisableSetDesktopBackground = true;
+          DisableTelemetry = true;
+          DontCheckDefaultBrowser = true;
+          NoDefaultBookmarks = true;
+          OfferToSaveLogins = false;
 
-            ExtensionSettings = builtins.listToAttrs (
-              builtins.map (
-                e:
-                  lib.nameValuePair e.addonId {
-                    installation_mode = "force_installed";
-                    install_url = "file://${e.src}";
-                    updates_disabled = true;
-                  }
-              )
-              extensions
-            );
+          EnableTrackingProtection = {
+            Value = true;
+            Locked = true;
+            Cryptomining = true;
+            Fingerprinting = true;
+          };
 
-            "3rdparty".Extensions."uBlock0@raymondhill.net" = {
-              adminSettings = {
-                selectedFilterLists = [
-                  "ublock-filters"
-                  "ublock-badware"
-                  "ublock-privacy"
-                  "ublock-unbreak"
-                  "ublock-quick-fixes"
-                  "ublock-annoyances"
-                  "easylist"
-                  "easylist-annoyances"
-                  "easylist-chat"
-                  "easylist-newsletters"
-                  "easylist-notifications"
-                  "easyprivacy"
-                  "urlhaus-1"
-                  "plowe-0"
-                  "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
-                ];
-              };
+          ExtensionSettings = builtins.listToAttrs (
+            builtins.map (
+              e:
+                lib.nameValuePair e.addonId {
+                  installation_mode = "force_installed";
+                  install_url = "file://${e.src}";
+                  updates_disabled = true;
+                }
+            )
+            extensions
+          );
+
+          "3rdparty".Extensions."uBlock0@raymondhill.net" = {
+            adminSettings = {
+              selectedFilterLists = [
+                "ublock-filters"
+                "ublock-badware"
+                "ublock-privacy"
+                "ublock-unbreak"
+                "ublock-quick-fixes"
+                "ublock-annoyances"
+                "easylist"
+                "easylist-annoyances"
+                "easylist-chat"
+                "easylist-newsletters"
+                "easylist-notifications"
+                "easyprivacy"
+                "urlhaus-1"
+                "plowe-0"
+                "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
+              ];
             };
           };
         };
@@ -96,7 +94,17 @@
             @import "pineapple-fried/pineapple-fried.css";
 
             :root {
-              --zen-themed-toolbar-bg-transparent: ${base00}96 !important;
+              --zen-themed-toolbar-bg-transparent: #151d2096 !important;
+
+              &:-moz-window-inactive {
+                --zen-themed-toolbar-bg-transparent: #151d2078 !important;
+              }
+
+              --toolbox-bgcolor-inactive: transparent !important;
+            }
+
+            #zen-main-app-wrapper {
+              transition: background-color 200ms;
             }
 
             .titlebar-close {
@@ -149,14 +157,14 @@
             # Disabling installing extensions
             "extensions.autoDisableScopes" = 0;
 
+            # Prevent PiP from opening when switching tabs
+            "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = false;
+
             # Disabling Zen welcome screen
             "zen.welcome-screen.seen" = true;
 
             # Enable Linux transparency
             "zen.widget.linux.transparency" = true;
-
-            # Don't grey out windows when not active
-            "zen.view.grey-out-inactive-windows" = false;
 
             # Set zen preferences
             "zen.theme.accent-color" = base0B;

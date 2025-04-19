@@ -1,12 +1,12 @@
 {
   imports = [
     ./starship
-    ./zen-browser
     ./cli.nix
     ./daily.nix
     ./helix.nix
     ./kitty.nix
     ./nautilus.nix
     ./vscodium.nix
+    ./zen-browser.nix
   ];
 }

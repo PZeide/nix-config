@@ -581,6 +581,27 @@
         "type": "github"
       }
     },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "zen-browser",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745033012,
+        "narHash": "sha256-KjBMsjCzIOWgDqTZMYIriPFmHiQcCb2RhuDh5JF0VVc=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "ae84885d9b6b62dc58ccd300e9ab321a3fd9f9c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "hyprcursor": {
       "inputs": {
         "hyprlang": [
@@ -1802,11 +1823,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744271650,
-        "narHash": "sha256-gCKLy8v8cDXw6dX8YCjpqz77hdELKiyBqr7/5rnlnDI=",
+        "lastModified": 1744934932,
+        "narHash": "sha256-I7p9V3DRpAY03lSx7U9LPdU/ewyj++GfalOF6aFLIR0=",
         "owner": "PZeide",
         "repo": "nix-shell",
-        "rev": "3179fe530f1b273cb1318ba4aa59a6f8c94668e9",
+        "rev": "32a8d53f47d60ceaae97c56b5d94cd461140bbfe",
         "type": "github"
       },
       "original": {
@@ -1817,21 +1838,22 @@
     },
     "zen-browser": {
       "inputs": {
+        "home-manager": "home-manager_2",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1744777229,
-        "narHash": "sha256-nBh3uEBqVPqKEHK6J0uECmXI9OcuLQImyiwGTvP2DCU=",
-        "owner": "maximoffua",
-        "repo": "zen-browser.nix",
-        "rev": "2320b15cae3267af98367a807c1e9b48d8d9289e",
+        "lastModified": 1745024827,
+        "narHash": "sha256-NjYyRsHrWwUVjbd78FV8E/HZC+gH4CYS6Qnjh2O29b4=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "e6893892b832d92f1ceb508fcdae250d41927b38",
         "type": "github"
       },
       "original": {
-        "owner": "maximoffua",
-        "repo": "zen-browser.nix",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     },

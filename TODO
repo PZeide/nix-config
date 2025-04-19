@@ -11,9 +11,11 @@ Todo:
       ☐ Gamemode
       ☐ Full Wayland
     ☐ FEAT - screenshot shortcut with selector + annotation tool
+    ☐ FEAT - special workspaces
 
   Bugs:
     ☐ BUG - Not fully sleeping with hypridle @low
+    ☐ BUG - Missing user directories in Nautilus sidebar @high
 
   Updates:
     ☐ UPDT - waydroid-helper - unstable
@@ -23,7 +25,6 @@ In Progress:
 
 Cancelled:
   ✘ FEAT - Full Matugen mode
-  ✘ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
 
 Archive:
   ✔ BUG - Missing fonts
@@ -36,3 +37,4 @@ Archive:
   ✔ FEAT - Starship.rs instead of tide
   ✔ BUG - Clocksource is HPET on Legion laptop @high
   ✔ FEAT - Zen Browser modified
+  ✔ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)

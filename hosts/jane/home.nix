@@ -42,7 +42,7 @@
         in [
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
-          "$mainMod, B, exec, ${wrapAppUnit "zen"}"
+          "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
         ];
 
         plugins = {
@@ -70,8 +70,6 @@
         enable = true;
         enableNerdIcons = true;
       };
-
-      zen-browser.enable = true;
 
       cli = {
         essentials.enable = true;
@@ -118,6 +116,8 @@
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedicons;
         };
       };
+
+      zen-browser.enable = true;
     };
 
     services = {
