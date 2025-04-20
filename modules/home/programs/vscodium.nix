@@ -144,6 +144,9 @@
 
                 "editor.formatOnSave" = true;
                 "editor.formatOnPaste" = true;
+                "editor.codeActionsOnSave" = {
+                  "source.organizeImports.biome" = "explicit";
+                };
 
                 "terminal.integrated.fontFamily" = lib.mkForce "'${monospace.name}', 'Symbols Nerd Font Mono'";
                 "editor.fontFamily" = lib.mkForce "'${monospace.name}', 'Symbols Nerd Font Mono'";

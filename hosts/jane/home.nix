@@ -52,11 +52,17 @@
 
         companions = {
           hyprpaper.enable = true;
-          hypridle.enable = true;
+
+          hypridle = {
+            enable = true;
+            dimBacklight = true;
+          };
+
           hyprlock = {
             enable = true;
             autostartOnGraphical = true;
           };
+
           hyprpicker.enable = true;
           zeide-shell.enable = false;
         };
