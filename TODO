@@ -14,8 +14,8 @@ Todo:
     ☐ FEAT - special workspaces
 
   Bugs:
-    ☐ BUG - Not fully sleeping with hypridle @low
     ☐ BUG - Missing user directories in Nautilus sidebar @high
+    ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical
 
   Updates:
     ☐ UPDT - waydroid-helper - unstable
@@ -38,3 +38,4 @@ Archive:
   ✔ BUG - Clocksource is HPET on Legion laptop @high
   ✔ FEAT - Zen Browser modified
   ✔ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
+  ✔ BUG - Not fully sleeping with hypridle @low

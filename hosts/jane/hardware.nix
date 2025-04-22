@@ -1,13 +1,34 @@
 {
   modulesPath,
   inputs,
+  pkgs,
   ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (inputs.nixos-hardware.nixosModules.lenovo-legion-15ach6h + "/hybrid")
-    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    (inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime + "/ampere")
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
+
+  hardware = {
+    amdgpu.initrd.enable = false;
+
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.finegrained = true;
+
+      prime = {
+        amdgpuBusId = "PCI:6:0:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
+    };
+  };
 
   boot = {
     kernelModules = ["kvm-amd"];

@@ -72,6 +72,13 @@
     shell.fish.enable = true;
 
     programs = {
+      gaming = {
+        prism-launcher = {
+          enable = true;
+          enableAllJdks = true;
+        };
+      };
+
       starship = {
         enable = true;
         enableNerdIcons = true;

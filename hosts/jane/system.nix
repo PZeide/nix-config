@@ -28,7 +28,6 @@
     laptop = {
       enable = true;
       enableTlp = true;
-      forceS2idle = true;
     };
 
     locale.enable = true;

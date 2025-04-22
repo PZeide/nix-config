@@ -1,5 +1,6 @@
 {
   imports = [
+    ./gaming
     ./starship
     ./cli.nix
     ./daily.nix
