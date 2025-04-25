@@ -39,6 +39,7 @@
           packages = with pkgs; [grc curl];
           shellAliases = {
             g = "git";
+            mommy = "git";
           };
         };
 
