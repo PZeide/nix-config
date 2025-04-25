@@ -14,6 +14,7 @@
     file-roller.enable = mkEnableOption "file-roller (archive manager)";
     papers.enable = mkEnableOption "papers (pdf viewer)";
     pods.enable = mkEnableOption "pods (podman manager)";
+    cider.enable = mkEnableOption "cider (apple music player)";
   };
 
   config = let
@@ -46,6 +47,9 @@
       })
       (lib.mkIf selfConfig.pods.enable {
         home.packages = [pkgs.pods];
+      })
+      (lib.mkIf selfConfig.cider.enable {
+        home.packages = [pkgs.zeide.cider-taproom];
       })
     ];
 }

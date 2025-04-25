@@ -12,7 +12,6 @@
     selfConfig = config.zeide.gaming.waydroid;
 
     waydroidConfig = pkgs.writeText "waydroid.cfg" ''
-      persist.waydroid.multi_windows=true
       sys.use_memfd=true
     '';
   in
@@ -20,6 +19,6 @@
       virtualisation.waydroid.enable = true;
 
       environment.etc."waydroid.cfg".source = waydroidConfig;
-      environment.systemPackages = with pkgs.zeide; [waydroid-helper];
+      environment.systemPackages = with pkgs; [waydroid-helper];
     };
 }

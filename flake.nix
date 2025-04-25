@@ -51,7 +51,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    # TODO Follow upstream when hyprsplit chased hyprland
+    hyprland.url = "github:hyprwm/Hyprland?rev=be6268a7ecea2ad50cdb78fb661884811a8a28e8";
 
     hyprland-contrib = {
       url = "github:hyprwm/contrib";

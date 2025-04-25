@@ -5,7 +5,9 @@
   inputs,
   system,
   ...
-}: {
+}: let
+  wrapAppUnit = app: "${lib.getExe pkgs.zeide.app2unit} -s a -- ${app}";
+in {
   zeide = {
     theme = {
       wallpaper = asset "wallpapers/jane.jpg";
@@ -37,13 +39,26 @@
           }
         ];
 
-        binds.extra = let
-          wrapAppUnit = app: "${lib.getExe pkgs.zeide.app2unit} -s a -- ${app}";
-        in [
+        binds.extra = [
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
+          "$mainMod, X, togglespecialworkspace, azurlane"
+          "$mainMod, Z, togglespecialworkspace, cider"
         ];
+
+        rules = {
+          windows = [
+            "fullscreen, class:^(waydroid.com.YoStarEN.AzurLane)$"
+            "workspace special:azurlane, class:^(waydroid.com.YoStarEN.AzurLane)$"
+            "workspace special:cider, class:^(Cider)$"
+          ];
+
+          workspaces = [
+            "special:azurlane, on-created-empty:${wrapAppUnit "waydroid app launch com.YoStarEN.AzurLane"}"
+            "special:cider, on-created-empty:${wrapAppUnit "cider"}"
+          ];
+        };
 
         plugins = {
           hyprsplit.enable = true;
@@ -100,6 +115,7 @@
         file-roller.enable = true;
         papers.enable = true;
         pods.enable = true;
+        cider.enable = true;
       };
 
       helix = {
