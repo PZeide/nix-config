@@ -11,7 +11,6 @@ Todo:
       ☐ Gamemode
       ☐ Full Wayland
     ☐ FEAT - screenshot shortcut with selector + annotation tool
-    ☐ FEAT - special workspaces
 
   Bugs:
     ☐ BUG - Missing user directories in Nautilus sidebar @high
@@ -39,3 +38,4 @@ Archive:
   ✔ FEAT - Zen Browser modified
   ✔ BUG - Zen Browser policies not applied @high @blocked(https://github.com/0xc000022070/zen-browser-flake/issues/42)
   ✔ BUG - Not fully sleeping with hypridle @low
+  ✔ FEAT - special workspaces
