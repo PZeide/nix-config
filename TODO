@@ -3,7 +3,6 @@ Todo:
   Features:
     ☐ FEAT - EasyEffects with declarative configuration
     ☐ FEAT - mpv (stylix?)
-    ☐ FEAT - screenshot shortcut with selector + annotation tool
 
   Bugs:
     ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical
@@ -41,3 +40,4 @@ Archive:
   ✔ FEAT - OBS Studio
   ✔ FEAT - QT Theming
   ✔ BUG - Missing user directories in Nautilus sidebar @high
+  ✔ FEAT - screenshot shortcut with selector + annotation tool

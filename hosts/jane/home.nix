@@ -43,10 +43,14 @@ in {
         ];
 
         binds.extra = [
+          "$mainMod, HOME, exec, ${wrapAppUnit "screenshot region"}"
+          "$mainMod SHIFT, HOME, exec, ${wrapAppUnit "screenshot window"}"
+
+          "$mainMod, SPACE, exec, ${wrapAppUnit "anyrun"}"
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
-          "$mainMod, SPACE, exec, ${wrapAppUnit "anyrun"}"
+
           "$mainMod, X, togglespecialworkspace, azurlane"
           "$mainMod, Z, togglespecialworkspace, cider"
         ];
@@ -83,6 +87,7 @@ in {
           };
 
           hyprpicker.enable = true;
+          screenshot.enable = true;
           zeide-shell.enable = false;
         };
       };
