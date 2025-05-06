@@ -136,6 +136,7 @@ in {
         papers.enable = true;
         pods.enable = true;
         cider.enable = true;
+        fragments.enable = true;
       };
 
       helix = {

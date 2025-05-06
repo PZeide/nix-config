@@ -15,6 +15,7 @@
     papers.enable = mkEnableOption "papers (pdf viewer)";
     pods.enable = mkEnableOption "pods (podman manager)";
     cider.enable = mkEnableOption "cider (apple music player)";
+    fragments.enable = mkEnableOption "fragments (torrent downloader)";
   };
 
   config = let
@@ -50,6 +51,9 @@
       })
       (lib.mkIf selfConfig.cider.enable {
         home.packages = [pkgs.zeide.cider-taproom];
+      })
+      (lib.mkIf selfConfig.fragments.enable {
+        home.packages = [pkgs.fragments];
       })
     ];
 }
