@@ -6,7 +6,8 @@
   system,
   ...
 }: let
-  wrapAppUnit = app: "${lib.getExe pkgs.zeide.app2unit} -s a -- ${app}";
+  appLaunchPrefix = "${lib.getExe pkgs.zeide.app2unit} -s a --";
+  wrapAppUnit = app: "${appLaunchPrefix} ${app}";
 in {
   zeide = {
     theme = {
@@ -43,6 +44,7 @@ in {
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
+          "$mainMod, SPACE, exec, ${wrapAppUnit "anyrun"}"
           "$mainMod, X, togglespecialworkspace, azurlane"
           "$mainMod, Z, togglespecialworkspace, cider"
         ];
@@ -88,6 +90,7 @@ in {
 
     programs = {
       gaming = {
+        bottles.enable = true;
         prism-launcher = {
           enable = true;
           enableAllJdks = true;
@@ -97,6 +100,16 @@ in {
       starship = {
         enable = true;
         enableNerdIcons = true;
+      };
+
+      anyrun = {
+        enable = true;
+        preprocessScript = let
+          script = pkgs.writeScript "anyrun-preprocess-script" ''
+            shift # Remove term|no-term
+            echo "${appLaunchPrefix} $*"
+          '';
+        in "${script}";
       };
 
       cli = {
