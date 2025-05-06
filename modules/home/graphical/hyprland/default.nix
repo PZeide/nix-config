@@ -2,6 +2,7 @@
   lib,
   config,
   osConfig,
+  pkgs,
   ...
 }: {
   options.zeide.graphical.hyprland = with lib; {
@@ -75,6 +76,18 @@
         export APP2UNIT_SLICES="a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice"
         export APP2UNIT_TYPE="scope"
       '';
+
+      # FROM: https://github.com/JManch/nixos/blob/main/modules/home-manager/desktop/uwsm.nix#L45
+      # Not perfect as it won't work for apps that wrap themselves with xdg-utils.
+      # Don't want to overlay xdg-utils to avoid mass rebuilds.
+      home.packages = [
+        (lib.hiPrio (
+          pkgs.runCommand "app2unit-xdg-open" {} ''
+            mkdir -p $out/bin
+            ln -s ${pkgs.zeide.app2unit}/bin/app2unit-open $out/bin/xdg-open
+          ''
+        ))
+      ];
 
       wayland.windowManager.hyprland = {
         enable = true;
