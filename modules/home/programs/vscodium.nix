@@ -92,8 +92,9 @@
               # Python
               ms-python.python
             ]
-            ++ (lib.optionals (selfConfig.colorTheme.package != null) [selfConfig.colorTheme.package])
-            ++ (lib.optionals (selfConfig.iconTheme.package != null) [selfConfig.iconTheme.package]);
+            ++ (lib.optional (selfConfig.colorTheme.package != null) selfConfig.colorTheme.package)
+            ++ (lib.optional (selfConfig.iconTheme.package != null) selfConfig.iconTheme.package)
+            ++ (lib.optional (config.zeide.services.wakatime.enable) pkgs.vscode-marketplace.wakatime.vscode-wakatime);
 
           userSettings = let
             formattersConfig = {
