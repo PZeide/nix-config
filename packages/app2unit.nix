@@ -1,13 +1,13 @@
 {
   lib,
-  pkgs,
-  ...
+  stdenvNoCC,
+  fetchFromGitHub,
 }:
-pkgs.stdenvNoCC.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "app2unit";
   version = "0-unstable-44b5da8";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "Vladimir-csp";
     repo = "app2unit";
     rev = "44b5da8a6f1e5449d3c2a8b63dc54875bb7e10af";

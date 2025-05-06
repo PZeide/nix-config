@@ -137,6 +137,7 @@ in {
         pods.enable = true;
         cider.enable = true;
         fragments.enable = true;
+        goofcord.enable = true;
       };
 
       helix = {

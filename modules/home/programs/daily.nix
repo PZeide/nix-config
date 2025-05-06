@@ -16,6 +16,7 @@
     pods.enable = mkEnableOption "pods (podman manager)";
     cider.enable = mkEnableOption "cider (apple music player)";
     fragments.enable = mkEnableOption "fragments (torrent downloader)";
+    goofcord.enable = mkEnableOption "goofcord (goofy discord client)";
   };
 
   config = let
@@ -54,6 +55,9 @@
       })
       (lib.mkIf selfConfig.fragments.enable {
         home.packages = [pkgs.fragments];
+      })
+      (lib.mkIf selfConfig.goofcord.enable {
+        home.packages = [pkgs.zeide.goofcord];
       })
     ];
 }

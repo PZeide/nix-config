@@ -11,10 +11,10 @@
     selfConfig = config.zeide.theme.qt;
   in
     lib.mkIf selfConfig.enable {
-      stylix.targets.qt = {
-        enable = true;
-        # Default platform (kvantum) looks really ugly
-        platform = "gnome";
-      };
+      # Default platform (kvantum) looks really ugly
+      qt.platformTheme.name =
+        if config.stylix.polarity == "dark"
+        then "adwaita-dark"
+        else "adwaita";
     };
 }

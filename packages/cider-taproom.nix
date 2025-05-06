@@ -1,22 +1,23 @@
 {
-  pkgs,
   lib,
-  ...
+  appimageTools,
+  requireFile,
+  makeWrapper,
 }:
-pkgs.appimageTools.wrapType2 rec {
+appimageTools.wrapType2 rec {
   pname = "cider";
   version = "2.0.3";
 
-  src = pkgs.requireFile {
+  src = requireFile {
     name = "cider-v${version}-linux-x64.AppImage";
     url = "https://taproom.cider.sh";
     hash = "sha256-+H1QRivPopBP8BdmpCX3zSvKDGQg3gyJi519+47LV18=";
   };
 
-  nativeBuildInputs = [pkgs.makeWrapper];
+  nativeBuildInputs = [makeWrapper];
 
   extraInstallCommands = let
-    contents = pkgs.appimageTools.extract {
+    contents = appimageTools.extract {
       inherit version src pname;
     };
   in ''
