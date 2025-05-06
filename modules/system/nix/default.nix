@@ -16,6 +16,7 @@
       '';
     };
 
+    enableCudaSupport = mkEnableOption "enable cuda support (required for NVENC on obs-studio)";
     autoOptimiseStore = mkEnableOption "nix store automatic optimisation";
   };
 
@@ -29,7 +30,12 @@
   in {
     nixpkgs = {
       inherit system;
-      config.allowUnfree = true;
+
+      config = {
+        allowUnfree = true;
+        cudaSupport = selfConfig.enableCudaSupport;
+      };
+
       overlays = [inputs.nix-vscode-extensions.overlays.default];
     };
 

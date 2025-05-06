@@ -145,6 +145,8 @@ in {
         bookmarks = [];
       };
 
+      obs-studio.enable = true;
+
       vscodium = {
         enable = true;
 

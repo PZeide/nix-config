@@ -83,6 +83,7 @@
 
     nix = {
       useLix = true;
+      enableCudaSupport = true;
       autoOptimiseStore = true;
 
       nh = {
