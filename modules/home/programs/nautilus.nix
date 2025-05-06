@@ -9,6 +9,12 @@
     enable = mkEnableOption "nautilus file explorer";
     enableVideoThumbnailer = mkEnableOption "video thumbnailer (powerered by ffmpeg-thumbnailer)";
 
+    addUserDirsToSidebar = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to add user directories in siderbar";
+    };
+
     openTerminalAction = mkOption {
       type = with types; nullOr str;
       default = null;
@@ -77,6 +83,17 @@
         };
       };
 
-      gtk.gtk3.bookmarks = selfConfig.bookmarks;
+      gtk.gtk3.bookmarks =
+        selfConfig.bookmarks
+        ++ (lib.optionals selfConfig.addUserDirsToSidebar [
+          "file://${config.home.homeDirectory}/Desktop"
+          "file://${config.home.homeDirectory}/Documents"
+          "file://${config.home.homeDirectory}/Downloads"
+          "file://${config.home.homeDirectory}/Music"
+          "file://${config.home.homeDirectory}/Pictures"
+          "file://${config.home.homeDirectory}/Public"
+          "file://${config.home.homeDirectory}/Templates"
+          "file://${config.home.homeDirectory}/Videos"
+        ]);
     };
 }

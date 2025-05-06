@@ -19,6 +19,8 @@ in {
         iconFlavor = "mocha";
         iconAccent = "red";
       };
+
+      qt.enable = true;
     };
 
     graphical = {
@@ -141,6 +143,7 @@ in {
       nautilus = {
         enable = true;
         enableVideoThumbnailer = true;
+        addUserDirsToSidebar = true;
         openTerminalAction = "kitty";
         bookmarks = [];
       };
