@@ -72,9 +72,6 @@
 
           name = "Papirus-Dark";
         };
-
-        # TODO MOVE IN NAUTILUS DIRECTLY
-        #gtk3.bookmarks = cfg.bookmarks;
       };
 
       dconf.settings."org/gnome/desktop/interface" = {

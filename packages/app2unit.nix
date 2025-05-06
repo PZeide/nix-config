@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  ...
 }:
 pkgs.stdenvNoCC.mkDerivation {
   pname = "app2unit";

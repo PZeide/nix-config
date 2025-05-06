@@ -2,6 +2,7 @@
   imports = [
     ./gaming
     ./starship
+    ./anyrun.nix
     ./cli.nix
     ./daily.nix
     ./helix.nix
