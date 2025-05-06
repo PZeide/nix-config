@@ -11,13 +11,13 @@
 in {
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/jane.jpg";
+      wallpaper = asset "wallpapers/zani.jpg";
       polarity = "dark";
 
       gtk = {
         enable = true;
         iconFlavor = "mocha";
-        iconAccent = "red";
+        iconAccent = "rosewater";
       };
 
       qt.enable = true;
@@ -138,6 +138,8 @@ in {
         cider.enable = true;
         fragments.enable = true;
         goofcord.enable = true;
+        proton-pass.enable = true;
+        proton-vpn.enable = true;
       };
 
       helix = {
@@ -162,7 +164,7 @@ in {
         enable = true;
 
         colorTheme = {
-          name = "Bearded Theme Black & Ruby";
+          name = "Bearded Theme Anthracite";
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
         };
 

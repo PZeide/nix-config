@@ -17,6 +17,8 @@
     cider.enable = mkEnableOption "cider (apple music player)";
     fragments.enable = mkEnableOption "fragments (torrent downloader)";
     goofcord.enable = mkEnableOption "goofcord (goofy discord client)";
+    proton-pass.enable = mkEnableOption "proton-pass (password manager)";
+    proton-vpn.enable = mkEnableOption "proton-vpn (VPN)";
   };
 
   config = let
@@ -58,6 +60,12 @@
       })
       (lib.mkIf selfConfig.goofcord.enable {
         home.packages = [pkgs.zeide.goofcord];
+      })
+      (lib.mkIf selfConfig.proton-pass.enable {
+        home.packages = [pkgs.proton-pass];
+      })
+      (lib.mkIf selfConfig.proton-vpn.enable {
+        home.packages = [pkgs.protonvpn-gui];
       })
     ];
 }
