@@ -176,6 +176,12 @@ in {
 
     services = {
       clipboard.enable = true;
+
+      easyeffects = {
+        enable = true;
+        enableDefaultPreset = true;
+      };
+
       keyring.enable = true;
       udiskie.enable = true;
       wakatime.enable = true;

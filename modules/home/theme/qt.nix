@@ -11,6 +11,10 @@
     selfConfig = config.zeide.theme.qt;
   in
     lib.mkIf selfConfig.enable {
-      stylix.targets.qt.enable = true;
+      stylix.targets.qt = {
+        enable = true;
+        # Default platform (kvantum) looks really ugly
+        platform = "gnome";
+      };
     };
 }
