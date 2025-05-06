@@ -32,6 +32,7 @@
   imports = [
     ./cursor.nix
     ./gtk.nix
+    ./qt.nix
 
     inputs.stylix.homeManagerModules.stylix
   ];

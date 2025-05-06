@@ -2,13 +2,10 @@
 Todo:
   Features:
     ☐ FEAT - EasyEffects with declarative configuration
-    ☐ FEAT - OBS Studio
     ☐ FEAT - mpv (stylix?)
-    ☐ FEAT - QT Theming
     ☐ FEAT - screenshot shortcut with selector + annotation tool
 
   Bugs:
-    ☐ BUG - Missing user directories in Nautilus sidebar @high
     ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical
     ☐ BUG - DX12 games using VK_KHR_present_wait cause crash @temporary-fix @high
     ☐ BUG - Dual GPU cause a gamescope crash with wayland backend @temporary-fix @high
@@ -41,3 +38,6 @@ Archive:
     ✔ Gamemode
     ✔ Full Wayland
   ✔ FEAT - Replace xdg-open with app2unit
+  ✔ FEAT - OBS Studio
+  ✔ FEAT - QT Theming
+  ✔ BUG - Missing user directories in Nautilus sidebar @high
