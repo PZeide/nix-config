@@ -16,7 +16,7 @@
 
     fileName = mkOption {
       type = types.str;
-      default = "%Y-%m-%d_%H:%M:%S.png";
+      default = "satty_%Y-%m-%d_%H:%M:%S.png";
       description = "Filename of the screenshot (supports https://docs.rs/chrono/latest/chrono/format/strftime/index.html).";
     };
   };

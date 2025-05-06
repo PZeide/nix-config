@@ -144,6 +144,7 @@ in {
       };
 
       kitty.enable = true;
+      mpv.enable = true;
 
       nautilus = {
         enable = true;
