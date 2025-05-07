@@ -86,13 +86,10 @@
       gtk.gtk3.bookmarks =
         selfConfig.bookmarks
         ++ (lib.optionals selfConfig.addUserDirsToSidebar [
-          "file://${config.home.homeDirectory}/Desktop"
           "file://${config.home.homeDirectory}/Documents"
           "file://${config.home.homeDirectory}/Downloads"
           "file://${config.home.homeDirectory}/Music"
           "file://${config.home.homeDirectory}/Pictures"
-          "file://${config.home.homeDirectory}/Public"
-          "file://${config.home.homeDirectory}/Templates"
           "file://${config.home.homeDirectory}/Videos"
         ]);
     };
