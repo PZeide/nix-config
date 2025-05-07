@@ -31,6 +31,11 @@
       if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
       then "split:movetoworkspacesilent"
       else "movetoworkspacesilent";
+
+    # FIXME https://github.com/hyprwm/hyprland-plugins/issues/119
+    hyprExpoFix = ''
+      exec, if [ "$(hyprctl activewindow -j | jq '.fullscreen')" != "0" ]; then hyprctl dispatch fullscreen; fi ; hyprctl dispatch hyprexpo:expo toggle
+    '';
   in {
     wayland.windowManager.hyprland.settings = {
       "$mainMod" = "SUPER";
@@ -82,7 +87,7 @@
           8
           9
         ]
-        ++ lib.optional config.zeide.graphical.hyprland.plugins.hyprexpo.enable "$mainMod, Tab, hyprexpo:expo, toggle"
+        ++ lib.optional config.zeide.graphical.hyprland.plugins.hyprexpo.enable "$mainMod, Tab, ${hyprExpoFix}"
         ++ selfConfig.extra;
 
       bindm = [
