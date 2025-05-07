@@ -25,6 +25,7 @@
     lib.mkIf selfConfig.enable {
       home.file = {
         ".zen/default/chrome/pineapple-fried".source = "${inputs.zen-pineapple-fried}/pineapple-fried";
+        ".zen/default/chrome/advanced-tab-groups/tabgroups.css".source = "${inputs.zen-advanced-tab-groups}/tabgroups.css";
         ".zen/default/zen-themes.json".source = asset "zen/zen-themes.json";
       };
 
@@ -92,6 +93,7 @@
 
           userChrome = ''
             @import "pineapple-fried/pineapple-fried.css";
+            @import "advanced-tab-groups/tabgroups.css";
 
             :root {
               --zen-themed-toolbar-bg-transparent: #151d2096 !important;
@@ -165,6 +167,12 @@
 
             # Enable Linux transparency
             "zen.widget.linux.transparency" = true;
+
+            # Enable and configure tab groups (experimental)
+            "browser.tabs.groups.enabled" = true;
+            "tab.groups.background" = true;
+            "tab.groups.borders" = true;
+            "tab.groups.theme-folders" = true;
 
             # Set zen preferences
             "zen.theme.accent-color" = base0B;

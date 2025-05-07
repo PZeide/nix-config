@@ -1410,6 +1410,7 @@
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "stylix": "stylix",
         "zeide-shell": "zeide-shell",
+        "zen-advanced-tab-groups": "zen-advanced-tab-groups",
         "zen-browser": "zen-browser",
         "zen-pineapple-fried": "zen-pineapple-fried"
       }
@@ -1892,6 +1893,22 @@
       "original": {
         "owner": "PZeide",
         "repo": "nix-shell",
+        "type": "github"
+      }
+    },
+    "zen-advanced-tab-groups": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1746111456,
+        "narHash": "sha256-2tiRa4pFhuVUVqa/2MQnhsbACQ1QspWWNU0hZ6DFZx4=",
+        "owner": "Anoms12",
+        "repo": "Advanced-Tab-Groups",
+        "rev": "0da4ba65b84ea990f2bbdfa7e4d30ce98bf84614",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Anoms12",
+        "repo": "Advanced-Tab-Groups",
         "type": "github"
       }
     },

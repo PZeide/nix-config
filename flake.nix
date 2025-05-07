@@ -132,6 +132,11 @@
       flake = false;
     };
 
+    zen-advanced-tab-groups = {
+      url = "github:Anoms12/Advanced-Tab-Groups";
+      flake = false;
+    };
+
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
