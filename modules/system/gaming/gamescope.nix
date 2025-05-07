@@ -45,9 +45,23 @@
     lib.mkIf selfConfig.enable {
       environment.systemPackages = with pkgs; [mangohud];
 
+      # FIXME Use ananicy because gamescope can't manage it's own niceness
+      services.ananicy = {
+        enable = true;
+        package = pkgs.ananicy-cpp;
+        rulesProvider = pkgs.ananicy-cpp;
+        extraRules = [
+          {
+            "name" = "gamescope";
+            "nice" = -20;
+          }
+        ];
+      };
+
       programs.gamescope = {
         enable = true;
-        capSysNice = true;
+        capSysNice = false;
+
         env =
           {
             # FIXME Remove when fixed on stable nvidia
@@ -59,9 +73,9 @@
             __GLX_VENDOR_LIBRARY_NAME = "nvidia";
           }
           // lib.mkIf selfConfig.exposeNvidiaGpu {
-            PROTON_HIDE_NVIDIA_GPU = 0;
-            PROTON_ENABLE_NVAPI = 1;
-            PROTON_ENABLE_NGX_UPDATER = 1;
+            PROTON_HIDE_NVIDIA_GPU = "0";
+            PROTON_ENABLE_NVAPI = "1";
+            PROTON_ENABLE_NGX_UPDATER = "1";
           };
 
         args =
@@ -78,8 +92,7 @@
             "--generate-drm-mode fixed"
             "--adaptive-sync"
           ]
-          ++ lib.optional selfConfig.enableMangoHud "--mangoapp"
-          ++ lib.optional config.zeide.gaming.steam.enable "--steam";
+          ++ lib.optional selfConfig.enableMangoHud "--mangoapp";
       };
     };
 }

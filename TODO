@@ -6,6 +6,7 @@ Todo:
     ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical
     ☐ BUG - DX12 games using VK_KHR_present_wait cause crash @temporary-fix @high
     ☐ BUG - Dual GPU cause a gamescope crash with wayland backend @temporary-fix @high
+    ☐ BUG - GameScope cannot set nice level @temporary-fix @critical
 
   Updates:
     ☐ UPDT - waydroid-helper - unstable
