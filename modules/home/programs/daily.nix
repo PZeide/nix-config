@@ -53,7 +53,7 @@
         home.packages = [pkgs.pods];
       })
       (lib.mkIf selfConfig.cider.enable {
-        home.packages = [pkgs.zeide.cider-taproom];
+        home.packages = [pkgs.zeide.cider];
       })
       (lib.mkIf selfConfig.fragments.enable {
         home.packages = [pkgs.fragments];
