@@ -98,6 +98,8 @@ in {
     programs = {
       gaming = {
         bottles.enable = true;
+        mangohud.enable = true;
+
         prism-launcher = {
           enable = true;
           enableAllJdks = true;
