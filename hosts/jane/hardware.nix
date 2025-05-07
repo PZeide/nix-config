@@ -65,15 +65,10 @@
   };
 
   fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/A8DCCD9EDCCD6762";
-    fsType = "ntfs3";
+    device = "/dev/disk/by-uuid/b17035bd-13ff-4864-88b7-03e21f34d603";
+    fsType = "btrfs";
     options = [
-      "uid=1000"
-      "gid=1000"
-      "fmask=133"
-      "dmask=022"
-      "nohidden"
-      "windows_names"
+      "noatime"
       "x-gvfs-show"
     ];
   };
