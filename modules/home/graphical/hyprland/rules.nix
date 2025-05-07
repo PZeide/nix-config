@@ -42,6 +42,8 @@
           "opacity 1 override, class:^(com.obsproject.Studio)$"
           "opacity 1 override, class:^(Waydroid)$"
           "opacity 1 override, class:^(waydroid.*)$"
+          "opacity 1 override, class:^(steam_proton)$"
+          "opacity 1 override, class:^(steam_app_.*)$"
         ]
         ++ selfConfig.windows;
 
