@@ -5,6 +5,7 @@
         app2unit = callPackage ./app2unit.nix {};
         cider = callPackage ./cider.nix {};
         goofcord = callPackage ./goofcord.nix {};
+        proton-tkg-bin = callPackage ./proton-tkg-bin.nix {};
       };
     })
   ];
