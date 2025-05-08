@@ -14,12 +14,6 @@
       description = "Whether to use nvidia prime in gamescope session";
     };
 
-    exposeNvidiaGpu = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Whether to expose Nvidia GPU to the game (to enable RayTracing and DLSS)";
-    };
-
     gamescopeWidth = mkOption {
       type = types.int;
       default = 1920;
@@ -62,21 +56,11 @@
         enable = true;
         capSysNice = false;
 
-        env =
-          {
-            # FIXME Remove when fixed on stable nvidia
-            VKD3D_DISABLE_EXTENSIONS = "VK_KHR_present_wait";
-          }
-          // lib.mkIf selfConfig.useNvidiaPrime {
-            __NV_PRIME_RENDER_OFFLOAD = "1";
-            __VK_LAYER_NV_optimus = "NVIDIA_only";
-            __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-          }
-          // lib.mkIf selfConfig.exposeNvidiaGpu {
-            PROTON_HIDE_NVIDIA_GPU = "0";
-            PROTON_ENABLE_NVAPI = "1";
-            PROTON_ENABLE_NGX_UPDATER = "1";
-          };
+        env = lib.mkIf selfConfig.useNvidiaPrime {
+          __NV_PRIME_RENDER_OFFLOAD = "1";
+          __VK_LAYER_NV_optimus = "NVIDIA_only";
+          __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        };
 
         args =
           [
