@@ -23,7 +23,6 @@
 
         extraCompatPackages = with pkgs; [
           proton-ge-bin
-          zeide.proton-tkg-bin
         ];
       };
     };

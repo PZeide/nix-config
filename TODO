@@ -1,12 +1,15 @@
 
 Todo:
   Features:
+    ☐ FEAT - Ability to hide Waydroid base entries
 
   Bugs:
     ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical
     ☐ BUG - DX12 games using VK_KHR_present_wait cause crash @temporary-fix @high
     ☐ BUG - Dual GPU cause a gamescope crash with wayland backend @temporary-fix @high
     ☐ BUG - GameScope cannot set nice level @temporary-fix @critical
+    ☐ BUG - udiskie in tray even when no devices plugged @high
+    ☐ BUG - remove network manager from tray @high
 
   Updates:
     ☐ UPDT - waydroid-helper - unstable

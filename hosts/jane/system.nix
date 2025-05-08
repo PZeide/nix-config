@@ -59,6 +59,8 @@
     };
 
     gaming = {
+      exposeNvidiaGpu = true;
+
       aagl = {
         enableGI = true;
         enableHSR = true;
@@ -71,7 +73,6 @@
         enable = true;
         enableMangoHud = true;
         useNvidiaPrime = true;
-        exposeNvidiaGpu = true;
 
         gamescopeWidth = 1920;
         gamescopeHeight = 1080;
