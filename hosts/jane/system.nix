@@ -59,6 +59,12 @@
     };
 
     gaming = {
+      aagl = {
+        enableGI = true;
+        enableHSR = true;
+        enableZZZ = true;
+      };
+
       gamemode.enable = true;
 
       gamescope = {
