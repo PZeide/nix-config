@@ -5,9 +5,9 @@
   ...
 }: {
   options.zeide.gaming.aagl = with lib; {
-    enableGI = mkEnableOption "gi (through anime-game-launcher)";
-    enableHSR = mkEnableOption "HSR (through honkers-railway-launcher)";
-    enableZZZ = mkEnableOption "zzz (through sleepy-launcher)";
+    enableGI = mkEnableOption "Genshin Impact (through anime-game-launcher)";
+    enableHSR = mkEnableOption "Honkai: Star Rail (through honkers-railway-launcher)";
+    enableZZZ = mkEnableOption "Zenless Zone Zero (through sleepy-launcher)";
   };
 
   imports = [inputs.aagl.nixosModules.default];
