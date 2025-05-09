@@ -32,7 +32,7 @@
 
         lowLatency = lib.mkIf selfConfig.enableLowLatency {
           enable = true;
-          quantum = 64;
+          quantum = 128;
           rate = 48000;
         };
       };
