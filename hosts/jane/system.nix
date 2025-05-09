@@ -44,7 +44,12 @@
     };
 
     shell.fishIntegration = true;
-    swap.enable = true;
+
+    swap = {
+      # File swap is required for HybridSleep to work
+      enableFile = true;
+      enableZram = true;
+    };
 
     time = {
       enable = true;

@@ -57,7 +57,6 @@ in {
 
         rules = {
           windows = [
-            "fullscreen, class:^(waydroid.com.YoStarEN.AzurLane)$"
             "workspace special:azurlane, class:^(waydroid.com.YoStarEN.AzurLane)$"
             "workspace special:cider, class:^(Cider)$"
           ];

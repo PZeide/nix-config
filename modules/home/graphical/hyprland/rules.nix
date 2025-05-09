@@ -41,13 +41,13 @@
           "opacity 1 override, class:^(org.gnome.Papers)$"
           "opacity 1 override, class:^(com.obsproject.Studio)$"
           "opacity 1 override, class:^(Waydroid)$"
-          "opacity 1 override, class:^(waydroid.*)$"
 
           # Games
           "tag +game, title:^(Wuthering Waves  )$" # Window name has two spaces at the end ?????
           "tag +game, class:^(genshinimpact.exe)$"
           "tag +game, class:^(starrail.exe)$"
           "tag +game, class:^(zenlesszonezero.exe)$"
+          "tag +game, class:^(waydroid.com.YoStarEN.AzurLane)$"
 
           "opacity 1 override, tag:game"
           "renderunfocused, tag:game"

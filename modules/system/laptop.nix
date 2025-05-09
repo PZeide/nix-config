@@ -16,7 +16,11 @@
         # On laptop, short press on power key should suspend instead of shutdown
         logind.powerKey = "suspend";
 
-        upower.enable = true;
+        upower = {
+          enable = true;
+          criticalPowerAction = "HybridSleep";
+        };
+
         tlp.enable = selfConfig.enableTlp;
       };
 
