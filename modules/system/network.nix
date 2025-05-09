@@ -32,7 +32,11 @@
           dns = "systemd-resolved";
         };
 
-        firewall.enable = selfConfig.enableFirewall;
+        firewall = {
+          enable = selfConfig.enableFirewall;
+          # Required by some VPN services
+          checkReversePath = "loose";
+        };
       };
 
       services.resolved = {
