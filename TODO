@@ -1,7 +1,6 @@
 
 Todo:
   Features:
-    ☐ FEAT - Ability to hide Waydroid base entries
 
   Bugs:
     ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical
@@ -46,3 +45,4 @@ Archive:
   ✔ FEAT - screenshot shortcut with selector + annotation tool
   ✔ FEAT - mpv (stylix?)
   ✔ FEAT - EasyEffects with declarative configuration
+  ✔ FEAT - Ability to hide Waydroid base entries
