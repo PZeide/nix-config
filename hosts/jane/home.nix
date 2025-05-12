@@ -103,8 +103,6 @@ in {
           enable = true;
           enableAllJdks = true;
         };
-
-        waydroid.hideDefaultEntries = true;
       };
 
       starship = {
