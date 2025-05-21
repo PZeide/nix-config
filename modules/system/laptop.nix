@@ -21,7 +21,12 @@
           criticalPowerAction = "HybridSleep";
         };
 
-        tlp.enable = selfConfig.enableTlp;
+        tlp = lib.mkIf selfConfig.enableTlp {
+          enable = true;
+          settings = {
+            RESTORE_DEVICE_STATE_ON_STARTUP = 1;
+          };
+        };
       };
 
       # Enable userspace backlight control
