@@ -1,5 +1,4 @@
 {
-  config,
   modulesPath,
   inputs,
   ...
@@ -20,8 +19,6 @@
     amdgpu.initrd.enable = false;
 
     nvidia = {
-      # Fixes some DX12 game issues
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
       modesetting.enable = true;
       powerManagement.finegrained = true;
 
