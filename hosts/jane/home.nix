@@ -87,7 +87,7 @@ in {
 
           hyprpicker.enable = true;
           screenshot.enable = true;
-          zeide-shell.enable = false;
+          zeide-shell.enable = true;
         };
       };
     };
@@ -98,6 +98,7 @@ in {
       gaming = {
         bottles.enable = true;
         mangohud.enable = true;
+        osu-lazer.enable = true;
 
         prism-launcher = {
           enable = true;
