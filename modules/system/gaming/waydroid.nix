@@ -19,6 +19,9 @@
       virtualisation.waydroid.enable = true;
 
       environment.etc."waydroid.cfg".source = waydroidConfig;
-      environment.systemPackages = with pkgs; [waydroid-helper];
+      environment.systemPackages = with pkgs; [
+        waydroid-helper
+        wl-clipboard
+      ];
     };
 }
