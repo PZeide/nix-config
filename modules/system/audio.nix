@@ -29,12 +29,7 @@
         };
 
         wireplumber.enable = true;
-
-        lowLatency = lib.mkIf selfConfig.enableLowLatency {
-          enable = true;
-          quantum = 128;
-          rate = 48000;
-        };
+        lowLatency.enable = selfConfig.enableLowLatency;
       };
 
       services.pulseaudio.enable = lib.mkForce false;

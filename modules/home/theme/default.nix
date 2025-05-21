@@ -34,7 +34,7 @@
     ./gtk.nix
     ./qt.nix
 
-    inputs.stylix.homeManagerModules.stylix
+    inputs.stylix.homeModules.stylix
   ];
 
   config = let
