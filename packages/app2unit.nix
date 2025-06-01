@@ -10,8 +10,8 @@ stdenvNoCC.mkDerivation {
   src = fetchFromGitHub {
     owner = "Vladimir-csp";
     repo = "app2unit";
-    rev = "44b5da8a6f1e5449d3c2a8b63dc54875bb7e10af";
-    hash = "sha256-SJVGMES0tmdAhh2u8IpGAITtSnDrgSfOQbDX9RhOc/M=";
+    rev = "7b9672a2dc16bdfbe7b7b7c27043529ca3bcb6ae";
+    hash = "sha256-8/H0M9bFppZE6JHm6seZq9X/u6HyPncvd2CUcnbptg0=";
   };
 
   installPhase = ''
