@@ -10,7 +10,7 @@
 
     monitors = mkOption {
       type = with types; listOf str;
-      default = [", preferred, auto, 1"];
+      default = [];
       description = ''
         Monitors configuration of Hyprland.
       '';
@@ -99,6 +99,8 @@
         portalPackage = osConfig.programs.hyprland.portalPackage;
 
         settings = {
+          monitor = selfConfig.monitors ++ [", highres, auto, 1"];
+
           general = {
             border_size = 2;
             gaps_in = 6;

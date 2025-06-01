@@ -108,12 +108,12 @@
 
       bindel =
         lib.optionals osConfig.zeide.audio.enable [
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 2%+"
+          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%-"
+          ", XF86AudioRaiseVolume, exec, wpctl set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 4%+"
         ]
         ++ lib.optionals osConfig.zeide.laptop.enable [
-          ", XF86MonBrightnessUp, exec, brillo -u 100000 -A 2"
-          ", XF86MonBrightnessDown, exec, brillo -u 100000 -U 2"
+          ", XF86MonBrightnessUp, exec, brillo -u 300000 -A 5"
+          ", XF86MonBrightnessDown, exec, brillo -u 300000 -U 5"
         ];
     };
   };

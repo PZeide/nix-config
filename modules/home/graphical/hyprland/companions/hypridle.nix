@@ -35,6 +35,7 @@
 
         settings = {
           general = {
+            lock_cmd = "pidof hyprlock || hyprlock";
             before_sleep_cmd = "loginctl lock-session";
             after_sleep_cmd = "hyprctl dispatch dpms on";
           };
@@ -42,17 +43,20 @@
           listener =
             [
               {
-                timeout = 300;
+                timeout = 600;
                 on-timeout = "hyprctl dispatch dpms off && loginctl lock-session";
-                on-resume = "hyprctl dispatch dpms on";
+                on-resume =
+                  if selfConfig.dimBacklight
+                  then "hyprctl dispatch dpms on && brillo -I"
+                  else "hyprctl dispatch dpms on";
               }
               {
-                timeout = 600;
+                timeout = 900;
                 on-timeout = "systemctl suspend";
               }
             ]
             ++ lib.optional selfConfig.dimBacklight {
-              timeout = 180;
+              timeout = 300;
               on-timeout = "brillo -O && brillo -u 500000 -S 20%";
               on-resume = "brillo -I";
             };

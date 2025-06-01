@@ -56,8 +56,8 @@
         ++ selfConfig.windows;
 
       layerrule = [
-        "blur, gtk4-layer-shell"
-        "ignorezero, gtk4-layer-shell"
+        "blur, zs-.*"
+        "ignorezero, zs-.*"
       ];
 
       workspace = selfConfig.workspaces;

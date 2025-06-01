@@ -48,7 +48,7 @@
       settings = {
         auto-optimise-store = selfConfig.autoOptimiseStore;
         builders-use-substitutes = true;
-        experimental-features = ["nix-command" "flakes"];
+        experimental-features = ["nix-command" "flakes" "repl-flake"];
 
         trusted-users = ["root" "@wheel"];
       };
