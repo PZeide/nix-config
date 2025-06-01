@@ -25,7 +25,7 @@
     lib.mkIf selfConfig.enable {
       home.file = {
         ".zen/default/chrome/pineapple-fried".source = "${inputs.zen-pineapple-fried}/pineapple-fried";
-        ".zen/default/chrome/advanced-tab-groups/tabgroups.css".source = "${inputs.zen-advanced-tab-groups}/tabgroups.css";
+        ".zen/default/chrome/advanced-tab-groups/tabgroups.css".source = "${inputs.zen-advanced-tab-groups}/chrome.css";
         ".zen/default/zen-themes.json".source = asset "zen/zen-themes.json";
       };
 
