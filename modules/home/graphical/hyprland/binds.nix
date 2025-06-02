@@ -112,8 +112,8 @@
           ", XF86AudioRaiseVolume, exec, wpctl set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 4%+"
         ]
         ++ lib.optionals osConfig.zeide.laptop.enable [
-          ", XF86MonBrightnessUp, exec, brillo -u 300000 -A 5"
-          ", XF86MonBrightnessDown, exec, brillo -u 300000 -U 5"
+          ", XF86MonBrightnessUp, exec, brillo -A 5"
+          ", XF86MonBrightnessDown, exec, brillo -U 5"
         ];
     };
   };
