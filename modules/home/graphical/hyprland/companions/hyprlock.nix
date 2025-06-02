@@ -122,7 +122,14 @@
         inhibit_sleep = 3;
       };
 
-      systemd.user.services.hyprlock-autostart = lib.mkIf selfConfig.autostartOnGraphical {
+      wayland.windowManager.hyprland.settings.exec-once = let
+        config = pkgs.writeText "hyprlock-autostart.conf" "${autostartConfig}";
+      in
+        lib.optional selfConfig.autostartOnGraphical "${lib.getExe pkgs.hyprlock} -c ${config} || hyprctl dispatch exit";
+
+      # exec-once run usually faster
+      /*
+        systemd.user.services.hyprlock-autostart = lib.mkIf selfConfig.autostartOnGraphical {
         Unit = {
           Description = "hyprlock-autostart";
           After = ["graphical-session.target"];
@@ -132,9 +139,7 @@
 
         Service = {
           Type = "simple";
-          ExecStart = "${lib.getExe pkgs.hyprlock} -c ${
-            pkgs.writeText "hyprlock-autostart.conf" "${autostartConfig}"
-          }";
+          ExecStart = "";
           # Immediately exit hyprland if hyprlock-autostart fail
           ExecStopPost = "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then hyprctl dispatch exit; fi'";
           Restart = "no";
@@ -142,5 +147,6 @@
 
         Install.WantedBy = ["graphical-session.target"];
       };
+      */
     };
 }

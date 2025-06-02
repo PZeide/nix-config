@@ -16,7 +16,7 @@
     selfConfig = config.zeide.gaming.aagl;
   in {
     programs.anime-game-launcher.enable = selfConfig.enableGI;
-    programs.sleepy-launcher.enable = selfConfig.enableHSR;
-    programs.honkers-railway-launcher.enable = selfConfig.enableZZZ;
+    programs.honkers-railway-launcher.enable = selfConfig.enableHSR;
+    programs.sleepy-launcher.enable = selfConfig.enableZZZ;
   };
 }

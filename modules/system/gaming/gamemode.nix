@@ -22,5 +22,9 @@
           };
         };
       };
+
+      users.users.${config.zeide.user} = {
+        extraGroups = ["gamemode"];
+      };
     };
 }
