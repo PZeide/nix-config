@@ -52,6 +52,7 @@
           "opacity 1 override, tag:game"
           "renderunfocused, tag:game"
           "fullscreen, tag:game"
+          "immediate, tag:game"
         ]
         ++ selfConfig.windows;
 
