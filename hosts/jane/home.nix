@@ -131,7 +131,6 @@ in {
         seahorse.enable = true;
         mission-center.enable = true;
         overskride.enable = true;
-        nm-applet.enable = true;
         disk-utility.enable = true;
         loupe.enable = true;
         file-roller.enable = true;
@@ -150,6 +149,7 @@ in {
       };
 
       kitty.enable = true;
+      librepods.enable = true;
       mpv.enable = true;
 
       nautilus = {
