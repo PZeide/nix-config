@@ -12,11 +12,11 @@
 }:
 appimageTools.wrapType2 rec {
   pname = "goofcord";
-  version = "1.10.0";
+  version = "1.10.1";
 
   src = fetchurl {
     url = "https://github.com/Milkshiift/GoofCord/releases/download/v${version}/GoofCord-${version}-linux-x86_64.AppImage";
-    hash = "sha256-pOV58mNaiPHUrmDL+AU+1KOqE5ONyv4AGUm6sfJJn/8=";
+    hash = "sha256-dsYwa/cCO6LjY7CYeCpNHY+MOvYM7tzJZnoBWjyD++Y=";
   };
 
   nativeBuildInputs = [makeWrapper];
