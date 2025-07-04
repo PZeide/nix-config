@@ -29,3 +29,8 @@
 @define-color popover_shade_color rgba(0, 0, 0, 0.07);
 @define-color shade_color rgba(0, 0, 0, 0.07);
 @define-color scrollbar_outline_color #{{base02-hex}};
+
+# Fixes https://github.com/nix-community/stylix/issues/1560
+.dialog-action-area > .text-button {
+  color: @dialog_fg_color;
+}

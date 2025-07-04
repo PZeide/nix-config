@@ -86,7 +86,7 @@
 
       optimizations.enable = true;
       steam.enable = true;
-      waydroid.enable = true;
+      #waydroid.enable = true;
     };
 
     graphical = {

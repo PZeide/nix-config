@@ -11,7 +11,7 @@
 in {
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/zani.jpg";
+      wallpaper = asset "wallpapers/carlotta-4.jpg";
       polarity = "dark";
 
       gtk = {
@@ -149,7 +149,6 @@ in {
       };
 
       kitty.enable = true;
-      librepods.enable = true;
       mpv.enable = true;
 
       nautilus = {
@@ -188,6 +187,12 @@ in {
       };
 
       keyring.enable = true;
+
+      librepods = {
+        enable = true;
+        phoneMacAddress = "28:2D:7F:DF:BC:76";
+      };
+
       udiskie.enable = true;
       wakatime.enable = true;
 
