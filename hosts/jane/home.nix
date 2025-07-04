@@ -11,7 +11,7 @@
 in {
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/carlotta-4.jpg";
+      wallpaper = asset "wallpapers/carlotta-2.png";
       polarity = "dark";
 
       gtk = {
