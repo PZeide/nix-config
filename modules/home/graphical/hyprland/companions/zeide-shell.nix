@@ -32,14 +32,14 @@
         };
 
         Install.WantedBy = ["graphical-session.target"];
-      };
+      };dawdaw
       */
 
       xdg.configFile."quickshell/caelestia".source = pkgs.fetchFromGitHub {
         owner = "caelestia-dots";
         repo = "shell";
-        rev = "8af10012b9527e3e4a894e4a3c0fd8ea9ac0e132";
-        hash = "sha256-wyx+CjtyryzULsWAJ9GHczNHBBJPNOlGjuAbG92UvOQ=";
+        rev = "1bd92b47406b352c72a54ca56e3b29ea5dfb5402";
+        hash = "sha256-U3PVdMRpc7f1k3wxGtpWIDzwmqHgaMj4ZcODT2QrCEs=";
       };
 
       wayland.windowManager.hyprland.settings = {

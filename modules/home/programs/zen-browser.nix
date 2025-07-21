@@ -20,6 +20,7 @@
       proton-pass
       sponsorblock
       kagi-search
+      violentmonkey
     ];
   in
     lib.mkIf selfConfig.enable {

@@ -80,6 +80,7 @@
               dbaeumer.vscode-eslint
               bradlc.vscode-tailwindcss
               vue.volar
+              svelte.svelte-vscode
               prisma.prisma
 
               # GraphQL
@@ -178,6 +179,8 @@
                   "textDocument/formatting"
                   "textDocument/definition"
                 ];
+
+                "svelte.enable-ts-plugin" = true;
 
                 "workbench.colorCustomizations" = {
                   "[${selfConfig.colorTheme.name}]" = with config.lib.stylix.colors.withHashtag; {

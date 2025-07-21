@@ -9,6 +9,8 @@
   appLaunchPrefix = "${lib.getExe pkgs.zeide.app2unit} -s a --";
   wrapAppUnit = app: "${appLaunchPrefix} ${app}";
 in {
+  home.packages = [pkgs.nyaa pkgs.qbittorrent-enhanced pkgs.lunar-client];
+
   zeide = {
     theme = {
       wallpaper = asset "wallpapers/carlotta-2.png";
