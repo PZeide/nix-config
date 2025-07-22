@@ -14,14 +14,10 @@
     lib.mkIf selfConfig.enable {
       assertions = [
         {
-          assertion = osConfig.zeide.services.gnome.enableKeyring;
-          message = "osConfig.zeide.services.gnome.enableKeyring is required to enable user integration.";
+          assertion = osConfig.zeide.services.keyring.enable;
+          message = "osConfig.zeide.services.keyring.enable is required to enable user integration.";
         }
       ];
-
-      home.sessionVariables = {
-        SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
-      };
 
       services.gnome-keyring = {
         enable = true;

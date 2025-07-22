@@ -8,7 +8,6 @@
     ./helix.nix
     ./kitty.nix
     ./mpv.nix
-    ./nautilus.nix
     ./obs-studio.nix
     ./vscodium.nix
     ./zen-browser.nix

@@ -4,7 +4,7 @@
     ./hyprlock.nix
     ./hyprpaper.nix
     ./hyprpicker.nix
+    ./hyprpolkit.nix
     ./screenshot.nix
-    ./zeide-shell.nix
   ];
 }

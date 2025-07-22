@@ -106,15 +106,13 @@
     };
 
     services = {
-      gnome = {
-        enableGvfs = true;
-        enablePolkit = true;
-        enableKeyring = true;
-        unlockKeyringServices = ["hyprlock"];
-        fixNautilusExtensions = true;
+      ios.enable = true;
+
+      keyring = {
+        enable = true;
+        unlockServices = ["hyprlock"];
       };
 
-      ios.enable = true;
       location.enable = true;
       openssh.enable = true;
       udisks2.enable = true;

@@ -86,8 +86,8 @@ in {
           };
 
           hyprpicker.enable = true;
+          hyprpolkit.enable = true;
           screenshot.enable = true;
-          zeide-shell.enable = true;
         };
       };
     };
@@ -153,14 +153,6 @@ in {
       mpv = {
         enable = true;
         useOpenGL = true;
-      };
-
-      nautilus = {
-        enable = true;
-        enableVideoThumbnailer = true;
-        addUserDirsToSidebar = true;
-        openTerminalAction = "kitty";
-        bookmarks = [];
       };
 
       obs-studio.enable = true;
