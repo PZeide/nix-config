@@ -2,29 +2,34 @@
   description = "Zeide's NixOS configuration | @PZeide";
 
   inputs = {
+    # Nix
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Packages repositories
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Home Manager
+    home-manager.url = "github:nix-community/home-manager";
+
+    # Boot Manager
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Secrets
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -33,41 +38,32 @@
       };
     };
 
+    # Gaming
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Theming
     stylix = {
       url = "github:danth/stylix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
-
-    apple-fonts = {
-      url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
-
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
-
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-
     hyprsplit = {
       url = "github:shezdy/hyprsplit";
       inputs.hyprland.follows = "hyprland";
     };
-
     hypridle = {
       url = "github:hyprwm/hypridle";
       inputs = {
@@ -79,7 +75,6 @@
         systems.follows = "hyprland/systems";
       };
     };
-
     hyprlock = {
       url = "github:hyprwm/hyprlock";
       inputs = {
@@ -91,7 +86,6 @@
         systems.follows = "hyprland/systems";
       };
     };
-
     hyprpaper = {
       url = "github:hyprwm/hyprpaper";
       inputs = {
@@ -103,7 +97,6 @@
         systems.follows = "hyprland/systems";
       };
     };
-
     hyprpicker = {
       url = "github:hyprwm/hyprpicker";
       inputs = {
@@ -113,7 +106,6 @@
         systems.follows = "hyprland/systems";
       };
     };
-
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";
       inputs = {
@@ -122,41 +114,33 @@
       };
     };
 
+    # Zen Browser
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    zen-pineapple-fried = {
-      url = "github:TheBigWazz/Pineapple-Fried";
+    zen-nebula = {
+      url = "github:JustAdumbPrsn/Zen-Nebula";
       flake = false;
     };
 
-    zen-advanced-tab-groups = {
-      url = "github:Anoms12/Advanced-Tab-Groups";
-      flake = false;
-    };
-
+    # Gaming
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
+    # Fonts
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Soon BYE
     anyrun = {
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    zeide-shell = {
-      url = "github:PZeide/nix-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";

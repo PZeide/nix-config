@@ -55,7 +55,7 @@
         home.packages = [pkgs.fragments];
       })
       (lib.mkIf selfConfig.goofcord.enable {
-        home.packages = [pkgs.zeide.goofcord];
+        #home.packages = [pkgs.zeide.goofcord];
       })
       (lib.mkIf selfConfig.proton-pass.enable {
         home.packages = [pkgs.proton-pass];

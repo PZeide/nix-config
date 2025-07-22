@@ -7,13 +7,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "librepods";
-  version = "0.1.0-96ee241";
+  version = "0.1.0-72a7637";
 
   src = fetchFromGitHub {
     owner = "kavishdevar";
     repo = "librepods";
-    rev = "96ee2410e83cb2895da5dff05d019380ee1c0dae";
-    hash = "sha256-DQjlv4QmIDRTItIJAKxe9fTz7Aenqn1dl8owuU9FRSI=";
+    rev = "72a7637863488a27d2c42e3ac2bc81e4e4bc7aab";
+    hash = "sha256-/I+PFIFpGqPfQQ7NSBta+yBbIxYjjYK5D7T8oBc6CAE=";
   };
 
   nativeBuildInputs = [
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    mv applinux $out/bin/${pname}
+    mv librepods $out/bin/${pname}
   '';
 
   meta = {

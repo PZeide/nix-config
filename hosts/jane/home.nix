@@ -9,11 +9,9 @@
   appLaunchPrefix = "${lib.getExe pkgs.zeide.app2unit} -s a --";
   wrapAppUnit = app: "${appLaunchPrefix} ${app}";
 in {
-  home.packages = [pkgs.nyaa pkgs.qbittorrent-enhanced pkgs.lunar-client];
-
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/carlotta-2.png";
+      wallpaper = asset "wallpapers/carlotta/10.png";
       polarity = "dark";
 
       gtk = {
@@ -151,7 +149,11 @@ in {
       };
 
       kitty.enable = true;
-      mpv.enable = true;
+
+      mpv = {
+        enable = true;
+        useOpenGL = true;
+      };
 
       nautilus = {
         enable = true;
@@ -167,7 +169,7 @@ in {
         enable = true;
 
         colorTheme = {
-          name = "Bearded Theme Anthracite";
+          name = "Bearded Theme Arc";
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
         };
 

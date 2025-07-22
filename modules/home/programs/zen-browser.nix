@@ -1,9 +1,9 @@
 {
-  asset,
   config,
   lib,
   pkgs,
   inputs,
+  system,
   ...
 }: {
   options.zeide.programs.zen-browser = with lib; {
@@ -22,104 +22,90 @@
       kagi-search
       violentmonkey
     ];
+
+    policies = {
+      AutofillAddressEnabled = true;
+      AutofillCreditCardEnabled = false;
+      DisableAppUpdate = true;
+      DisableFeedbackCommands = true;
+      DisableFirefoxAccounts = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableSetDesktopBackground = true;
+      DisableTelemetry = true;
+      DontCheckDefaultBrowser = true;
+      NoDefaultBookmarks = true;
+      OfferToSaveLogins = false;
+
+      EnableTrackingProtection = {
+        Value = true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+
+      ExtensionSettings = builtins.listToAttrs (
+        builtins.map (
+          e:
+            lib.nameValuePair e.addonId {
+              installation_mode = "force_installed";
+              install_url = "file://${e.src}";
+              updates_disabled = true;
+            }
+        )
+        extensions
+      );
+
+      "3rdparty".Extensions."uBlock0@raymondhill.net" = {
+        adminSettings = {
+          selectedFilterLists = [
+            "ublock-filters"
+            "ublock-badware"
+            "ublock-privacy"
+            "ublock-unbreak"
+            "ublock-quick-fixes"
+            "ublock-annoyances"
+            "easylist"
+            "easylist-annoyances"
+            "easylist-chat"
+            "easylist-newsletters"
+            "easylist-notifications"
+            "easyprivacy"
+            "urlhaus-1"
+            "plowe-0"
+            "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
+          ];
+        };
+      };
+    };
+
+    zen-package = pkgs.wrapFirefox (inputs.zen-browser.packages.${system}.beta-unwrapped.override
+      {
+        policies = policies;
+      }) {};
   in
     lib.mkIf selfConfig.enable {
-      home.file = {
-        ".zen/default/chrome/pineapple-fried".source = "${inputs.zen-pineapple-fried}/pineapple-fried";
-        ".zen/default/chrome/advanced-tab-groups/tabgroups.css".source = "${inputs.zen-advanced-tab-groups}/chrome.css";
-        ".zen/default/zen-themes.json".source = asset "zen/zen-themes.json";
-      };
+      home.file.".zen/default/chrome/Nebula".source = "${inputs.zen-nebula}/Nebula";
 
       programs.zen-browser = {
         enable = true;
-
-        policies = {
-          AutofillAddressEnabled = true;
-          AutofillCreditCardEnabled = false;
-          DisableAppUpdate = true;
-          DisableFeedbackCommands = true;
-          DisableFirefoxAccounts = true;
-          DisableFirefoxStudies = true;
-          DisablePocket = true;
-          DisableSetDesktopBackground = true;
-          DisableTelemetry = true;
-          DontCheckDefaultBrowser = true;
-          NoDefaultBookmarks = true;
-          OfferToSaveLogins = false;
-
-          EnableTrackingProtection = {
-            Value = true;
-            Locked = true;
-            Cryptomining = true;
-            Fingerprinting = true;
-          };
-
-          ExtensionSettings = builtins.listToAttrs (
-            builtins.map (
-              e:
-                lib.nameValuePair e.addonId {
-                  installation_mode = "force_installed";
-                  install_url = "file://${e.src}";
-                  updates_disabled = true;
-                }
-            )
-            extensions
-          );
-
-          "3rdparty".Extensions."uBlock0@raymondhill.net" = {
-            adminSettings = {
-              selectedFilterLists = [
-                "ublock-filters"
-                "ublock-badware"
-                "ublock-privacy"
-                "ublock-unbreak"
-                "ublock-quick-fixes"
-                "ublock-annoyances"
-                "easylist"
-                "easylist-annoyances"
-                "easylist-chat"
-                "easylist-newsletters"
-                "easylist-notifications"
-                "easyprivacy"
-                "urlhaus-1"
-                "plowe-0"
-                "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
-              ];
-            };
-          };
-        };
+        package = lib.mkForce zen-package;
 
         profiles.default = with config.lib.stylix.colors.withHashtag; {
           isDefault = true;
 
           userChrome = ''
-            @import "pineapple-fried/pineapple-fried.css";
-            @import "advanced-tab-groups/tabgroups.css";
+            @import "Nebula/Nebula.css";
 
-            :root {
-              --zen-themed-toolbar-bg-transparent: #151d2096 !important;
-
-              &:-moz-window-inactive {
-                --zen-themed-toolbar-bg-transparent: #151d2078 !important;
-              }
-
-              --toolbox-bgcolor-inactive: transparent !important;
-            }
-
-            #zen-main-app-wrapper {
-              transition: background-color 200ms;
-            }
-
+            /* Disable close button */
             .titlebar-close {
-              display: none !important;
-            }
-
-            #zen-sidebar-top-buttons {
               display: none !important;
             }
           '';
 
-          userContent = builtins.readFile "${inputs.zen-pineapple-fried}/pineapple-fried/zen-new-tabs/zen-new-tabs.css";
+          userContent = ''
+            @import "Nebula/Nebula-content.css";
+          '';
 
           search = {
             force = true;
@@ -147,8 +133,9 @@
             # Allow transparent browser if no background is defined
             "browser.tabs.allow_transparent_browser" = true;
 
-            # Disable weather on new tab page
-            "browser.newtabpage.activity-stream.showWeather" = false;
+            # Blank startup and new tab page
+            "browser.newtabpage.enabled" = false;
+            "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
 
             # Attempts to reject cookies where possible and ignores other types of banners
             "cookiebanners.service.mode" = 1;
@@ -169,19 +156,25 @@
             # Enable Linux transparency
             "zen.widget.linux.transparency" = true;
 
+            # Don't disable transparency if inactive
+            "zen.view.grey-out-inactive-windows" = false;
+
             # Enable and configure tab groups (experimental)
             "browser.tabs.groups.enabled" = true;
             "tab.groups.background" = true;
             "tab.groups.borders" = true;
             "tab.groups.theme-folders" = true;
 
-            # Set zen preferences
+            # Zen preferences
             "zen.theme.accent-color" = base0B;
             "zen.theme.color-prefs.amoled" = true;
             "zen.theme.color-prefs.use-workspace-colors" = false;
             "zen.urlbar.behavior" = "normal";
             "zen.view.use-single-toolbar" = false;
             "zen.urlbar.replace-newtab" = false;
+
+            # Zen-Nebula config
+            "nebula-disable-container-styling" = true;
           };
 
           extensions.packages = extensions;

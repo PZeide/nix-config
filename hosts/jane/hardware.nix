@@ -1,5 +1,4 @@
 {
-  config,
   modulesPath,
   inputs,
   ...
@@ -18,9 +17,6 @@
 
   hardware = {
     amdgpu.initrd.enable = false;
-
-    # Love bleeding edge
-    nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     nvidia = {
       modesetting.enable = true;

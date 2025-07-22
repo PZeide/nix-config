@@ -2,17 +2,22 @@
   lib,
   stdenvNoCC,
   fetchFromGitHub,
+  scdoc,
 }:
 stdenvNoCC.mkDerivation {
   pname = "app2unit";
-  version = "0-unstable-9f19342";
+  version = "0-unstable-6a2fe29";
 
   src = fetchFromGitHub {
     owner = "Vladimir-csp";
     repo = "app2unit";
-    rev = "9f19342ed9195abbe9473805534103627f4ca190";
-    hash = "sha256-fw6Vh3Jyop95TQdOFrpspbauSfqMpd0BZkZVc1k6+K0=";
+    rev = "6a2fe29210fd939571fdfcd78581965ef479c749";
+    hash = "sha256-TjePNU9Wu9kaXSczMAZcMV0HSC9zqzLcgKXdbkyLSAU=";
   };
+
+  nativeBuildInputs = [
+    scdoc
+  ];
 
   installPhase = ''
     install -Dt $out/bin app2unit
