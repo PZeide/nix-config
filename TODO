@@ -2,6 +2,7 @@
 Todo:
   Features:
     ☐ FEAT - Move Hyprland Rules / binds directly in program not in global config
+    ☐ FEAT - GPU Screen Recorder
 
   Bugs:
     ☐ BUG - GTK apps and Chromium wake up dGPU from D3cold @critical

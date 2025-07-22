@@ -19,8 +19,6 @@
         dedicatedServer.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
 
-        gamescopeSession.enable = config.zeide.gaming.gamescope.enable;
-
         extraCompatPackages = with pkgs; [
           proton-ge-bin
         ];
