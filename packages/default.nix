@@ -19,7 +19,6 @@
         app2unit = callPackage ./app2unit.nix {};
         cider = callPackage ./cider.nix {};
         librepods = callPackage ./librepods.nix {};
-        pax-kvantum = callPackage ./pax-kvantum.nix {};
       };
     })
   ];

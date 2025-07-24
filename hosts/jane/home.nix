@@ -19,8 +19,11 @@ in {
       qt = {
         enable = true;
         kvantumTheme = {
-          package = pkgs.zeide.pax-kvantum;
-          name = "Pax-Kvantum";
+          package = pkgs.catppuccin-kvantum.override {
+            variant = "macchiato";
+            accent = "maroon";
+          };
+          name = "catppuccin-macchiato-maroon";
         };
       };
     };
