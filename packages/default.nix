@@ -2,6 +2,10 @@
   nixpkgs.overlays = [
     (final: _: {
       zeide = with pkgs; {
+        yazi-flavors = {
+          catppuccin-mocha = callPackage ./yazi-flavors/catppuccin-mocha.nix {};
+        };
+
         yazi-plugins = {
           bunny = callPackage ./yazi-plugins/bunny.nix {};
           chmod = callPackage ./yazi-plugins/chmod.nix {};

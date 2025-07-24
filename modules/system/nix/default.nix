@@ -6,7 +6,8 @@
   ...
 }: {
   options.zeide.nix = with lib; {
-    enableCudaSupport = mkEnableOption "enable cuda support (required for NVENC on obs-studio)";
+    enableCudaSupport = mkEnableOption "enable cuda support";
+    enableRocmSupport = mkEnableOption "enable rocm support";
     autoOptimiseStore = mkEnableOption "nix store automatic optimisation";
   };
 
@@ -24,6 +25,7 @@
       config = {
         allowUnfree = true;
         cudaSupport = selfConfig.enableCudaSupport;
+        rocmSupport = selfConfig.enableRocmSupport;
       };
 
       overlays = [inputs.nix-vscode-extensions.overlays.default];

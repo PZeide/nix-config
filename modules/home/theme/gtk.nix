@@ -2,7 +2,6 @@
   asset,
   config,
   lib,
-  pkgs,
   ...
 }: {
   options.zeide.theme.gtk = with lib; {

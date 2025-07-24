@@ -20,10 +20,29 @@
       };
     };
   };
+
+  yaziFlavorType = lib.types.submodule {
+    options = {
+      package = lib.mkOption {
+        type = lib.types.package;
+        description = "The package of the flavor";
+      };
+      name = lib.mkOption {
+        type = lib.types.str;
+        description = "The name of the flavor";
+      };
+    };
+  };
 in {
   options.zeide.programs.tui.yazi = with lib; {
     enable = mkEnableOption "yazi (file manager)";
     enableFileChooser = mkEnableOption "yazi file chooser";
+
+    flavor = mkOption {
+      type = with types; nullOr yaziFlavorType;
+      default = null;
+      description = "Yazi flavor to use";
+    };
 
     extraHops = mkOption {
       type = types.listOf hopType;
@@ -74,6 +93,15 @@ in {
         enable = true;
         enableFishIntegration = true;
         shellWrapperName = "y";
+
+        flavors = lib.mkIf (selfConfig.flavor != null) {
+          ${selfConfig.flavor.name} = selfConfig.flavor.package;
+        };
+
+        theme.flavor = lib.mkIf (selfConfig.flavor != null) {
+          dark = selfConfig.flavor.name;
+          light = selfConfig.flavor.name;
+        };
 
         settings = {
           show_hidden = false;
@@ -275,7 +303,5 @@ in {
           lazygit = lazygit;
         };
       };
-
-      stylix.targets.yazi.enable = true;
     };
 }

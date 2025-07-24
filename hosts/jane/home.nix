@@ -116,6 +116,7 @@ in {
       };
 
       tui = {
+        btop.enable = true;
         lazygit.enable = true;
         nyaa.enable = true;
         rustmission.enable = true;
@@ -123,6 +124,10 @@ in {
         yazi = {
           enable = true;
           enableFileChooser = true;
+          flavor = {
+            package = pkgs.zeide.yazi-flavors.catppuccin-mocha;
+            name = "catppuccin-mocha";
+          };
           extraHops = [
             {
               key = "D";
