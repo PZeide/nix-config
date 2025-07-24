@@ -2,7 +2,6 @@
   lib,
   config,
   osConfig,
-  pkgs,
   ...
 }: {
   options.zeide.graphical.hyprland = with lib; {

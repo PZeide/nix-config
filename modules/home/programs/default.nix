@@ -2,9 +2,10 @@
   imports = [
     ./gaming
     ./starship
+    ./tui
     ./anyrun.nix
     ./cli.nix
-    ./daily.nix
+    ./graphical.nix
     ./helix.nix
     ./kitty.nix
     ./mpv.nix

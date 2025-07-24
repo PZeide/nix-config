@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   options.zeide.programs.kitty = with lib; {
@@ -27,8 +28,17 @@
           remember_window_size = false;
           window_padding_width = 8;
           hide_window_decorations = true;
+          confirm_os_window_close = 0;
         };
       };
+
+      home.packages = [pkgs.xdg-terminal-exec];
+
+      xdg.configFile."xdg-terminals.list".text = ''
+        kitty.desktop
+      '';
+
+      dconf.settings."org/gnome/desktop/applications/terminal".exec = lib.getExe pkgs.xdg-terminal-exec;
 
       stylix.targets.kitty.enable = true;
     };

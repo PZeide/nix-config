@@ -4,6 +4,7 @@
   osConfig,
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   options.zeide.theme = with lib; {
@@ -53,6 +54,13 @@
         sansSerif = osConfig.zeide.graphical.fonts.sansSerif;
         monospace = osConfig.zeide.graphical.fonts.monospace;
         emoji = osConfig.zeide.graphical.fonts.emoji;
+      };
+
+      icons = {
+        enable = true;
+        package = pkgs.papirus-icon-theme;
+        light = "Papirus-Light";
+        dark = "Papirus-Dark";
       };
     };
   };

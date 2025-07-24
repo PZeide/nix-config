@@ -87,6 +87,7 @@ stdenv.mkDerivation rec {
   postInstall = ''
     wrapProgram $out/lib/cider/Cider \
        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
+       --add-flags "--no-sandbox --disable-gpu-sandbox"
 
     mkdir $out/bin
     ln -sf $out/lib/cider/Cider $out/bin/${pname}

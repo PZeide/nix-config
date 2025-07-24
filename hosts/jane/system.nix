@@ -74,19 +74,8 @@
 
       gamemode.enable = true;
 
-      gamescope = {
-        enable = true;
-        enableMangoHud = true;
-        useNvidiaPrime = true;
-
-        gamescopeWidth = 1920;
-        gamescopeHeight = 1080;
-        gamescopeRefreshRate = 144;
-      };
-
       optimizations.enable = true;
       steam.enable = true;
-      #waydroid.enable = true;
     };
 
     graphical = {
@@ -95,7 +84,6 @@
     };
 
     nix = {
-      useLix = true;
       enableCudaSupport = true;
       autoOptimiseStore = true;
 
@@ -115,6 +103,12 @@
 
       location.enable = true;
       openssh.enable = true;
+
+      transmission = {
+        enable = true;
+        symlinkDownloads = true;
+      };
+
       udisks2.enable = true;
     };
   };

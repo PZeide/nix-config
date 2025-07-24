@@ -2,20 +2,10 @@
   system,
   config,
   lib,
-  pkgs,
   inputs,
   ...
 }: {
   options.zeide.nix = with lib; {
-    useLix = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether to use Lix nix package manager.
-        See: https://lix.systems/
-      '';
-    };
-
     enableCudaSupport = mkEnableOption "enable cuda support (required for NVENC on obs-studio)";
     autoOptimiseStore = mkEnableOption "nix store automatic optimisation";
   };
@@ -40,15 +30,10 @@
     };
 
     nix = {
-      package =
-        if selfConfig.useLix
-        then pkgs.lix
-        else pkgs.nix;
-
       settings = {
         auto-optimise-store = selfConfig.autoOptimiseStore;
         builders-use-substitutes = true;
-        experimental-features = ["nix-command" "flakes" "repl-flake"];
+        experimental-features = ["nix-command" "flakes" "pipe-operators"];
 
         trusted-users = ["root" "@wheel"];
       };

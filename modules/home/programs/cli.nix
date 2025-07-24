@@ -36,7 +36,12 @@
     lib.mkMerge [
       (lib.mkIf selfConfig.essentials.enable {
         home = {
-          packages = with pkgs; [grc curl];
+          packages = with pkgs; [
+            grc
+            curl
+            ouch
+          ];
+
           shellAliases = {
             g = "git";
             mommy = "git";

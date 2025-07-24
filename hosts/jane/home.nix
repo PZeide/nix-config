@@ -14,13 +14,15 @@ in {
       wallpaper = asset "wallpapers/carlotta/10.png";
       polarity = "dark";
 
-      gtk = {
-        enable = true;
-        iconFlavor = "mocha";
-        iconAccent = "rosewater";
-      };
+      gtk.enable = true;
 
-      qt.enable = true;
+      qt = {
+        enable = true;
+        kvantumTheme = {
+          package = pkgs.zeide.pax-kvantum;
+          name = "Pax-Kvantum";
+        };
+      };
     };
 
     graphical = {
@@ -86,7 +88,6 @@ in {
           };
 
           hyprpicker.enable = true;
-          hyprpolkit.enable = true;
           screenshot.enable = true;
         };
       };
@@ -111,6 +112,24 @@ in {
         enableNerdIcons = true;
       };
 
+      tui = {
+        lazygit.enable = true;
+        nyaa.enable = true;
+        rustmission.enable = true;
+
+        yazi = {
+          enable = true;
+          enableFileChooser = true;
+          extraHops = [
+            {
+              key = "D";
+              path = "/mnt/data";
+              desc = "Data Drive";
+            }
+          ];
+        };
+      };
+
       anyrun = {
         enable = true;
         preprocessScript = let
@@ -127,25 +146,21 @@ in {
         development.enable = true;
       };
 
-      daily = {
-        seahorse.enable = true;
-        mission-center.enable = true;
-        overskride.enable = true;
-        disk-utility.enable = true;
+      graphical = {
         loupe.enable = true;
-        file-roller.enable = true;
         papers.enable = true;
-        pods.enable = true;
         cider.enable = true;
-        fragments.enable = true;
-        goofcord.enable = true;
+        equibop.enable = true;
         proton-pass.enable = true;
         proton-vpn.enable = true;
       };
 
       helix = {
         enable = true;
-        theme = builtins.fromTOML (builtins.readFile (asset "helix/themes/kaolin-dark-transparent.toml"));
+        theme = {
+          inherits = "snazzy";
+          "ui.background" = {};
+        };
       };
 
       kitty.enable = true;
@@ -189,6 +204,7 @@ in {
         phoneMacAddress = "28:2D:7F:DF:BC:76";
       };
 
+      polkit-agent.enable = true;
       udiskie.enable = true;
       wakatime.enable = true;
 
@@ -200,11 +216,11 @@ in {
           image = ["org.gnome.Loupe.desktop"];
           audio = ["mpv.desktop"];
           video = ["mpv.desktop"];
-          directory = ["org.gnome.Nautilus.desktop"];
+          directory = ["yazi.desktop"];
           office = [];
           pdf = ["org.gnome.Papers.desktop"];
           terminal = ["kitty.desktop"];
-          archive = ["org.gnome.FileRoller.desktop"];
+          archive = [];
           discord = [];
         };
       };

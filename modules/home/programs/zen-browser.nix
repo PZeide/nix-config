@@ -165,6 +165,9 @@
             "tab.groups.borders" = true;
             "tab.groups.theme-folders" = true;
 
+            # Use FileChooser from XDG Desktop Portal
+            "widget.use-xdg-desktop-portal.file-picker" = 1;
+
             # Zen preferences
             "zen.theme.accent-color" = base0B;
             "zen.theme.color-prefs.amoled" = true;

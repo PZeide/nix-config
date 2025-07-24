@@ -16,7 +16,6 @@
     ./gamemode.nix
     ./optimizations.nix
     ./steam.nix
-    ./waydroid.nix
   ];
 
   config = let

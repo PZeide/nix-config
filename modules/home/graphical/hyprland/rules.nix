@@ -35,7 +35,8 @@
           "pin, title:^(Picture-in-Picture)$"
 
           # Disable opacity for these apps
-          "opacity 0.999 override, class:^(zen-beta)$"
+          "opacity 1 override, class:^(zen-beta)$"
+          "opacity 1 override, class:^(equibop)$"
           "opacity 1 override, class:^(mpv)$"
           "opacity 1 override, class:^(org.gnome.Loupe)$"
           "opacity 1 override, class:^(org.gnome.Papers)$"

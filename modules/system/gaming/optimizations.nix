@@ -8,7 +8,7 @@
     enable = mkEnableOption "various system optimizations for gaming";
   };
 
-  imports = with inputs.nix-gaming.nixosModules; [platformOptimizations ntsync];
+  imports = with inputs.nix-gaming.nixosModules; [platformOptimizations wine];
 
   config = let
     selfConfig = config.zeide.gaming.optimizations;
@@ -16,7 +16,10 @@
     lib.mkIf selfConfig.enable {
       programs = {
         steam.platformOptimizations.enable = true;
-        wine.ntsync.enable = true;
+        wine = {
+          enable = true;
+          ntsync = true;
+        };
       };
     };
 }
