@@ -85,6 +85,7 @@
 
     nix = {
       enableCudaSupport = true;
+      enableRocmSupport = true;
       autoOptimiseStore = true;
 
       nh = {
