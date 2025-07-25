@@ -138,12 +138,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Fonts
-    apple-fonts = {
-      url = "github:Lyndeno/apple-fonts.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Soon BYE
     anyrun = {
       url = "github:anyrun-org/anyrun";

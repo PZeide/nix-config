@@ -45,8 +45,8 @@ in {
       description = "Sans-serif font to use throughout the system.";
       type = fontType;
       default = {
-        package = inputs.apple-fonts.packages.${system}.sf-pro;
-        name = "SF Pro Text";
+        package = pkgs.jost;
+        name = "Jost";
       };
     };
 
@@ -63,7 +63,7 @@ in {
       description = "Emoji font to use throughout the system.";
       type = fontType;
       default = {
-        package = pkgs.noto-fonts-color-emoji;
+        package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
     };
@@ -72,12 +72,13 @@ in {
       description = "Extra fonts to install for the system.";
       type = with types; listOf package;
       default = with pkgs; [
-        # Nerd fonts symbols
-        nerd-fonts.symbols-only
-
         # Various useful fonts
+        noto-fonts
         noto-fonts-cjk-sans
         roboto
+
+        # Nerd fonts symbols
+        nerd-fonts.symbols-only
       ];
     };
   };
@@ -88,14 +89,22 @@ in {
     lib.mkIf selfConfig.enable {
       fonts = {
         enableDefaultPackages = false;
-        enableGhostscriptFonts = false;
 
-        packages = selfConfig.extraFonts;
+        packages =
+          [
+            selfConfig.serif.package
+            selfConfig.sansSerif.package
+            selfConfig.monospace.package
+            selfConfig.emoji.package
+          ]
+          ++ selfConfig.extraFonts;
 
         fontconfig = {
           enable = true;
+          useEmbeddedBitmaps = true;
 
-          localConf = lib.mkIf selfConfig.disableProblematicDefault ''
+          /*
+            localConf = lib.mkIf selfConfig.disableProblematicDefault ''
             <?xml version="1.0"?>
             <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
             <fontconfig>
@@ -110,6 +119,7 @@ in {
               </selectfont>
             </fontconfig>
           '';
+          */
 
           defaultFonts = {
             serif = [selfConfig.serif.name];
