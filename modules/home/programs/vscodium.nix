@@ -61,6 +61,7 @@
           extensions = with pkgs.vscode-marketplace;
             [
               # General
+              mkhl.direnv
               wakatime.vscode-wakatime
               maattdd.gitless
               usernamehw.errorlens
