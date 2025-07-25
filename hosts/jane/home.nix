@@ -101,6 +101,7 @@ in {
     programs = {
       gaming = {
         bottles.enable = true;
+        lunar-client.enable = true;
         mangohud.enable = true;
         osu-lazer.enable = true;
 
