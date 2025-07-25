@@ -21,15 +21,6 @@ in {
   options.zeide.graphical.fonts = with lib; {
     enable = mkEnableOption "system-wide font config";
 
-    disableProblematicDefault = mkOption {
-      description = ''
-        Whether to disable the default DejaVu font.
-        This font can cause various issues with emojis or nerd fonts symbols.
-      '';
-      type = types.bool;
-      default = true;
-    };
-
     serif = mkOption {
       description = "Serif font to use throughout the system.";
       type = fontType;
@@ -101,8 +92,9 @@ in {
           enable = true;
           useEmbeddedBitmaps = true;
 
-          /*
-            localConf = lib.mkIf selfConfig.disableProblematicDefault ''
+          # DejaVu Sans comes by default with fontconfig
+          # DejaVu Sans is interfering with a LOT of fonts including Nerd Fonts
+          localConf = ''
             <?xml version="1.0"?>
             <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
             <fontconfig>
@@ -117,7 +109,6 @@ in {
               </selectfont>
             </fontconfig>
           '';
-          */
 
           defaultFonts = {
             serif = [selfConfig.serif.name];
