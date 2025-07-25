@@ -3,8 +3,8 @@ Todo:
   Features:
     ☐ FEAT - Move Hyprland Rules / binds directly in program not in global config
     ☐ FEAT - GPU Screen Recorder
-    ☐ FEAT - Teams for Linux
     ☐ FEAT - Test torrent notify
+    ☐ FEAT - K8S / Podman / Docker TUI
 
   Declarative:
     ☐ FEAT - OBS
@@ -54,3 +54,4 @@ Archive:
   ✔ FEAT - mpv (stylix?)
   ✔ FEAT - EasyEffects with declarative configuration
   ✔ FEAT - Ability to hide Waydroid base entries
+  ✔ FEAT - Teams for Linux

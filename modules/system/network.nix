@@ -5,6 +5,7 @@
 }: {
   options.zeide.network = with lib; {
     enable = mkEnableOption "network config";
+    enableWireless = mkEnableOption "wireless with iwd";
     enableQuad9Dns = mkEnableOption "quad9 DNS with DoT and DNSSEC";
     enableFirewall = mkOption {
       type = types.bool;
@@ -28,8 +29,22 @@
 
         networkmanager = {
           enable = true;
-          wifi.powersave = true;
+
+          wifi = lib.mkIf selfConfig.enableWireless {
+            backend = "iwd";
+            powersave = true;
+          };
+
           dns = "systemd-resolved";
+        };
+
+        wireless.iwd = lib.mkIf selfConfig.enableWireless {
+          enable = true;
+          settings = {
+            Settings = {
+              AutoConnect = true;
+            };
+          };
         };
 
         firewall = {

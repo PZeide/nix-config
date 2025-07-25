@@ -116,7 +116,9 @@ in {
       };
 
       tui = {
+        bluetui.enable = true;
         btop.enable = true;
+        impala.enable = true;
         lazygit.enable = true;
         nyaa.enable = true;
         rustmission.enable = true;
