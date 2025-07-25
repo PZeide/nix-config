@@ -34,6 +34,7 @@
 
     network = {
       enable = true;
+      enableWireless = true;
       enableQuad9Dns = true;
       enableFirewall = true;
     };
@@ -111,6 +112,18 @@
       };
 
       udisks2.enable = true;
+    };
+  };
+
+  # ideapad_laptop module automatically softblock bluetooth on startup?
+  systemd.services.unblock-bluetooth = {
+    description = "Unblock Bluetooth on startup";
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
     };
   };
 }
