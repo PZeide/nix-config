@@ -134,7 +134,7 @@ in {
             {
               key = "D";
               path = "/mnt/data";
-              desc = "Data Drive";
+              desc = "Data drive";
             }
           ];
         };

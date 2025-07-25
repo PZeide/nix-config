@@ -67,7 +67,7 @@
               usernamehw.errorlens
               fabiospampinato.vscode-todo-plus
 
-              # Formatters
+              # Formatters / Linters
               biomejs.biome
               esbenp.prettier-vscode
               tamasfe.even-better-toml
@@ -93,6 +93,10 @@
 
               # Python
               ms-python.python
+
+              # QT / QML
+              theqtcompany.qt-core
+              theqtcompany.qt-qml
             ]
             ++ (lib.optional (selfConfig.colorTheme.package != null) selfConfig.colorTheme.package)
             ++ (lib.optional (selfConfig.iconTheme.package != null) selfConfig.iconTheme.package)
@@ -182,6 +186,10 @@
                 ];
 
                 "svelte.enable-ts-plugin" = true;
+
+                "qt-qml.doNotAskForQmllsDownload" = true;
+                "qt-qml.qmlls.useQmlImportPathEnvVar" = true;
+                "qt-qml.qmlls.customExePath" = "${pkgs.qt6.qtdeclarative}/bin/qmlls";
 
                 "workbench.colorCustomizations" = {
                   "[${selfConfig.colorTheme.name}]" = with config.lib.stylix.colors.withHashtag; {
