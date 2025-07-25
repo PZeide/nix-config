@@ -5,35 +5,39 @@
   ...
 }: {
   options.zeide.programs.graphical = with lib; {
-    loupe.enable = mkEnableOption "loupe (image viewer)";
-    papers.enable = mkEnableOption "papers (pdf viewer)";
-    cider.enable = mkEnableOption "cider (apple music player)";
-    equibop.enable = mkEnableOption "equibop (discord client)";
-    proton-pass.enable = mkEnableOption "proton-pass (password manager)";
-    proton-vpn.enable = mkEnableOption "proton-vpn (VPN)";
+    loupe = mkEnableOption "loupe (image viewer)";
+    papers = mkEnableOption "papers (pdf viewer)";
+    cider = mkEnableOption "cider (apple music player)";
+    equibop = mkEnableOption "equibop (discord client)";
+    proton-pass = mkEnableOption "proton-pass (password manager)";
+    proton-vpn = mkEnableOption "proton-vpn (VPN)";
+    teams = mkEnableOption "teams-for-linux";
   };
 
   config = let
     selfConfig = config.zeide.programs.graphical;
   in
     lib.mkMerge [
-      (lib.mkIf selfConfig.loupe.enable {
+      (lib.mkIf selfConfig.loupe {
         home.packages = [pkgs.loupe];
       })
-      (lib.mkIf selfConfig.papers.enable {
+      (lib.mkIf selfConfig.papers {
         home.packages = [pkgs.papers];
       })
-      (lib.mkIf selfConfig.cider.enable {
+      (lib.mkIf selfConfig.cider {
         home.packages = [pkgs.zeide.cider];
       })
-      (lib.mkIf selfConfig.equibop.enable {
+      (lib.mkIf selfConfig.equibop {
         home.packages = [pkgs.equibop];
       })
-      (lib.mkIf selfConfig.proton-pass.enable {
+      (lib.mkIf selfConfig.proton-pass {
         home.packages = [pkgs.proton-pass];
       })
-      (lib.mkIf selfConfig.proton-vpn.enable {
+      (lib.mkIf selfConfig.proton-vpn {
         home.packages = [pkgs.protonvpn-gui];
+      })
+      (lib.mkIf selfConfig.teams {
+        home.packages = [pkgs.teams-for-linux];
       })
     ];
 }

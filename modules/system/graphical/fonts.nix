@@ -1,9 +1,7 @@
 {
-  system,
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   fontType = lib.types.submodule {

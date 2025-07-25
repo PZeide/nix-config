@@ -155,12 +155,13 @@ in {
       };
 
       graphical = {
-        loupe.enable = true;
-        papers.enable = true;
-        cider.enable = true;
-        equibop.enable = true;
-        proton-pass.enable = true;
-        proton-vpn.enable = true;
+        loupe = true;
+        papers = true;
+        cider = true;
+        equibop = true;
+        proton-pass = true;
+        proton-vpn = true;
+        teams = true;
       };
 
       helix = {
