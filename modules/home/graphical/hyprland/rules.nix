@@ -58,8 +58,8 @@
         ++ selfConfig.windows;
 
       layerrule = [
-        "blur, zs-.*"
-        "ignorezero, zs-.*"
+        "blur, shiny-.*"
+        "ignorezero, shiny-.*"
       ];
 
       workspace = selfConfig.workspaces;
