@@ -23,11 +23,10 @@
     lib.mkIf selfConfig.enable {
       services.greetd = {
         enable = true;
-        vt = 1;
 
         settings = {
           default_session = {
-            command = "${pkgs.greetd.greetd}/bin/agreety --cmd $SHELL";
+            command = "${pkgs.greetd}/bin/agreety --cmd $SHELL";
             user = config.zeide.user;
           };
 

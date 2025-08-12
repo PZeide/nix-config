@@ -5,5 +5,6 @@
     ./hyprpaper.nix
     ./hyprpicker.nix
     ./screenshot.nix
+    ./shiny-shell.nix
   ];
 }

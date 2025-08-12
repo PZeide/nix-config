@@ -1,6 +1,7 @@
 {
   modulesPath,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -19,8 +20,13 @@
     amdgpu.initrd.enable = false;
 
     nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
       modesetting.enable = true;
-      powerManagement.finegrained = true;
+
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+      };
 
       prime = {
         amdgpuBusId = "PCI:6:0:0";
@@ -31,8 +37,7 @@
 
   boot = {
     kernelModules = ["kvm-amd"];
-
-    kernelParams = ["mt7921e.disable_aspm=y"];
+    kernelParams = [];
 
     initrd = {
       availableKernelModules = [

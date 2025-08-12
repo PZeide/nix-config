@@ -94,6 +94,10 @@
               # Python
               ms-python.python
 
+              # Shell
+              timonwong.shellcheck
+              foxundermoon.shell-format
+
               # QT / QML
               theqtcompany.qt-core
               theqtcompany.qt-qml
@@ -120,6 +124,7 @@
               postcss = "esbenp.prettier-vscode";
               less = "esbenp.prettier-vscode";
               scss = "esbenp.prettier-vscode";
+              shellscript = "foxundermoon.shell-format";
               toml = "tamasfe.even-better-toml";
               yaml = "redhat.vscode-yaml";
             };
@@ -133,6 +138,9 @@
                 "nix.serverSettings"."nixd"."formatting"."command" = [
                   (lib.getExe pkgs.alejandra)
                 ];
+                "shellcheck.executablePath" = lib.getExe pkgs.shellcheck;
+                "qt-qml.qmlls.customExePath" = "${pkgs.qt6.qtdeclarative}/bin/qmlls";
+                "shellformat.path" = lib.getExe pkgs.shfmt;
 
                 "breadcrumbs.enabled" = true;
 
@@ -186,10 +194,7 @@
                 ];
 
                 "svelte.enable-ts-plugin" = true;
-
                 "qt-qml.doNotAskForQmllsDownload" = true;
-                "qt-qml.qmlls.useQmlImportPathEnvVar" = true;
-                "qt-qml.qmlls.customExePath" = "${pkgs.qt6.qtdeclarative}/bin/qmlls";
 
                 "workbench.colorCustomizations" = {
                   "[${selfConfig.colorTheme.name}]" = with config.lib.stylix.colors.withHashtag; {

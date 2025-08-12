@@ -178,6 +178,7 @@
             disable_autoreload = true;
             focus_on_activate = false;
             new_window_takes_over_fullscreen = 1;
+            session_lock_xray = true;
           };
 
           xwayland = {

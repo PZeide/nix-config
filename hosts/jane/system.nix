@@ -100,7 +100,7 @@
 
       keyring = {
         enable = true;
-        unlockServices = ["hyprlock"];
+        unlockServices = [];
       };
 
       location.enable = true;

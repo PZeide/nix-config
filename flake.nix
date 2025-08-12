@@ -138,13 +138,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Shell
+    shiny-shell = {
+      url = "git+file:///home/thibaud/Documents/Development/shiny-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Soon BYE
     anyrun = {
       url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -11,7 +11,7 @@
 in {
   zeide = {
     theme = {
-      wallpaper = asset "wallpapers/carlotta/10.png";
+      wallpaper = asset "wallpapers/yuzuha.jpg";
       polarity = "dark";
 
       gtk.enable = true;
@@ -53,7 +53,7 @@ in {
 
           "$mainMod, SPACE, exec, ${wrapAppUnit "anyrun"}"
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
-          "$mainMod, E, exec, ${wrapAppUnit "nautilus"}"
+          "$mainMod, E, exec, ${wrapAppUnit "yazi"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
 
           "$mainMod, X, togglespecialworkspace, azurlane"
@@ -78,20 +78,18 @@ in {
         };
 
         companions = {
-          hyprpaper.enable = true;
-
           hypridle = {
             enable = true;
             dimBacklight = true;
           };
 
-          hyprlock = {
+          hyprpicker.enable = true;
+          screenshot.enable = true;
+
+          shiny-shell = {
             enable = true;
             autostartOnGraphical = true;
           };
-
-          hyprpicker.enable = true;
-          screenshot.enable = true;
         };
       };
     };
@@ -188,7 +186,7 @@ in {
         enable = true;
 
         colorTheme = {
-          name = "Bearded Theme Arc";
+          name = "Bearded Theme Coffee Reversed";
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
         };
 
