@@ -122,7 +122,6 @@
 
           animations = {
             enabled = true;
-            first_launch_animation = false;
 
             bezier = [
               "easeInOutQuart, 0.76, 0, 0.24, 1"

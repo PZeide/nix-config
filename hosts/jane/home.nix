@@ -9,6 +9,8 @@
   appLaunchPrefix = "${lib.getExe pkgs.zeide.app2unit} -s a --";
   wrapAppUnit = app: "${appLaunchPrefix} ${app}";
 in {
+  home.packages = [pkgs.jetbrains.idea-community];
+
   zeide = {
     theme = {
       wallpaper = asset "wallpapers/yuzuha.jpg";
