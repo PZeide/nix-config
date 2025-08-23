@@ -165,6 +165,11 @@ in {
         proton-pass = true;
         proton-vpn = true;
         teams = true;
+
+        webapps = {
+          keychronLauncher = true;
+          lamzuAurora = true;
+        };
       };
 
       helix = {

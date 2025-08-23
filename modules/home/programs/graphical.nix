@@ -1,4 +1,5 @@
 {
+  asset,
   config,
   lib,
   pkgs,
@@ -12,6 +13,11 @@
     proton-pass = mkEnableOption "proton-pass (password manager)";
     proton-vpn = mkEnableOption "proton-vpn (VPN)";
     teams = mkEnableOption "teams-for-linux";
+
+    webapps = {
+      keychronLauncher = mkEnableOption "keychron launcher";
+      lamzuAurora = mkEnableOption "lamzu aurora";
+    };
   };
 
   config = let
@@ -38,6 +44,28 @@
       })
       (lib.mkIf selfConfig.teams {
         home.packages = [pkgs.teams-for-linux];
+      })
+      (lib.mkIf selfConfig.webapps.keychronLauncher {
+        home.packages = [
+          (pkgs.nix-webapps-lib.mkChromiumApp {
+            appName = "keychron-launcher";
+            desktopName = "Keychron Launcher";
+            icon = asset "icons/keychron.png";
+            url = "https://launcher.keychron.com/";
+            class = "__nix-webapps-keychron-launcher__-Default";
+          })
+        ];
+      })
+      (lib.mkIf selfConfig.webapps.keychronLauncher {
+        home.packages = [
+          (pkgs.nix-webapps-lib.mkChromiumApp {
+            appName = "lamzu-aurora";
+            desktopName = "LAMZU Aurora";
+            icon = asset "icons/lamzu.png";
+            url = "https://www.lamzu.net/";
+            class = "__nix-webapps-lamzu-aurora__-Default";
+          })
+        ];
       })
     ];
 }

@@ -57,6 +57,11 @@
       enableAutomaticTimeZone = true;
     };
 
+    udev = {
+      keychron = true;
+      lamzu = true;
+    };
+
     development = {
       podman = {
         enable = true;

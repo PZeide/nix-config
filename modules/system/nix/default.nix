@@ -28,7 +28,10 @@
         rocmSupport = selfConfig.enableRocmSupport;
       };
 
-      overlays = [inputs.nix-vscode-extensions.overlays.default];
+      overlays = [
+        inputs.nix-vscode-extensions.overlays.default
+        inputs.nix-webapps.overlays.lib
+      ];
     };
 
     nix = {

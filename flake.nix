@@ -144,6 +144,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    #Webapps
+    nix-webapps = {
+      url = "github:TLATER/nix-webapps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Soon BYE
     anyrun = {
       url = "github:anyrun-org/anyrun";

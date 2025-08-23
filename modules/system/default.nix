@@ -41,6 +41,7 @@
     ./shell.nix
     ./swap.nix
     ./time.nix
+    ./udev.nix
   ];
 
   config = let
