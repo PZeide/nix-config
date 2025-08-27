@@ -46,7 +46,8 @@
 
     # Theming
     stylix = {
-      url = "github:danth/stylix";
+      # FIXME matugen branch
+      url = "github:nix-community/stylix/347a99fabd2bc8a5a05776e62c7333ecbdc66545";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

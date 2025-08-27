@@ -1,5 +1,6 @@
 {
   config,
+  secrets,
   lib,
   pkgs,
   ...
@@ -31,7 +32,7 @@
         description = ''
           Icon theme to set.
         '';
-        default = "vs-seti";
+        default = "flow-dark";
       };
 
       package = mkOption {
@@ -48,6 +49,16 @@
     selfConfig = config.zeide.programs.vscodium;
   in
     lib.mkIf selfConfig.enable {
+      home.activation.flowIconsLicenseReplace =
+        lib.hm.dag.entryAfter ["writeBoundary"]
+        ''
+          license=$(cat "${secrets.flowicons-license.path}")
+          file="${config.xdg.configHome}/VSCodium/User/settings.json"
+          if [ -f "$file" ]; then
+            ${pkgs.gnused}/bin/sed -i "s#@flowicons-license-age@#$license#" "$file"
+          fi
+        '';
+
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium;
@@ -60,6 +71,9 @@
 
           extensions = with pkgs.vscode-marketplace;
             [
+              # Theming
+              thang-nm.flow-icons
+
               # General
               mkhl.direnv
               wakatime.vscode-wakatime
@@ -186,6 +200,8 @@
                 "workbench.iconTheme" = selfConfig.iconTheme.name;
                 "workbench.startupEditor" = "none";
                 "workbench.list.smoothScrolling" = true;
+
+                "flow-icons.licenseKey" = "@flowicons-license-age@";
 
                 "nix.enableLanguageServer" = true;
                 "nix.hiddenLanguageServerErrors" = [

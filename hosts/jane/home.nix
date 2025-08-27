@@ -197,10 +197,7 @@ in {
           package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
         };
 
-        iconTheme = {
-          name = "bearded-icons";
-          package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedicons;
-        };
+        iconTheme.name = "flow-dark";
       };
 
       zen-browser.enable = true;

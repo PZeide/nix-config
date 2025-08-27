@@ -16,5 +16,11 @@
       owner = config.zeide.user;
       group = "users";
     };
+
+    flowicons-license = {
+      file = secret "flowicons-license.age";
+      owner = config.zeide.user;
+      group = "users";
+    };
   };
 }

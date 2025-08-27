@@ -8,4 +8,5 @@ let
   ];
 in {
   "wakatime-key.age".publicKeys = all;
+  "flowicons-license.age".publicKeys = all;
 }
