@@ -19,6 +19,7 @@
         package = pkgs.transmission_4;
         downloadDirPermissions = "770";
         settings = {
+          # FIXME TEST SCRIPT TORRENT DONE
           script-torrent-done-enabled = selfConfig.notifyOnDone;
           script-torrent-done-filename = pkgs.writeShellScript "transmission-done" ''
             TR_TORRENT_DIR=''${TR_TORRENT_DIR:-$1}

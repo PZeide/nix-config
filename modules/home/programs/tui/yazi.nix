@@ -20,29 +20,10 @@
       };
     };
   };
-
-  yaziFlavorType = lib.types.submodule {
-    options = {
-      package = lib.mkOption {
-        type = lib.types.package;
-        description = "The package of the flavor";
-      };
-      name = lib.mkOption {
-        type = lib.types.str;
-        description = "The name of the flavor";
-      };
-    };
-  };
 in {
   options.zeide.programs.tui.yazi = with lib; {
     enable = mkEnableOption "yazi (file manager)";
     enableFileChooser = mkEnableOption "yazi file chooser";
-
-    flavor = mkOption {
-      type = with types; nullOr yaziFlavorType;
-      default = null;
-      description = "Yazi flavor to use";
-    };
 
     extraHops = mkOption {
       type = types.listOf hopType;
@@ -55,6 +36,13 @@ in {
     selfConfig = config.zeide.programs.tui.yazi;
   in
     lib.mkIf selfConfig.enable {
+      assertions = [
+        {
+          assertion = selfConfig.enableFileChooser && config.zeide.programs.kitty.enable;
+          message = "config.zeide.programs.kitty.enable is required to enable terminal file chooser.";
+        }
+      ];
+
       home.packages = with pkgs; [
         ripdrag
         wl-clipboard
@@ -70,10 +58,10 @@ in {
           text = ''
             [filechooser]
             cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
-            env=TERMCMD=${pkgs.kitty}/bin/kitty --title FileChooser
             default_dir=$HOME
-            open_mode=last
-            save_mode=last
+            open_mode=suggested
+            save_mode=$HOME/Downloads
+            env=TERMCMD=${pkgs.kitty}/bin/kitty --class xdg-termfilechooser-yazi
           '';
 
           recursive = true;
@@ -81,11 +69,7 @@ in {
 
         portal = {
           extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
-
-          config = {
-            common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
-            hyprland."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
-          };
+          config.common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
         };
       };
 
@@ -93,15 +77,6 @@ in {
         enable = true;
         enableFishIntegration = true;
         shellWrapperName = "y";
-
-        flavors = lib.mkIf (selfConfig.flavor != null) {
-          ${selfConfig.flavor.name} = selfConfig.flavor.package;
-        };
-
-        theme.flavor = lib.mkIf (selfConfig.flavor != null) {
-          dark = selfConfig.flavor.name;
-          light = selfConfig.flavor.name;
-        };
 
         settings = {
           show_hidden = false;
@@ -303,5 +278,7 @@ in {
           lazygit = lazygit;
         };
       };
+
+      stylix.targets.yazi.enable = true;
     };
 }

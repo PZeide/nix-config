@@ -29,7 +29,7 @@
       };
 
       overlays = [
-        inputs.nix-vscode-extensions.overlays.default
+        inputs.nix4vscode.overlays.default
         inputs.nix-webapps.overlays.lib
       ];
     };

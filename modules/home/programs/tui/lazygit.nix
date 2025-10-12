@@ -17,5 +17,7 @@
           git.paging.pager = "delta --paging=never";
         };
       };
+
+      stylix.targets.lazygit.enable = true;
     };
 }

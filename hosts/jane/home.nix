@@ -1,35 +1,12 @@
 {
   asset,
-  lib,
   pkgs,
-  inputs,
-  system,
   ...
 }: let
-  appLaunchPrefix = "${lib.getExe pkgs.zeide.app2unit} -s a --";
+  appLaunchPrefix = "${pkgs.app2unit}/bin/app2unit -s a --";
   wrapAppUnit = app: "${appLaunchPrefix} ${app}";
 in {
-  home.packages = [pkgs.jetbrains.idea-community];
-
   zeide = {
-    theme = {
-      wallpaper = asset "wallpapers/yuzuha.jpg";
-      polarity = "dark";
-
-      gtk.enable = true;
-
-      qt = {
-        enable = true;
-        kvantumTheme = {
-          package = pkgs.catppuccin-kvantum.override {
-            variant = "macchiato";
-            accent = "maroon";
-          };
-          name = "catppuccin-macchiato-maroon";
-        };
-      };
-    };
-
     graphical = {
       hyprland = {
         enable = true;
@@ -53,31 +30,20 @@ in {
           "$mainMod, HOME, exec, ${wrapAppUnit "screenshot region"}"
           "$mainMod SHIFT, HOME, exec, ${wrapAppUnit "screenshot window"}"
 
-          "$mainMod, SPACE, exec, ${wrapAppUnit "anyrun"}"
+          "$mainMod, SPACE, exec, shiny-shell ipc call launcher toggle"
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
-          "$mainMod, E, exec, ${wrapAppUnit "yazi"}"
+          "$mainMod, E, exec, ${wrapAppUnit "kitty yazi"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
 
-          "$mainMod, X, togglespecialworkspace, azurlane"
-          "$mainMod, Z, togglespecialworkspace, cider"
+          "$mainMod, X, togglespecialworkspace, cider"
         ];
 
         rules = {
-          windows = [
-            "workspace special:azurlane, class:^(waydroid.com.YoStarEN.AzurLane)$"
-            "workspace special:cider, class:^(Cider)$"
-          ];
-
-          workspaces = [
-            "special:azurlane, on-created-empty:${wrapAppUnit "waydroid app launch com.YoStarEN.AzurLane"}"
-            "special:cider, on-created-empty:${wrapAppUnit "cider"}"
-          ];
+          windows = ["workspace special:cider, class:^(Cider)$"];
+          workspaces = ["special:cider, on-created-empty:${wrapAppUnit "cider"}"];
         };
 
-        plugins = {
-          hyprsplit.enable = true;
-          hyprexpo.enable = true;
-        };
+        plugins.hyprsplit.enable = true;
 
         companions = {
           hypridle = {
@@ -87,16 +53,10 @@ in {
 
           hyprpicker.enable = true;
           screenshot.enable = true;
-
-          shiny-shell = {
-            enable = true;
-            autostartOnGraphical = true;
-          };
+          shiny-shell.enable = true;
         };
       };
     };
-
-    shell.fish.enable = true;
 
     programs = {
       gaming = {
@@ -111,10 +71,7 @@ in {
         };
       };
 
-      starship = {
-        enable = true;
-        enableNerdIcons = true;
-      };
+      starship.enable = true;
 
       tui = {
         bluetui.enable = true;
@@ -127,10 +84,7 @@ in {
         yazi = {
           enable = true;
           enableFileChooser = true;
-          flavor = {
-            package = pkgs.zeide.yazi-flavors.catppuccin-mocha;
-            name = "catppuccin-mocha";
-          };
+
           extraHops = [
             {
               key = "D";
@@ -139,16 +93,6 @@ in {
             }
           ];
         };
-      };
-
-      anyrun = {
-        enable = true;
-        preprocessScript = let
-          script = pkgs.writeScript "anyrun-preprocess-script" ''
-            shift # Remove term|no-term
-            echo "${appLaunchPrefix} $*"
-          '';
-        in "${script}";
       };
 
       cli = {
@@ -161,7 +105,6 @@ in {
         loupe = true;
         papers = true;
         cider = true;
-        equibop = true;
         proton-pass = true;
         proton-vpn = true;
         teams = true;
@@ -172,14 +115,7 @@ in {
         };
       };
 
-      helix = {
-        enable = true;
-        theme = {
-          inherits = "snazzy";
-          "ui.background" = {};
-        };
-      };
-
+      helix.enable = true;
       kitty.enable = true;
 
       mpv = {
@@ -187,17 +123,17 @@ in {
         useOpenGL = true;
       };
 
+      nix-index.enable = true;
       obs-studio.enable = true;
+      vesktop.enable = true;
 
       vscodium = {
         enable = true;
 
         colorTheme = {
-          name = "Bearded Theme Coffee Reversed";
-          package = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace.beardedbear.beardedtheme;
+          name = "Bearded Theme Black & Ruby";
+          extension = "BeardedBear.beardedtheme";
         };
-
-        iconTheme.name = "flow-dark";
       };
 
       zen-browser.enable = true;
@@ -224,6 +160,7 @@ in {
 
       xdg = {
         enableUserDirs = true;
+        execTerminal = "kitty.desktop";
         defaultApps = {
           browser = ["zen.desktop"];
           text = ["Helix.desktop"];
@@ -234,10 +171,21 @@ in {
           office = [];
           pdf = ["org.gnome.Papers.desktop"];
           terminal = ["kitty.desktop"];
-          archive = [];
-          discord = [];
+          archive = ["yazi.desktop"];
+          discord = ["vesktop.desktop"];
         };
       };
+    };
+
+    shell.fish.enable = true;
+
+    theme = {
+      wallpaper = asset "wallpapers/phrolova/f90f00d53bab218f9ae16be912cff2bf.jpg";
+      #polarity = "dark";
+      #scheme = "content";
+
+      gtk.enable = true;
+      qt.enable = true;
     };
   };
 }

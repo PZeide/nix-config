@@ -35,7 +35,7 @@
     network = {
       enable = true;
       enableWireless = true;
-      enableQuad9Dns = true;
+      enableCloudflareDns = true;
       enableFirewall = true;
     };
 
@@ -82,6 +82,7 @@
 
       optimizations.enable = true;
       steam.enable = true;
+      xpadneo.enable = true;
     };
 
     graphical = {
@@ -103,11 +104,7 @@
     services = {
       ios.enable = true;
 
-      keyring = {
-        enable = true;
-        unlockServices = [];
-      };
-
+      keyring.enable = true;
       location.enable = true;
       openssh.enable = true;
 
@@ -120,15 +117,61 @@
     };
   };
 
-  # ideapad_laptop module automatically softblock bluetooth on startup?
-  systemd.services.unblock-bluetooth = {
-    description = "Unblock Bluetooth on startup";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
+  systemd.services = {
+    # ideapad_laptop module automatically softblock bluetooth on boot
+    unblock-bluetooth-on-boot = {
+      description = "Unblock Bluetooth on boot";
+      after = ["network.target"];
+      wantedBy = ["multi-user.target"];
 
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
+      };
+    };
+
+    # mt7921e is slow to resume after suspend so we unload it before suspending
+    unload-mt7921e-before-suspend = {
+      description = "Unload MT7921E driver before hibernate";
+      before = [
+        "suspend.target"
+        "hibernate.target"
+        "hybrid-sleep.target"
+        "suspend-then-hibernate.target"
+      ];
+      wantedBy = [
+        "suspend.target"
+        "hibernate.target"
+        "hybrid-sleep.target"
+        "suspend-then-hibernate.target"
+      ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.kmod}/bin/modprobe -r mt7921e";
+      };
+    };
+
+    # load mt7921e back after resuming
+    load-mt7921e-after-resume = {
+      description = "Load mediatek driver after resuming";
+      after = [
+        "suspend.target"
+        "hibernate.target"
+        "hybrid-sleep.target"
+        "suspend-then-hibernate.target"
+      ];
+      wantedBy = [
+        "suspend.target"
+        "hibernate.target"
+        "hybrid-sleep.target"
+        "suspend-then-hibernate.target"
+      ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.kmod}/bin/modprobe mt7921e";
+      };
     };
   };
 }

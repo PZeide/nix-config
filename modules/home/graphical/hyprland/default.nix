@@ -46,6 +46,7 @@
   imports = [
     ./companions
     ./binds.nix
+    ./gestures.nix
     ./plugins.nix
     ./rules.nix
   ];
@@ -98,18 +99,13 @@
           };
 
           decoration = {
-            rounding = 12;
+            rounding = 8;
             rounding_power = 3.5;
-            active_opacity = 0.9;
-            inactive_opacity = 0.8;
-            fullscreen_opacity = 1;
 
             blur = {
               enabled = true;
               size = 3;
               passes = 2;
-              popups = true;
-              input_methods = true;
             };
 
             shadow = {
@@ -124,24 +120,28 @@
             enabled = true;
 
             bezier = [
-              "easeInOutQuart, 0.76, 0, 0.24, 1"
-              "fluentDecel, 0, 0.2, 0.4, 1"
-              "easeOutCirc, 0, 0.55, 0.45, 1"
-              "easeOutCubic, 0.33, 1, 0.68, 1"
-              "easeOutQuint, 0.23, 1, 0.32, 1"
+              "expressiveFastSpatial, 0.42, 1.67, 0.21, 0.90"
+              "expressiveSlowSpatial, 0.39, 1.29, 0.35, 0.98"
+              "expressiveDefaultSpatial, 0.38, 1.21, 0.22, 1.00"
+              "emphasizedDecel, 0.05, 0.7, 0.1, 1"
+              "emphasizedAccel, 0.3, 0, 0.8, 0.15"
+              "standardDecel, 0, 0, 0, 1"
+              "menuDecel, 0.1, 1, 0, 1"
+              "menuAccel, 0.52, 0.03, 0.72, 0.08"
             ];
 
             animation = [
-              "windowsIn, 1, 3, easeOutCubic, popin 30%"
-              "windowsOut, 1, 3, fluentDecel, popin 70%"
-              "windowsMove, 1, 4, easeOutQuint"
-              "fadeIn, 1, 3, easeOutCubic"
-              "fadeOut, 1, 1.7, easeOutCubic"
-              "fadeSwitch, 1, 1, easeOutCirc"
-              "fadeDim, 1, 4, fluentDecel"
-              "workspaces, 1, 3, easeOutCubic, slide"
-              "specialWorkspace, 1, 3, easeOutCubic, slidevert"
-              "layers, 1, 4, easeOutQuint"
+              "windowsIn, 1, 3, emphasizedDecel, popin 80%"
+              "windowsOut, 1, 2, emphasizedDecel, popin 90%"
+              "windowsMove, 1, 3, emphasizedDecel, slide"
+              "border, 1, 10, emphasizedDecel"
+              "layersIn, 1, 2.7, emphasizedDecel, popin 93%"
+              "layersOut, 1, 2.4, menuAccel, popin 94%"
+              "fadeLayersIn, 1, 0.5, menuDecel"
+              "fadeLayersOut, 1, 2.7, menuAccel"
+              "workspaces, 1, 7, menuDecel, slide"
+              "specialWorkspaceIn, 1, 2.8, emphasizedDecel, slidevert"
+              "specialWorkspaceOut, 1, 1.2, emphasizedAccel, slidevert"
             ];
           };
 
@@ -162,7 +162,6 @@
           device = selfConfig.perDeviceConfigurations;
 
           gestures = {
-            workspace_swipe = true;
             workspace_swipe_distance = 400;
             workspace_swipe_cancel_ratio = 0.2;
             workspace_swipe_min_speed_to_force = 5;

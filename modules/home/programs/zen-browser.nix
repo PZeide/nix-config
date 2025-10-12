@@ -1,9 +1,7 @@
 {
   config,
   lib,
-  pkgs,
   inputs,
-  system,
   ...
 }: {
   options.zeide.programs.zen-browser = with lib; {
@@ -14,88 +12,76 @@
 
   config = let
     selfConfig = config.zeide.programs.zen-browser;
-
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      ublock-origin
-      proton-pass
-      sponsorblock
-      kagi-search
-      violentmonkey
-    ];
-
-    policies = {
-      AutofillAddressEnabled = true;
-      AutofillCreditCardEnabled = false;
-      DisableAppUpdate = true;
-      DisableFeedbackCommands = true;
-      DisableFirefoxAccounts = true;
-      DisableFirefoxStudies = true;
-      DisablePocket = true;
-      DisableSetDesktopBackground = true;
-      DisableTelemetry = true;
-      DontCheckDefaultBrowser = true;
-      NoDefaultBookmarks = true;
-      OfferToSaveLogins = false;
-
-      EnableTrackingProtection = {
-        Value = true;
-        Locked = true;
-        Cryptomining = true;
-        Fingerprinting = true;
-      };
-
-      ExtensionSettings = builtins.listToAttrs (
-        builtins.map (
-          e:
-            lib.nameValuePair e.addonId {
-              installation_mode = "force_installed";
-              install_url = "file://${e.src}";
-              updates_disabled = true;
-            }
-        )
-        extensions
-      );
-
-      "3rdparty".Extensions."uBlock0@raymondhill.net" = {
-        adminSettings = {
-          selectedFilterLists = [
-            "ublock-filters"
-            "ublock-badware"
-            "ublock-privacy"
-            "ublock-unbreak"
-            "ublock-quick-fixes"
-            "ublock-annoyances"
-            "easylist"
-            "easylist-annoyances"
-            "easylist-chat"
-            "easylist-newsletters"
-            "easylist-notifications"
-            "easyprivacy"
-            "urlhaus-1"
-            "plowe-0"
-            "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
-          ];
-        };
-      };
-    };
-
-    zen-package = pkgs.wrapFirefox (inputs.zen-browser.packages.${system}.beta-unwrapped.override
-      {
-        policies = policies;
-      }) {};
   in
     lib.mkIf selfConfig.enable {
-      home.file.".zen/default/chrome/Nebula".source = "${inputs.zen-nebula}/Nebula";
+      home.file.".zen/default/chrome/bubble-clean".source = "${inputs.bubble-clean-zen}/chrome/bubble-clean";
 
       programs.zen-browser = {
         enable = true;
-        package = lib.mkForce zen-package;
+
+        policies = let
+          mkExtensionSettings = builtins.mapAttrs (_: pluginId: {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/${pluginId}/latest.xpi";
+            installation_mode = "force_installed";
+          });
+        in {
+          AutofillAddressEnabled = true;
+          AutofillCreditCardEnabled = false;
+          DisableAppUpdate = true;
+          DisableFeedbackCommands = true;
+          DisableFirefoxAccounts = true;
+          DisableFirefoxStudies = true;
+          DisablePocket = true;
+          DisableSetDesktopBackground = true;
+          DisableTelemetry = true;
+          DontCheckDefaultBrowser = true;
+          NoDefaultBookmarks = true;
+          OfferToSaveLogins = false;
+
+          EnableTrackingProtection = {
+            Value = true;
+            Locked = true;
+            Cryptomining = true;
+            Fingerprinting = true;
+          };
+
+          ExtensionSettings = mkExtensionSettings {
+            "uBlock0@raymondhill.net" = "ublock-origin";
+            "78272b6fa58f4a1abaac99321d503a20@proton.me" = "proton-pass";
+            "sponsorBlocker@ajay.app" = "sponsorblock";
+            "search@kagi.com" = "kagi-search";
+            "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" = "violentmonkey";
+            "companion@seelie.me" = "seelie-companion";
+          };
+
+          "3rdparty".Extensions."uBlock0@raymondhill.net" = {
+            adminSettings = {
+              selectedFilterLists = [
+                "ublock-filters"
+                "ublock-badware"
+                "ublock-privacy"
+                "ublock-unbreak"
+                "ublock-quick-fixes"
+                "ublock-annoyances"
+                "easylist"
+                "easylist-annoyances"
+                "easylist-chat"
+                "easylist-newsletters"
+                "easylist-notifications"
+                "easyprivacy"
+                "urlhaus-1"
+                "plowe-0"
+                "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
+              ];
+            };
+          };
+        };
 
         profiles.default = with config.lib.stylix.colors.withHashtag; {
           isDefault = true;
 
           userChrome = ''
-            @import "Nebula/Nebula.css";
+            @import "bubble-clean/bubble-clean.css";
 
             /* Disable close button */
             .titlebar-close {
@@ -104,7 +90,7 @@
           '';
 
           userContent = ''
-            @import "Nebula/Nebula-content.css";
+            @import "bubble-clean/bubble-content.css";
           '';
 
           search = {
@@ -123,6 +109,22 @@
               "ddg".metaData.hidden = true;
               "qwant".metaData.hidden = true;
               "wikipedia".metaData.hidden = true;
+            };
+          };
+
+          containers = {
+            personal = {
+              id = 1;
+              name = "Personal";
+              color = "turquoise";
+              icon = "fingerprint";
+            };
+
+            work = {
+              id = 2;
+              name = "Work";
+              color = "yellow";
+              icon = "briefcase";
             };
           };
 
@@ -169,18 +171,13 @@
             "widget.use-xdg-desktop-portal.file-picker" = 1;
 
             # Zen preferences
-            "zen.theme.accent-color" = base0B;
+            "zen.theme.accent-color" = base08;
             "zen.theme.color-prefs.amoled" = true;
             "zen.theme.color-prefs.use-workspace-colors" = false;
             "zen.urlbar.behavior" = "normal";
             "zen.view.use-single-toolbar" = false;
             "zen.urlbar.replace-newtab" = false;
-
-            # Zen-Nebula config
-            "nebula-disable-container-styling" = true;
           };
-
-          extensions.packages = extensions;
         };
       };
     };

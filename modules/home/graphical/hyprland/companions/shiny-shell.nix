@@ -2,41 +2,78 @@
   lib,
   config,
   inputs,
-  system,
   ...
 }: {
   options.zeide.graphical.hyprland.companions.shiny-shell = with lib; {
-    enable = mkEnableOption "shiny-shell own shell :)";
-
-    autostartOnGraphical = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether to autostart hyprlock on graphical target.
-        This DOES NOT act as a login manager, however, hyprland will exit if hyprlock fail.
-      '';
-    };
+    enable = mkEnableOption "shiny-shell";
   };
+
+  imports = [inputs.shiny-shell.homeManagerModules.default];
 
   config = let
     selfConfig = config.zeide.graphical.hyprland.companions.shiny-shell;
   in
     lib.mkIf selfConfig.enable {
-      systemd.user.services.shiny-shell = {
-        Unit = {
-          Description = "shiny-shell";
-          After = ["graphical-session.target"];
-          PartOf = ["graphical-session.target"];
-          ConditionEnvironment = "WAYLAND_DISPLAY";
-        };
+      programs.shiny-shell = {
+        enable = true;
 
-        Service = {
-          Type = "simple";
-          ExecStart = "${lib.getExe inputs.shiny-shell.packages.${system}.default}";
-          Restart = lib.mkIf selfConfig.autostartOnGraphical "no";
-        };
+        settings = {
+          appearance = {
+            color = with config.lib.stylix.colors.withHashtag; {
+              bgPrimary = base00;
+              bgSecondary = base01;
+              bgSelection = base02;
 
-        Install.WantedBy = ["graphical-session.target"];
+              fgPrimary = base05;
+              fgSecondary = base04;
+
+              accentPrimary = base08;
+              accentSecondary = base09;
+            };
+
+            font.family = with config.stylix.fonts; {
+              sans = sansSerif.name;
+              mono = monospace.name;
+            };
+          };
+
+          bar = {};
+
+          launcher = {
+            enabled = true;
+            applications.useSystemd = true;
+            calculator.enabled = true;
+
+            webSearch = {
+              enabled = true;
+              url = "https://kagi.com/search?q=%s";
+            };
+          };
+
+          locale = {
+            timeFormat = "h:mm A";
+            dateFullFormat = "dddd d MMMM";
+            temperatureUnit = "celsius";
+          };
+
+          location.enabled = true;
+
+          lockScreen = {
+            enabled = true;
+            lockOnStart = true;
+          };
+
+          player = {
+            blacklist = [];
+            preferred = ["cider"];
+          };
+
+          wallpaper = {
+            enabled = true;
+            path = "${config.stylix.image}";
+            foreground = true;
+          };
+        };
       };
     };
 }

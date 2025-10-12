@@ -16,15 +16,14 @@
     ./gamemode.nix
     ./optimizations.nix
     ./steam.nix
+    ./xpadneo.nix
   ];
 
   config = let
     selfConfig = config.zeide.gaming;
   in {
     environment.variables = lib.mkIf selfConfig.exposeNvidiaGpu {
-      VKD3D_CONFIG = "dxr11,dxr";
-      PROTON_ENABLE_NVAPI = 1;
-      PROTON_ENABLE_NGX_UPDATER = 1;
+      WINE_HIDE_NVIDIA_GPU = 0;
       PROTON_HIDE_NVIDIA_GPU = 0;
     };
   };

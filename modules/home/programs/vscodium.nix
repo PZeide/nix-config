@@ -17,10 +17,10 @@
         default = "Default Dark Modern";
       };
 
-      package = mkOption {
-        type = with types; nullOr package;
+      extension = mkOption {
+        type = with types; nullOr str;
         description = ''
-          Package of the color theme to set.
+          Extension id of the color theme to set.
         '';
         default = null;
       };
@@ -35,113 +35,164 @@
         default = "flow-dark";
       };
 
-      package = mkOption {
-        type = with types; nullOr package;
+      extension = mkOption {
+        type = with types; nullOr str;
         description = ''
-          Package of the icon theme to set.
+          Extension id of the icon theme to set.
         '';
-        default = null;
+        default = "thang-nm.flow-icons";
       };
     };
   };
 
   config = let
     selfConfig = config.zeide.programs.vscodium;
+
+    settingsPath = "${config.xdg.configHome}/VSCodium/User/settings.json";
+    settingsStorePath = config.home.file."${settingsPath}".source;
+
+    autoExtensions = pkgs.nix4vscode.forVscodePrerelease ([
+        # General
+        "maattdd.gitless"
+        "usernamehw.errorlens"
+        "fabiospampinato.vscode-todo-plus"
+        "mkhl.direnv"
+
+        # Formatters / Linters
+        "biomejs.biome"
+        "esbenp.prettier-vscode"
+        "tamasfe.even-better-toml"
+        "redhat.vscode-yaml"
+
+        # Nix
+        "jnoortheen.nix-ide"
+
+        # JavaScript / TypeScript / Web
+        "chamboug.js-auto-backticks"
+        "dbaeumer.vscode-eslint"
+        "bradlc.vscode-tailwindcss"
+        "Vue.volar"
+        "svelte.svelte-vscode"
+
+        # GraphQL
+        "GraphQL.vscode-graphql"
+        "GraphQL.vscode-graphql-syntax"
+
+        # Rust
+        "rust-lang.rust-analyzer"
+
+        # Nushell
+        "TheNuProjectContributors.vscode-nushell-lang"
+
+        # Shell
+        "timonwong.shellcheck"
+
+        # QT / QML
+        "TheQtCompany.qt-core"
+        "TheQtCompany.qt-qml"
+
+        # C/C++
+        "llvm-vs-code-extensions.vscode-clangd"
+        "mesonbuild.mesonbuild"
+      ]
+      ++ (lib.optional (selfConfig.colorTheme.extension != null) selfConfig.colorTheme.extension)
+      ++ (lib.optional (selfConfig.iconTheme.extension != null && selfConfig.iconTheme.extension != "thang-nm.flow-icons")
+        selfConfig.iconTheme.extension)
+      ++ (lib.optional (config.zeide.services.wakatime.enable) "wakatime.vscode-wakatime"));
+
+    pkgsExtensions = with pkgs.vscode-extensions; [
+      ms-vscode.cmake-tools
+      vadimcn.vscode-lldb
+      foxundermoon.shell-format
+      ms-python.python
+    ];
   in
     lib.mkIf selfConfig.enable {
-      home.activation.flowIconsLicenseReplace =
-        lib.hm.dag.entryAfter ["writeBoundary"]
-        ''
-          license=$(cat "${secrets.flowicons-license.path}")
-          file="${config.xdg.configHome}/VSCodium/User/settings.json"
-          if [ -f "$file" ]; then
-            ${pkgs.gnused}/bin/sed -i "s#@flowicons-license-age@#$license#" "$file"
-          fi
-        '';
+      home = {
+        activation.vscodiumSettings =
+          lib.hm.dag.entryAfter
+          ["writeBoundary"]
+          ''
+            template="${settingsStorePath}"
+            target="${settingsPath}"
+
+            flowicons_license=$(cat "${secrets.flowicons-license.path}")
+
+            mkdir -p "$(dirname "$target")"
+            ${pkgs.gnused}/bin/sed "s#@flowicons-license-age@#$flowicons_license#g" "$template" > "$target"
+          '';
+
+        file."${settingsPath}".enable = false;
+      };
 
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium;
 
-        mutableExtensionsDir = false;
-
+        mutableExtensionsDir = true;
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
 
-          extensions = with pkgs.vscode-marketplace;
-            [
-              # Theming
-              thang-nm.flow-icons
-
-              # General
-              mkhl.direnv
-              wakatime.vscode-wakatime
-              maattdd.gitless
-              usernamehw.errorlens
-              fabiospampinato.vscode-todo-plus
-
-              # Formatters / Linters
-              biomejs.biome
-              esbenp.prettier-vscode
-              tamasfe.even-better-toml
-              redhat.vscode-yaml
-
-              # Nix
-              jnoortheen.nix-ide
-
-              # JavaScript / TypeScript / Web
-              chamboug.js-auto-backticks
-              dbaeumer.vscode-eslint
-              bradlc.vscode-tailwindcss
-              vue.volar
-              svelte.svelte-vscode
-              prisma.prisma
-
-              # GraphQL
-              graphql.vscode-graphql
-              graphql.vscode-graphql-syntax
-
-              # Rust
-              rust-lang.rust-analyzer
-
-              # Python
-              ms-python.python
-
-              # Shell
-              timonwong.shellcheck
-              foxundermoon.shell-format
-
-              # QT / QML
-              theqtcompany.qt-core
-              theqtcompany.qt-qml
-            ]
-            ++ (lib.optional (selfConfig.colorTheme.package != null) selfConfig.colorTheme.package)
-            ++ (lib.optional (selfConfig.iconTheme.package != null) selfConfig.iconTheme.package)
-            ++ (lib.optional (config.zeide.services.wakatime.enable) pkgs.vscode-marketplace.wakatime.vscode-wakatime);
+          extensions = autoExtensions ++ pkgsExtensions;
 
           userSettings = let
-            formattersConfig = {
-              javascript = "biomejs.biome";
-              javascriptreact = "biomejs.biome";
-              typescript = "biomejs.biome";
-              typescriptreact = "biomejs.biome";
-              astro = "biomejs.biome";
-              svelte = "biomejs.biome";
-              vue = "biomejs.biome";
-              tailwind = "biomejs.biome";
-              json = "biomejs.biome";
-              jsonc = "biomejs.biome";
-              css = "biomejs.biome";
-              graphql = "biomejs.biome";
-              html = "esbenp.prettier-vscode";
-              postcss = "esbenp.prettier-vscode";
-              less = "esbenp.prettier-vscode";
-              scss = "esbenp.prettier-vscode";
-              shellscript = "foxundermoon.shell-format";
-              toml = "tamasfe.even-better-toml";
-              yaml = "redhat.vscode-yaml";
+            formatterConfig = {
+              "biomejs.biome" = [
+                "javascript"
+                "javascriptreact"
+                "typescript"
+                "typescriptreact"
+                "astro"
+                "svelte"
+                "vue"
+                "tailwind"
+                "json"
+                "jsonc"
+                "css"
+                "graphql"
+              ];
+
+              "esbenp.prettier-vscode" = [
+                "html"
+                "postcss"
+                "less"
+                "scss"
+              ];
+
+              "foxundermoon.shell-format" = [
+                "shellscript"
+                "dockerfile"
+              ];
+
+              "tamasfe.even-better-toml" = ["toml"];
+
+              "redhat.vscode-yaml" = ["yaml"];
+
+              "mesonbuild.mesonbuild" = ["meson"];
+
+              "llvm-vs-code-extensions.vscode-clangd" = [
+                "c"
+                "cpp"
+                "cuda-cpp"
+                "objective-c"
+                "objective-cpp"
+              ];
+
+              "ms-python.python" = ["python"];
             };
+
+            formatterSettings =
+              lib.foldlAttrs (
+                acc: formatter: langs:
+                  acc
+                  // builtins.listToAttrs (map (lang: {
+                      name = "[${lang}]";
+                      value = {"editor.defaultFormatter" = formatter;};
+                    })
+                    langs)
+              ) {}
+              formatterConfig;
           in
             with config.stylix.fonts;
               {
@@ -154,7 +205,8 @@
                 ];
                 "shellcheck.executablePath" = lib.getExe pkgs.shellcheck;
                 "qt-qml.qmlls.customExePath" = "${pkgs.qt6.qtdeclarative}/bin/qmlls";
-                "shellformat.path" = lib.getExe pkgs.shfmt;
+                "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
+                "mesonbuild.languageServerPath" = pkgs.lib.getExe pkgs.mesonlsp;
 
                 "breadcrumbs.enabled" = true;
 
@@ -212,6 +264,10 @@
                 "svelte.enable-ts-plugin" = true;
                 "qt-qml.doNotAskForQmllsDownload" = true;
 
+                "mesonbuild.downloadLanguageServer" = false;
+                "mesonbuild.languageServer" = "mesonlsp";
+                "mesonbuild.modifySettings" = false;
+
                 "workbench.colorCustomizations" = {
                   "[${selfConfig.colorTheme.name}]" = with config.lib.stylix.colors.withHashtag; {
                     "terminal.ansiBlack" = "${base00}";
@@ -233,12 +289,7 @@
                   };
                 };
               }
-              // lib.foldlAttrs (acc: lang: formatter:
-                {
-                  "[${lang}]"."editor.defaultFormatter" = formatter;
-                }
-                // acc) {}
-              formattersConfig;
+              // formatterSettings;
         };
       };
 

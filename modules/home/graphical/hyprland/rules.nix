@@ -27,30 +27,23 @@
     wayland.windowManager.hyprland.settings = {
       windowrule =
         [
-          # Use kitty native opacity instead
+          # Terminal inactive opacity
           "opacity 1 override 0.8 override, class:^(kitty)$"
 
           # Make PiP window flaoting and sticky
           "float, title:^(Picture-in-Picture)$"
           "pin, title:^(Picture-in-Picture)$"
 
-          # Disable opacity for these apps
-          "opacity 1 override, class:^(zen-beta)$"
-          "opacity 1 override, class:^(equibop)$"
-          "opacity 1 override, class:^(mpv)$"
-          "opacity 1 override, class:^(org.gnome.Loupe)$"
-          "opacity 1 override, class:^(org.gnome.Papers)$"
-          "opacity 1 override, class:^(com.obsproject.Studio)$"
-          "opacity 1 override, class:^(Waydroid)$"
+          # Make xdg-termfilechooser floating
+          "float, class:^(xdg-termfilechooser-yazi)$"
 
           # Games
           "tag +game, title:^(Wuthering Waves  )$" # Window name has two spaces at the end ?????
           "tag +game, class:^(genshinimpact.exe)$"
           "tag +game, class:^(starrail.exe)$"
           "tag +game, class:^(zenlesszonezero.exe)$"
-          "tag +game, class:^(waydroid.com.YoStarEN.AzurLane)$"
+          "tag +game, class:^(.*steam_app.*)$"
 
-          "opacity 1 override, tag:game"
           "renderunfocused, tag:game"
           "fullscreen, tag:game"
           "immediate, tag:game"
@@ -60,6 +53,7 @@
       layerrule = [
         "blur, shiny-.*"
         "ignorezero, shiny-.*"
+        "noanim, shiny-.*"
       ];
 
       workspace = selfConfig.workspaces;

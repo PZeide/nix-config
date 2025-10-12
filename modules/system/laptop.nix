@@ -14,7 +14,7 @@
     lib.mkIf selfConfig.enable {
       services = {
         # On laptop, short press on power key should suspend instead of shutdown
-        logind.powerKey = "suspend";
+        logind.settings.Login.HandlePowerKey = "suspend";
 
         upower = {
           enable = true;

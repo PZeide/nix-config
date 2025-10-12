@@ -256,6 +256,8 @@
         home.packages = with pkgs; [
           dive
           kubectl
+          devenv
+          hurl
         ];
       })
     ];

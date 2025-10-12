@@ -2,6 +2,7 @@
   asset,
   config,
   lib,
+  pkgs,
   ...
 }: let
   mkDefaultAppsOption' = appType:
@@ -15,6 +16,14 @@
 in {
   options.zeide.services.xdg = with lib; {
     enableUserDirs = mkEnableOption "xdg user directories";
+
+    execTerminal = mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      description = ''
+        Desktop file of the default terminal, not configuring this can cause issues in some apps.
+      '';
+    };
 
     defaultApps = {
       browser = mkDefaultAppsOption' "browser";
@@ -46,6 +55,17 @@ in {
         )
       );
   in {
+    home.packages = lib.optional (selfConfig.execTerminal != null) pkgs.xdg-terminal-exec;
+
+    xdg.configFile."xdg-terminals.list" = {
+      enable = selfConfig.execTerminal != null;
+      text = "${selfConfig.execTerminal}";
+    };
+
+    dconf.settings."org/gnome/desktop/applications/terminal".exec =
+      lib.mkIf (selfConfig.execTerminal != null)
+      (lib.getExe pkgs.xdg-terminal-exec);
+
     xdg = {
       userDirs = lib.mkIf selfConfig.enableUserDirs {
         enable = true;

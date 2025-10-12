@@ -12,20 +12,43 @@
       type = with types; coercedTo package toString path;
       default = asset "wallpapers/rem.jpg";
       description = ''
-        Wallpaper image used to generate color palette and theming.
+        Wallpaper image (will drive the generation of the color palette).
       '';
     };
 
     polarity = mkOption {
       type = types.enum [
-        "either"
         "light"
         "dark"
       ];
-      default = "either";
+      default = "dark";
       description = ''
-        Force the use of light or dark mode.
-        "either" will use the best.
+        Use of light or dark mode.
+      '';
+    };
+
+    scheme = lib.mkOption {
+      type = lib.types.enum [
+        "content"
+        "expressive"
+        "fidelity"
+        "fruit-salad"
+        "monochrome"
+        "neutral"
+        "rainbow"
+        "tonal-spot"
+      ];
+      default = "tonal-spot";
+      description = ''
+        Color scheme type used to generate the colors from the wallpaper.
+      '';
+    };
+
+    contrast = lib.mkOption {
+      type = lib.types.addCheck lib.types.float (x: x >= -1.0 && x <= 1.0);
+      default = 0.0;
+      description = ''
+        Number from -1 (minimum contrast) to 1 (maximum contrast) used to generate colors.
       '';
     };
   };
@@ -46,7 +69,12 @@
       autoEnable = false;
 
       image = selfConfig.wallpaper;
-      polarity = selfConfig.polarity;
+
+      colorGeneration = {
+        polarity = selfConfig.polarity;
+        scheme = selfConfig.scheme;
+        contrast = selfConfig.contrast;
+      };
 
       # If system-wide fonts config is enabled, use the fonts from there.
       fonts = lib.mkIf osConfig.zeide.graphical.fonts.enable {

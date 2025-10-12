@@ -5,8 +5,8 @@
 }: {
   options.zeide.network = with lib; {
     enable = mkEnableOption "network config";
-    enableWireless = mkEnableOption "wireless with iwd";
-    enableQuad9Dns = mkEnableOption "quad9 DNS with DoT and DNSSEC";
+    enableWireless = mkEnableOption "wireless (using iwd)";
+    enableCloudflareDns = mkEnableOption "Cloudflare DNS with DoT";
     enableFirewall = mkOption {
       type = types.bool;
       default = false;
@@ -22,10 +22,9 @@
   in
     lib.mkIf selfConfig.enable {
       networking = {
-        nameservers = lib.optionals selfConfig.enableQuad9Dns [
-          #"9.9.9.9#dns.quad9.net"
-          #"149.112.112.112#dns.quad9.net"
-          "194.242.2.2#dns.mullvad.net"
+        nameservers = lib.optionals selfConfig.enableCloudflareDns [
+          "1.1.1.1#one.one.one.one"
+          "1.0.0.1#one.one.one.one"
         ];
 
         networkmanager = {
@@ -60,7 +59,7 @@
         domains = ["~."];
 
         dnsovertls =
-          if selfConfig.enableQuad9Dns
+          if selfConfig.enableCloudflareDns
           then "true"
           else "opportunistic";
       };

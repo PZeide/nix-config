@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: {
   options.zeide.programs.kitty = with lib; {
@@ -21,7 +20,7 @@
           show_hyperlink_targets = true;
 
           background_opacity = lib.mkForce 0.65;
-          background_blur = lib.mkForce 0;
+          background_blur = 0;
 
           enable_audio_bell = false;
 
@@ -31,14 +30,6 @@
           confirm_os_window_close = 0;
         };
       };
-
-      home.packages = [pkgs.xdg-terminal-exec];
-
-      xdg.configFile."xdg-terminals.list".text = ''
-        kitty.desktop
-      '';
-
-      dconf.settings."org/gnome/desktop/applications/terminal".exec = lib.getExe pkgs.xdg-terminal-exec;
 
       stylix.targets.kitty.enable = true;
     };

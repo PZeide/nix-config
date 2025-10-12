@@ -7,13 +7,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "librepods";
-  version = "0.1.0-72a7637";
+  version = "0.1.0-unstable-75fa80c";
 
   src = fetchFromGitHub {
     owner = "kavishdevar";
     repo = "librepods";
-    rev = "72a7637863488a27d2c42e3ac2bc81e4e4bc7aab";
-    hash = "sha256-/I+PFIFpGqPfQQ7NSBta+yBbIxYjjYK5D7T8oBc6CAE=";
+    rev = "28ffd217d643f525f940528addcff78846434635";
+    hash = "sha256-+mdTMA14TqbZgPmgGeFUqnp4DudIKMk5vIYQfqqBglE=";
   };
 
   nativeBuildInputs = [

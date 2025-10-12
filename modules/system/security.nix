@@ -8,7 +8,7 @@
     enable = mkEnableOption "security config";
     wheelNeedsPassword = mkOption {
       type = types.bool;
-      default = false;
+      default = true;
       description = ''
         Whether wheel members needs password to use sudo.
       '';

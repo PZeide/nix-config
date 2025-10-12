@@ -16,22 +16,18 @@
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
-  hardware = {
-    amdgpu.initrd.enable = false;
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    modesetting.enable = true;
 
-    nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
-      modesetting.enable = true;
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
 
-      powerManagement = {
-        enable = true;
-        finegrained = true;
-      };
-
-      prime = {
-        amdgpuBusId = "PCI:6:0:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
+    prime = {
+      amdgpuBusId = "PCI:6:0:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
   };
 

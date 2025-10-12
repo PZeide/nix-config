@@ -2,34 +2,30 @@
   description = "Zeide's NixOS configuration | @PZeide";
 
   inputs = {
-    # Nix
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Packages repositories
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
+    nix4vscode = {
+      url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Home Manager
-    home-manager.url = "github:nix-community/home-manager";
-
-    # Boot Manager
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Secrets
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -38,33 +34,29 @@
       };
     };
 
-    # Gaming
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Theming
     stylix = {
       # FIXME matugen branch
-      url = "github:nix-community/stylix/347a99fabd2bc8a5a05776e62c7333ecbdc66545";
+      url = "github:nix-community/stylix/7353adc04e99b389432605fab549706d9f7d6793";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
+
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
+
     hyprsplit = {
       url = "github:shezdy/hyprsplit";
       inputs.hyprland.follows = "hyprland";
     };
+
     hypridle = {
       url = "github:hyprwm/hypridle";
       inputs = {
@@ -76,28 +68,7 @@
         systems.follows = "hyprland/systems";
       };
     };
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs = {
-        hyprgraphics.follows = "hyprland/hyprgraphics";
-        hyprlang.follows = "hyprland/hyprlang";
-        hyprutils.follows = "hyprland/hyprutils";
-        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-      };
-    };
-    hyprpaper = {
-      url = "github:hyprwm/hyprpaper";
-      inputs = {
-        hyprgraphics.follows = "hyprland/hyprgraphics";
-        hyprlang.follows = "hyprland/hyprlang";
-        hyprutils.follows = "hyprland/hyprutils";
-        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-      };
-    };
+
     hyprpicker = {
       url = "github:hyprwm/hyprpicker";
       inputs = {
@@ -107,53 +78,34 @@
         systems.follows = "hyprland/systems";
       };
     };
-    hyprpolkitagent = {
-      url = "github:hyprwm/hyprpolkitagent";
-      inputs = {
-        hyprutils.follows = "hyprland/hyprutils";
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-      };
-    };
-    rose-pine-hyprcursor = {
-      url = "github:ndom91/rose-pine-hyprcursor";
-      inputs = {
-        nixpkgs.follows = "hyprland/nixpkgs";
-        hyprlang.follows = "hyprland/hyprlang";
-      };
-    };
 
-    # Zen Browser
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zen-nebula = {
-      url = "github:JustAdumbPrsn/Zen-Nebula";
+
+    bubble-clean-zen = {
+      url = "github:nieffka/bubble-clean-zen";
       flake = false;
     };
 
-    # Gaming
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Shell
-    shiny-shell = {
-      url = "git+file:///home/thibaud/Documents/Development/shiny-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    #Webapps
     nix-webapps = {
       url = "github:TLATER/nix-webapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Soon BYE
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    shiny-shell = {
+      url = "github:PZeide/shiny-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -174,8 +126,6 @@
         };
 
         modules = [
-          inputs.nix-index-database.nixosModules.nix-index
-          inputs.nur.modules.nixos.default
           inputs.agenix.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
           ./packages

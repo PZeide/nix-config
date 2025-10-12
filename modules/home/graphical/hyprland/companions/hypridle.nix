@@ -24,6 +24,10 @@
     lib.mkIf selfConfig.enable {
       assertions = [
         {
+          assertion = config.zeide.graphical.hyprland.companions.shiny-shell.enable;
+          message = "config.zeide.graphical.hyprland.companions.shiny-shell.enable is required to enable hypridle.";
+        }
+        {
           assertion = !selfConfig.dimBacklight || osConfig.zeide.laptop.enable;
           message = "osConfig.zeide.laptop.enable is required to dim backlight.";
         }
@@ -43,8 +47,12 @@
           listener =
             [
               {
+                timeout = 300;
+                on-timeout = "loginctl lock-session";
+              }
+              {
                 timeout = 600;
-                on-timeout = "hyprctl dispatch dpms off && loginctl lock-session";
+                on-timeout = "hyprctl dispatch dpms off";
                 on-resume =
                   if selfConfig.dimBacklight
                   then "hyprctl dispatch dpms on && brillo -I"
@@ -56,7 +64,7 @@
               }
             ]
             ++ lib.optional selfConfig.dimBacklight {
-              timeout = 300;
+              timeout = 500;
               on-timeout = "brillo -O && brillo -u 500000 -S 20%";
               on-resume = "brillo -I";
             };
