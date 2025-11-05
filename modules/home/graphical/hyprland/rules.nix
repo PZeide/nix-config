@@ -51,9 +51,9 @@
         ++ selfConfig.windows;
 
       layerrule = [
-        "blur, shiny-.*"
-        "ignorezero, shiny-.*"
-        "noanim, shiny-.*"
+        "blur, shiny:.*"
+        "ignorezero, shiny:.*"
+        "noanim, shiny:.*"
       ];
 
       workspace = selfConfig.workspaces;

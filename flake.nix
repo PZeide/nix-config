@@ -39,6 +39,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    devenv.url = "github:cachix/devenv";
+
     stylix = {
       # FIXME matugen branch
       url = "github:nix-community/stylix/7353adc04e99b389432605fab549706d9f7d6793";

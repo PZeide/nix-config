@@ -16,7 +16,6 @@
       home.packages = with pkgs; [
         (prismlauncher.override {
           gamemodeSupport = true;
-          glfw3-minecraft = pkgs.glfw-wayland-minecraft;
 
           jdks = lib.optionals selfConfig.enableAllJdks [
             zulu8

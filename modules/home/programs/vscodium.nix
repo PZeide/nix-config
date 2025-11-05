@@ -40,7 +40,7 @@
         description = ''
           Extension id of the icon theme to set.
         '';
-        default = "thang-nm.flow-icons";
+        default = null;
       };
     };
   };
@@ -96,8 +96,7 @@
         "mesonbuild.mesonbuild"
       ]
       ++ (lib.optional (selfConfig.colorTheme.extension != null) selfConfig.colorTheme.extension)
-      ++ (lib.optional (selfConfig.iconTheme.extension != null && selfConfig.iconTheme.extension != "thang-nm.flow-icons")
-        selfConfig.iconTheme.extension)
+      ++ (lib.optional (selfConfig.iconTheme.extension != null) selfConfig.iconTheme.extension)
       ++ (lib.optional (config.zeide.services.wakatime.enable) "wakatime.vscode-wakatime"));
 
     pkgsExtensions = with pkgs.vscode-extensions; [

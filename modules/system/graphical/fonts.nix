@@ -34,8 +34,8 @@ in {
       description = "Sans-serif font to use throughout the system.";
       type = fontType;
       default = {
-        package = pkgs.jost;
-        name = "Jost";
+        package = pkgs.vegur;
+        name = "Vegur";
       };
     };
 
@@ -52,7 +52,7 @@ in {
       description = "Emoji font to use throughout the system.";
       type = fontType;
       default = {
-        package = pkgs.noto-fonts-emoji;
+        package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
     };

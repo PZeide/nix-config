@@ -30,7 +30,8 @@ in {
           "$mainMod, HOME, exec, ${wrapAppUnit "screenshot region"}"
           "$mainMod SHIFT, HOME, exec, ${wrapAppUnit "screenshot window"}"
 
-          "$mainMod, SPACE, exec, shiny-shell ipc call launcher toggle"
+          "$mainMod, TAB, global, shiny-shell:overview-toggle"
+          "$mainMod, SPACE, global, shiny-shell:launcher-toggle"
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "kitty yazi"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
@@ -46,11 +47,6 @@ in {
         plugins.hyprsplit.enable = true;
 
         companions = {
-          hypridle = {
-            enable = true;
-            dimBacklight = true;
-          };
-
           hyprpicker.enable = true;
           screenshot.enable = true;
           shiny-shell.enable = true;
@@ -149,10 +145,12 @@ in {
 
       keyring.enable = true;
 
-      librepods = {
+      /*
+        librepods = {
         enable = true;
         phoneMacAddress = "28:2D:7F:DF:BC:76";
       };
+      */
 
       polkit-agent.enable = true;
       udiskie.enable = true;
@@ -180,9 +178,7 @@ in {
     shell.fish.enable = true;
 
     theme = {
-      wallpaper = asset "wallpapers/phrolova/f90f00d53bab218f9ae16be912cff2bf.jpg";
-      #polarity = "dark";
-      #scheme = "content";
+      wallpaper = asset "wallpapers/vaxry.png";
 
       gtk.enable = true;
       qt.enable = true;

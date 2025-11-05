@@ -82,6 +82,10 @@
           8
           9
         ]
+        ++ [
+          "$mainMod, 0, ${workspaceDispatcher}, 10"
+          "$mainMod SHIFT, 0, ${moveToWorkspaceSilentDispatcher}, 10"
+        ]
         ++ selfConfig.extra;
 
       bindm = [

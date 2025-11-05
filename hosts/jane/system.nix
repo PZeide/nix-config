@@ -129,49 +129,5 @@
         ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
       };
     };
-
-    # mt7921e is slow to resume after suspend so we unload it before suspending
-    unload-mt7921e-before-suspend = {
-      description = "Unload MT7921E driver before hibernate";
-      before = [
-        "suspend.target"
-        "hibernate.target"
-        "hybrid-sleep.target"
-        "suspend-then-hibernate.target"
-      ];
-      wantedBy = [
-        "suspend.target"
-        "hibernate.target"
-        "hybrid-sleep.target"
-        "suspend-then-hibernate.target"
-      ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.kmod}/bin/modprobe -r mt7921e";
-      };
-    };
-
-    # load mt7921e back after resuming
-    load-mt7921e-after-resume = {
-      description = "Load mediatek driver after resuming";
-      after = [
-        "suspend.target"
-        "hibernate.target"
-        "hybrid-sleep.target"
-        "suspend-then-hibernate.target"
-      ];
-      wantedBy = [
-        "suspend.target"
-        "hibernate.target"
-        "hybrid-sleep.target"
-        "suspend-then-hibernate.target"
-      ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.kmod}/bin/modprobe mt7921e";
-      };
-    };
   };
 }

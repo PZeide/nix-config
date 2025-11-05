@@ -17,7 +17,6 @@
         };
 
         cider = callPackage ./cider.nix {};
-        librepods = callPackage ./librepods.nix {};
       };
     })
   ];

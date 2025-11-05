@@ -37,7 +37,31 @@
             };
           };
 
-          bar = {};
+          bar.enabled = true;
+
+          brightness = {
+            enabled = true;
+            natural = true;
+            smooth = true;
+          };
+
+          idle = {
+            enabled = true;
+            items = [
+              {
+                timeout = 300;
+                actions = ["setbrightness,0.3"];
+              }
+              {
+                timeout = 600;
+                actions = ["dpms"];
+              }
+              {
+                timeout = 900;
+                actions = ["suspend"];
+              }
+            ];
+          };
 
           launcher = {
             enabled = true;
@@ -51,8 +75,9 @@
           };
 
           locale = {
-            timeFormat = "h:mm A";
+            timeFormat = "h:mm a";
             dateFullFormat = "dddd d MMMM";
+            dateShortFormat = "ddd d MMM";
             temperatureUnit = "celsius";
           };
 
@@ -61,7 +86,10 @@
           lockScreen = {
             enabled = true;
             lockOnStart = true;
+            lockOnSuspend = true;
           };
+
+          overview.enabled = true;
 
           player = {
             blacklist = [];

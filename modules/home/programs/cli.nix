@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }: {
   options.zeide.programs.cli = with lib; {
@@ -66,38 +68,62 @@
             nix-direnv.enable = true;
           };
 
+          delta = {
+            enable = true;
+            enableGitIntegration = true;
+
+            options = {
+              navigate = true;
+              side-by-side = true;
+              true-color = "never";
+
+              features = "unobtrusive-line-numbers decorations";
+              unobtrusive-line-numbers = {
+                line-numbers = true;
+                line-numbers-left-format = "{nm:>4}│";
+                line-numbers-right-format = "{np:>4}│";
+                line-numbers-left-style = "grey";
+                line-numbers-right-style = "grey";
+              };
+
+              decorations = {
+                commit-decoration-style = "bold grey box ul";
+                file-style = "bold blue";
+                file-decoration-style = "ul";
+                hunk-header-decoration-style = "box";
+              };
+            };
+          };
+
           git = {
             enable = true;
 
-            userName = selfConfig.essentials.gitName;
-            userEmail = selfConfig.essentials.gitEmail;
+            settings = {
+              user = {
+                name = selfConfig.essentials.gitName;
+                email = selfConfig.essentials.gitName;
+              };
 
-            signing = {
-              key = "~/.ssh/id_ed25519.pub";
-              signByDefault = true;
-            };
+              alias = {
+                a = "add";
+                aa = "add -A";
+                b = "branch";
+                ba = "branch -a";
+                c = "commit -m";
+                ca = "commit -am";
+                pl = "pull";
+                ps = "push";
+                co = "checkout";
+                cob = "checkout -b";
+                contributors = "shortlog -nse";
+                d = "difftool";
+                ds = "difftool --staged";
+                lg = "log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'";
+                remotes = "remote -v";
+                s = "status -sb";
+                undo = "reset HEAD~1";
+              };
 
-            aliases = {
-              a = "add";
-              aa = "add -A";
-              b = "branch";
-              ba = "branch -a";
-              c = "commit -m";
-              ca = "commit -am";
-              pl = "pull";
-              ps = "push";
-              co = "checkout";
-              cob = "checkout -b";
-              contributors = "shortlog -nse";
-              d = "difftool";
-              ds = "difftool --staged";
-              lg = "log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'";
-              remotes = "remote -v";
-              s = "status -sb";
-              undo = "reset HEAD~1";
-            };
-
-            extraConfig = {
               gpg.format = "ssh";
               init.defaultBranch = "main";
               color.ui = true;
@@ -108,30 +134,9 @@
               };
             };
 
-            delta = {
-              enable = true;
-
-              options = {
-                navigate = true;
-                side-by-side = true;
-                true-color = "never";
-
-                features = "unobtrusive-line-numbers decorations";
-                unobtrusive-line-numbers = {
-                  line-numbers = true;
-                  line-numbers-left-format = "{nm:>4}│";
-                  line-numbers-right-format = "{np:>4}│";
-                  line-numbers-left-style = "grey";
-                  line-numbers-right-style = "grey";
-                };
-
-                decorations = {
-                  commit-decoration-style = "bold grey box ul";
-                  file-style = "bold blue";
-                  file-decoration-style = "ul";
-                  hunk-header-decoration-style = "box";
-                };
-              };
+            signing = {
+              key = "~/.ssh/id_ed25519.pub";
+              signByDefault = true;
             };
           };
         };
@@ -254,9 +259,9 @@
 
       (lib.mkIf selfConfig.development.enable {
         home.packages = with pkgs; [
+          inputs.devenv.packages.${system}.default
           dive
           kubectl
-          devenv
           hurl
         ];
       })
