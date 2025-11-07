@@ -52,7 +52,7 @@
 
       layerrule = [
         "blur, shiny:.*"
-        "ignorezero, shiny:.*"
+        "ignorealpha 0.6, shiny:.*"
         "noanim, shiny:.*"
       ];
 
