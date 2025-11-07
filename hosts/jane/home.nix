@@ -104,6 +104,7 @@ in {
         proton-pass = true;
         proton-vpn = true;
         teams = true;
+        affinity = true;
 
         webapps = {
           keychronLauncher = true;

@@ -3,6 +3,8 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }: {
   options.zeide.programs.graphical = with lib; {
@@ -12,6 +14,7 @@
     proton-pass = mkEnableOption "proton-pass (password manager)";
     proton-vpn = mkEnableOption "proton-vpn (VPN)";
     teams = mkEnableOption "teams-for-linux";
+    affinity = mkEnableOption "affinity";
 
     webapps = {
       keychronLauncher = mkEnableOption "keychron launcher";
@@ -49,6 +52,7 @@
       (mkPackageIf "proton-pass" pkgs.proton-pass)
       (mkPackageIf "proton-vpn" pkgs.protonvpn-gui)
       (mkPackageIf "teams" pkgs.teams-for-linux)
+      (mkPackageIf "affinity" inputs.affinity-nix.packages.${system}.v3)
 
       (mkWebAppIf "keychronLauncher" {
         desktopName = "Keychron Launcher";
