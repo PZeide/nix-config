@@ -21,13 +21,6 @@
     selfConfig = config.zeide.services.easyeffects;
   in
     lib.mkIf selfConfig.enable {
-      dconf.settings = {
-        "com/github/wwmm/easyeffects" = {
-          process-all-inputs = true;
-          process-all-outputs = false; # Can cause xruns
-        };
-      };
-
       services.easyeffects = {
         enable = true;
 

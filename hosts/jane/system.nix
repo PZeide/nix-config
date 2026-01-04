@@ -19,7 +19,7 @@
       initialSessionCommand = let
         script = pkgs.writeScript "greeter-hyprland-login" ''
           if uwsm check may-start -i -v; then
-              exec uwsm start hyprland-uwsm.desktop
+              exec uwsm start -eD Hyprland hyprland.desktop
           fi
         '';
       in "${script}";
@@ -47,7 +47,6 @@
     shell.fishIntegration = true;
 
     swap = {
-      # File swap is required for HybridSleep to work
       enableFile = true;
       enableZram = true;
     };
@@ -60,6 +59,7 @@
     udev = {
       keychron = true;
       lamzu = true;
+      heightbitdo = true;
     };
 
     development = {
@@ -82,7 +82,6 @@
 
       optimizations.enable = true;
       steam.enable = true;
-      xpadneo.enable = true;
     };
 
     graphical = {
@@ -102,8 +101,13 @@
     };
 
     services = {
-      ios.enable = true;
+      anime = {
+        enable = true;
+        symlinkAnimes = true;
+        anilistUsername = "Zeide";
+      };
 
+      ios.enable = true;
       keyring.enable = true;
       location.enable = true;
       openssh.enable = true;
@@ -117,17 +121,13 @@
     };
   };
 
-  systemd.services = {
-    # ideapad_laptop module automatically softblock bluetooth on boot
-    unblock-bluetooth-on-boot = {
-      description = "Unblock Bluetooth on boot";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+  powerManagement = {
+    powerUpCommands = ''
+      ${pkgs.util-linux}/bin/rfkill unblock bluetooth
+    '';
 
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
-      };
-    };
+    resumeCommands = ''
+      ${pkgs.kbd}/bin/setleds -D +num < /dev/tty1
+    '';
   };
 }

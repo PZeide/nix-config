@@ -28,6 +28,7 @@
           window_padding_width = 8;
           hide_window_decorations = true;
           confirm_os_window_close = 0;
+          cursor_trail = 1;
         };
       };
 

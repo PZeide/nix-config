@@ -29,7 +29,17 @@
         };
 
         wireplumber.enable = true;
-        lowLatency.enable = selfConfig.enableLowLatency;
+
+        lowLatency = lib.mkIf selfConfig.enableLowLatency {
+          enable = true;
+          quantum = 128;
+        };
+
+        extraConfig.pipewire."clock-rates" = {
+          "context.properties" = {
+            "default.clock.allowed-rates" = [44100 48000 96000];
+          };
+        };
       };
 
       services.pulseaudio.enable = lib.mkForce false;

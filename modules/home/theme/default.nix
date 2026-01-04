@@ -67,6 +67,7 @@
     stylix = {
       enable = true;
       autoEnable = false;
+      enableReleaseChecks = false;
 
       image = selfConfig.wallpaper;
 

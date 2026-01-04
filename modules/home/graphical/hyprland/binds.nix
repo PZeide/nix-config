@@ -58,7 +58,11 @@
 
           "$mainMod, S, ${swapActiveWorkspacesDispatcher}, current+1" # Swap active workspaces
 
-          "$mainMod, L, exec, loginctl lock-session" # Lock
+          # Shiny-shell
+          "$mainMod, L, global, shiny-shell:session-lock"
+          "$mainMod, M, global, shiny-shell:session-control-toggle"
+          "$mainMod, TAB, global, shiny-shell:overview-toggle"
+          "$mainMod, SPACE, global, shiny-shell:launcher-toggle"
         ]
         ++ map (i: "$mainMod, ${toString i}, ${workspaceDispatcher}, ${toString i}") [
           1
@@ -97,11 +101,11 @@
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioPause, exec, playerctl play-pause"
-        ", XF86AudioNext, exec, playerctl next"
-        ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86AudioStop, exec, playerctl stop"
+        ", XF86AudioPlay, global, shiny-shell:player-play-pause"
+        ", XF86AudioPause, global, shiny-shell:player-playpause"
+        ", XF86AudioNext, global, shiny-shell:player-next"
+        ", XF86AudioPrev, global, shiny-shell:player-previous"
+        ", XF86AudioStop, global, shiny-shell:player-stop"
       ];
 
       bindel =
@@ -110,8 +114,8 @@
           ", XF86AudioRaiseVolume, exec, wpctl set-volume -l '1.0' @DEFAULT_AUDIO_SINK@ 4%+"
         ]
         ++ lib.optionals osConfig.zeide.laptop.enable [
-          ", XF86MonBrightnessUp, exec, brillo -A 5"
-          ", XF86MonBrightnessDown, exec, brillo -U 5"
+          ", XF86MonBrightnessUp, global, shiny-shell:brightness-increment"
+          ", XF86MonBrightnessDown, global, shiny-shell:brightness-decrement"
         ];
     };
   };

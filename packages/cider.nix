@@ -23,13 +23,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "cider";
-  version = "3.1.1";
+  version = "3.1.8";
 
   src = fetchzip {
     nativeBuildInputs = [zstd];
     stripRoot = false;
     url = "https://repo.cider.sh/arch/cider-v${version}-linux-x64.pkg.tar.zst";
-    hash = "sha256-qaTt03axLgesivE8aKvqJb3n+z6t8XUJguhqjqldIro=";
+    hash = "sha256-ABwQRpqok9PqXvdV3qfkDOJ3Dm74mr83ed0or4f8zm4=";
   };
 
   nativeBuildInputs = [

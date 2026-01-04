@@ -17,7 +17,7 @@
   ];
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     modesetting.enable = true;
 
     powerManagement = {
@@ -33,7 +33,6 @@
 
   boot = {
     kernelModules = ["kvm-amd"];
-    kernelParams = [];
 
     initrd = {
       availableKernelModules = [

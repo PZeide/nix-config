@@ -11,7 +11,7 @@
     ./obs-studio.nix
     ./starship.nix
     ./vesktop.nix
-    ./vscodium.nix
+    ./zed.nix
     ./zen-browser.nix
   ];
 }

@@ -44,11 +44,11 @@
   };
 
   imports = [
-    ./companions
     ./binds.nix
     ./gestures.nix
     ./plugins.nix
     ./rules.nix
+    ./shell.nix
   ];
 
   config = let
@@ -175,7 +175,6 @@
             vrr = 1;
             disable_autoreload = true;
             focus_on_activate = false;
-            new_window_takes_over_fullscreen = 1;
             session_lock_xray = true;
           };
 
@@ -190,10 +189,6 @@
           ecosystem = {
             no_update_news = true;
             no_donation_nag = true;
-          };
-
-          experimental = {
-            xx_color_management_v4 = true;
           };
         };
       };

@@ -8,7 +8,15 @@
       type = with types; listOf str;
       default = [];
       description = ''
-        Extra window rules.
+        Extra anonymous window rules.
+      '';
+    };
+
+    layers = mkOption {
+      type = with types; listOf str;
+      default = [];
+      description = ''
+        Extra anonymous layer rules.
       '';
     };
 
@@ -16,7 +24,7 @@
       type = with types; listOf str;
       default = [];
       description = ''
-        Extra workspace rules.
+        Extra anonymous workspace rules.
       '';
     };
   };
@@ -27,34 +35,30 @@
     wayland.windowManager.hyprland.settings = {
       windowrule =
         [
-          # Terminal inactive opacity
-          "opacity 1 override 0.8 override, class:^(kitty)$"
+          # Terminal opacity
+          "match:class ^(kitty)$, opacity 1.0 override 0.8 override"
+
+          # Zed opacity
+          "match:class ^(dev.zed.Zed)$, opacity 0.9 override 0.8 override"
 
           # Make PiP window flaoting and sticky
-          "float, title:^(Picture-in-Picture)$"
-          "pin, title:^(Picture-in-Picture)$"
+          "match:title ^(Picture-in-Picture)$, float on, pin on"
 
           # Make xdg-termfilechooser floating
-          "float, class:^(xdg-termfilechooser-yazi)$"
+          "match:class ^(xdg-termfilechooser-yazi)$, float on"
 
-          # Games
-          "tag +game, title:^(Wuthering Waves  )$" # Window name has two spaces at the end ?????
-          "tag +game, class:^(genshinimpact.exe)$"
-          "tag +game, class:^(starrail.exe)$"
-          "tag +game, class:^(zenlesszonezero.exe)$"
-          "tag +game, class:^(.*steam_app.*)$"
+          # Add tag game to games
+          "match:class ^(genshinimpact\.exe)$, tag +game"
+          "match:class ^(starrail\.exe)$, tag +game"
+          "match:class ^(zenlesszonezero\.exe)$, tag +game"
+          "match:class ^(.*steam_app.*)$, tag +game"
 
-          "renderunfocused, tag:game"
-          "fullscreen, tag:game"
-          "immediate, tag:game"
+          # Rules for games
+          "match:tag game, render_unfocused on, fullscreen on, immediate on, idle_inhibit always"
         ]
         ++ selfConfig.windows;
 
-      layerrule = [
-        "blur, shiny:.*"
-        "ignorealpha 0.6, shiny:.*"
-        "noanim, shiny:.*"
-      ];
+      layerrule = ["match:namespace ^(shiny:.*)$, blur on, ignore_alpha 0.6, no_anim on"] ++ selfConfig.layers;
 
       workspace = selfConfig.workspaces;
     };

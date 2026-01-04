@@ -61,5 +61,8 @@
 
     # git is required for flakes to work so here it is
     programs.git.enable = true;
+
+    # allow running non-nix binaries (useful for LSPs)
+    programs.nix-ld.enable = true;
   };
 }

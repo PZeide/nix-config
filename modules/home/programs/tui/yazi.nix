@@ -53,8 +53,17 @@ in {
         trash-cli
       ];
 
-      xdg = lib.mkIf selfConfig.enableFileChooser {
-        configFile."xdg-desktop-portal-termfilechooser/config" = {
+      xdg = {
+        desktopEntries.yazi-kitty = {
+          name = "Yazi (Kitty)";
+          comment = "Open Yazi in a Kitty terminal";
+          type = "Application";
+          exec = "kitty -e yazi %u";
+          terminal = false;
+          noDisplay = true;
+        };
+
+        configFile."xdg-desktop-portal-termfilechooser/config" = lib.mkIf selfConfig.enableFileChooser {
           text = ''
             [filechooser]
             cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
@@ -67,7 +76,7 @@ in {
           recursive = true;
         };
 
-        portal = {
+        portal = lib.mkIf selfConfig.enableFileChooser {
           extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
           config.common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
         };

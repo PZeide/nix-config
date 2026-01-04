@@ -16,7 +16,6 @@
     ./gamemode.nix
     ./optimizations.nix
     ./steam.nix
-    ./xpadneo.nix
   ];
 
   config = let

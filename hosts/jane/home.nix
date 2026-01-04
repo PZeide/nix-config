@@ -27,11 +27,6 @@ in {
         ];
 
         binds.extra = [
-          "$mainMod, HOME, exec, ${wrapAppUnit "screenshot region"}"
-          "$mainMod SHIFT, HOME, exec, ${wrapAppUnit "screenshot window"}"
-
-          "$mainMod, TAB, global, shiny-shell:overview-toggle"
-          "$mainMod, SPACE, global, shiny-shell:launcher-toggle"
           "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
           "$mainMod, E, exec, ${wrapAppUnit "kitty yazi"}"
           "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
@@ -40,17 +35,11 @@ in {
         ];
 
         rules = {
-          windows = ["workspace special:cider, class:^(Cider)$"];
+          windows = ["match:class ^(Cider)$,"];
           workspaces = ["special:cider, on-created-empty:${wrapAppUnit "cider"}"];
         };
 
         plugins.hyprsplit.enable = true;
-
-        companions = {
-          hyprpicker.enable = true;
-          screenshot.enable = true;
-          shiny-shell.enable = true;
-        };
       };
     };
 
@@ -72,10 +61,10 @@ in {
       tui = {
         bluetui.enable = true;
         btop.enable = true;
-        impala.enable = true;
         lazygit.enable = true;
         nyaa.enable = true;
         rustmission.enable = true;
+        wifitui.enable = true;
 
         yazi = {
           enable = true;
@@ -123,16 +112,7 @@ in {
       nix-index.enable = true;
       obs-studio.enable = true;
       vesktop.enable = true;
-
-      vscodium = {
-        enable = true;
-
-        colorTheme = {
-          name = "Bearded Theme Black & Ruby";
-          extension = "BeardedBear.beardedtheme";
-        };
-      };
-
+      zed.enable = true;
       zen-browser.enable = true;
     };
 
@@ -145,14 +125,6 @@ in {
       };
 
       keyring.enable = true;
-
-      /*
-        librepods = {
-        enable = true;
-        phoneMacAddress = "28:2D:7F:DF:BC:76";
-      };
-      */
-
       polkit-agent.enable = true;
       udiskie.enable = true;
       wakatime.enable = true;
@@ -166,11 +138,11 @@ in {
           image = ["org.gnome.Loupe.desktop"];
           audio = ["mpv.desktop"];
           video = ["mpv.desktop"];
-          directory = ["yazi.desktop"];
+          directory = ["yazi-kitty.desktop"];
           office = [];
           pdf = ["org.gnome.Papers.desktop"];
           terminal = ["kitty.desktop"];
-          archive = ["yazi.desktop"];
+          archive = ["yazi-kitty.desktop"];
           discord = ["vesktop.desktop"];
         };
       };

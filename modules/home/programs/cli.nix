@@ -101,7 +101,7 @@
             settings = {
               user = {
                 name = selfConfig.essentials.gitName;
-                email = selfConfig.essentials.gitName;
+                email = selfConfig.essentials.gitEmail;
               };
 
               alias = {

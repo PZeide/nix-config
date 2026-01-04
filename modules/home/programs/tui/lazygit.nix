@@ -11,12 +11,7 @@
     selfConfig = config.zeide.programs.tui.lazygit;
   in
     lib.mkIf selfConfig.enable {
-      programs.lazygit = {
-        enable = true;
-        settings = {
-          git.paging.pager = "delta --paging=never";
-        };
-      };
+      programs.lazygit.enable = true;
 
       stylix.targets.lazygit.enable = true;
     };

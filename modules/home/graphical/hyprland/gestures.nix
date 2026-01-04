@@ -20,7 +20,6 @@
       gesture =
         [
           "3, horizontal, workspace"
-          "3, pinch, fullscreen, maximise"
         ]
         ++ selfConfig.extra;
     };

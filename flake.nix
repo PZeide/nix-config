@@ -43,7 +43,7 @@
 
     stylix = {
       # FIXME matugen branch
-      url = "github:nix-community/stylix/7353adc04e99b389432605fab549706d9f7d6793";
+      url = "github:nix-community/stylix/9f2f38b324caeca55c76b8767b30bd316e8f4597";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -54,36 +54,9 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    hyprland-contrib = {
-      url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "hyprland/nixpkgs";
-    };
-
     hyprsplit = {
       url = "github:shezdy/hyprsplit";
       inputs.hyprland.follows = "hyprland";
-    };
-
-    hypridle = {
-      url = "github:hyprwm/hypridle";
-      inputs = {
-        hyprlang.follows = "hyprland/hyprlang";
-        hyprutils.follows = "hyprland/hyprutils";
-        hyprland-protocols.follows = "hyprland/hyprland-protocols";
-        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-      };
-    };
-
-    hyprpicker = {
-      url = "github:hyprwm/hyprpicker";
-      inputs = {
-        hyprutils.follows = "hyprland/hyprutils";
-        hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
-        nixpkgs.follows = "hyprland/nixpkgs";
-        systems.follows = "hyprland/systems";
-      };
     };
 
     zen-browser = {
@@ -108,6 +81,11 @@
 
     nixcord = {
       url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    wifitui = {
+      url = "github:shazow/wifitui";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

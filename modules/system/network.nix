@@ -5,7 +5,7 @@
 }: {
   options.zeide.network = with lib; {
     enable = mkEnableOption "network config";
-    enableWireless = mkEnableOption "wireless (using iwd)";
+    enableWireless = mkEnableOption "wireless (using wpa_supplicant)";
     enableCloudflareDns = mkEnableOption "Cloudflare DNS with DoT";
     enableFirewall = mkOption {
       type = types.bool;
@@ -29,22 +29,7 @@
 
         networkmanager = {
           enable = true;
-
-          wifi = lib.mkIf selfConfig.enableWireless {
-            backend = "iwd";
-            powersave = true;
-          };
-
           dns = "systemd-resolved";
-        };
-
-        wireless.iwd = lib.mkIf selfConfig.enableWireless {
-          enable = true;
-          settings = {
-            Settings = {
-              AutoConnect = true;
-            };
-          };
         };
 
         firewall = {
