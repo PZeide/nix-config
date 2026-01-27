@@ -39,7 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devenv.url = "github:cachix/devenv";
+    devenv.url = "github:cachix/devenv/v1.11.2";
 
     stylix = {
       # FIXME matugen branch
@@ -86,6 +86,11 @@
 
     wifitui = {
       url = "github:shazow/wifitui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    librepods = {
+      url = "github:Chrisbattarbee/librepods";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

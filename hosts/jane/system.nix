@@ -1,4 +1,9 @@
 {pkgs, ...}: {
+  # FIXME REMOVED WHEN UPDATED
+  nixpkgs.config.permittedInsecurePackages = [
+    "beekeeper-studio-5.5.3"
+  ];
+
   zeide = {
     user = "thibaud";
 

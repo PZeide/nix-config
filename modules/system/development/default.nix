@@ -1,3 +1,6 @@
 {
-  imports = [./podman.nix];
+  imports = [
+    ./podman.nix
+    ./k3s.nix
+  ];
 }

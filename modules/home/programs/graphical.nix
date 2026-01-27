@@ -15,6 +15,9 @@
     proton-vpn = mkEnableOption "proton-vpn (VPN)";
     teams = mkEnableOption "teams-for-linux";
     affinity = mkEnableOption "affinity";
+    hoppscotch = mkEnableOption "hoppscotch (api testing)";
+    beekeeper-studio = mkEnableOption "beekeeper-studio (sql client)";
+    librepods = mkEnableOption "librepods";
 
     webapps = {
       keychronLauncher = mkEnableOption "keychron launcher";
@@ -53,6 +56,9 @@
       (mkPackageIf "proton-vpn" pkgs.protonvpn-gui)
       (mkPackageIf "teams" pkgs.teams-for-linux)
       (mkPackageIf "affinity" inputs.affinity-nix.packages.${system}.v3)
+      (mkPackageIf "hoppscotch" pkgs.hoppscotch)
+      (mkPackageIf "beekeeper-studio" pkgs.beekeeper-studio)
+      (mkPackageIf "librepods" inputs.librepods.packages.${system}.default)
 
       (mkWebAppIf "keychronLauncher" {
         desktopName = "Keychron Launcher";

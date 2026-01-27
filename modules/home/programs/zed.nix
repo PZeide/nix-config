@@ -24,6 +24,24 @@
         default = "yugen";
       };
     };
+
+    iconTheme = {
+      name = mkOption {
+        type = types.str;
+        description = ''
+          Icon theme to set.
+        '';
+        default = "Zed (Default)";
+      };
+
+      extension = mkOption {
+        type = with types; nullOr str;
+        description = ''
+          Extension id of the icon theme to set.
+        '';
+        default = null;
+      };
+    };
   };
 
   config = let
@@ -36,6 +54,7 @@
         extraPackages = with pkgs; [
           nixd
           alejandra
+          clang-tools
         ];
 
         extensions =
@@ -78,7 +97,8 @@
             "gitignore-template"
             "mistral-vibe"
           ]
-          ++ (lib.optional (selfConfig.theme.extension != null) selfConfig.theme.extension);
+          ++ (lib.optional (selfConfig.theme.extension != null) selfConfig.theme.extension)
+          ++ (lib.optional (selfConfig.iconTheme.extension != null) selfConfig.iconTheme.extension);
 
         userSettings = {
           auto_update = false;
@@ -97,6 +117,7 @@
           features.edit_prediction_provider = "codestral";
 
           theme = lib.mkForce selfConfig.theme.name;
+          icon_theme = lib.mkForce selfConfig.iconTheme.name;
 
           collaboration_panel.button = false;
 

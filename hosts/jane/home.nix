@@ -6,6 +6,11 @@
   appLaunchPrefix = "${pkgs.app2unit}/bin/app2unit -s a --";
   wrapAppUnit = app: "${appLaunchPrefix} ${app}";
 in {
+  home.sessionVariables = {
+    # Temp fix for webkitgtk apps
+    WEBKIT_DISABLE_DMABUF_RENDERER = 1;
+  };
+
   zeide = {
     graphical = {
       hyprland = {
@@ -94,6 +99,9 @@ in {
         proton-vpn = true;
         teams = true;
         affinity = true;
+        hoppscotch = true;
+        beekeeper-studio = true;
+        librepods = true;
 
         webapps = {
           keychronLauncher = true;
@@ -112,7 +120,12 @@ in {
       nix-index.enable = true;
       obs-studio.enable = true;
       vesktop.enable = true;
-      zed.enable = true;
+
+      zed = {
+        enable = true;
+        iconTheme.name = "Flow Dark";
+      };
+
       zen-browser.enable = true;
     };
 

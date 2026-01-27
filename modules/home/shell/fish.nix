@@ -30,10 +30,6 @@
               src = pisces.src;
             }
             {
-              name = "sponge";
-              src = sponge.src;
-            }
-            {
               name = "fzf.fish";
               src = fzf-fish.src;
             }

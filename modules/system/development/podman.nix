@@ -18,6 +18,7 @@
 
         podman = {
           enable = true;
+          dockerCompat = true;
           defaultNetwork.settings.dns_enabled = true;
 
           autoPrune = lib.mkIf selfConfig.enableAutoPrune {
@@ -28,6 +29,11 @@
         };
       };
 
-      environment.systemPackages = with pkgs; [podman-compose];
+      environment = {
+        systemPackages = with pkgs; [podman-compose];
+        shellAliases = {
+          docker-compose = "podman-compose";
+        };
+      };
     };
 }
