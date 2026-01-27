@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.ios;
+    cfg = config.zeide.services.ios;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services.usbmuxd = {
         enable = true;
         package = pkgs.usbmuxd2;

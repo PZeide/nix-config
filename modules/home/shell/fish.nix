@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.shell.fish;
+    cfg = config.zeide.shell.fish;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs = {
         fish = {
           enable = true;

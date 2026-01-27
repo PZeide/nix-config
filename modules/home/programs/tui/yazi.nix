@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: let
   hopType = lib.types.submodule {
@@ -33,12 +34,12 @@ in {
   };
 
   config = let
-    selfConfig = config.zeide.programs.tui.yazi;
+    cfg = config.zeide.programs.tui.yazi;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
-          assertion = selfConfig.enableFileChooser && config.zeide.programs.kitty.enable;
+          assertion = cfg.enableFileChooser && config.zeide.programs.kitty.enable;
           message = "config.zeide.programs.kitty.enable is required to enable terminal file chooser.";
         }
       ];
@@ -63,7 +64,7 @@ in {
           noDisplay = true;
         };
 
-        configFile."xdg-desktop-portal-termfilechooser/config" = lib.mkIf selfConfig.enableFileChooser {
+        configFile."xdg-desktop-portal-termfilechooser/config" = lib.mkIf cfg.enableFileChooser {
           text = ''
             [filechooser]
             cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
@@ -76,7 +77,7 @@ in {
           recursive = true;
         };
 
-        portal = lib.mkIf selfConfig.enableFileChooser {
+        portal = lib.mkIf cfg.enableFileChooser {
           extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
           config.common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
         };
@@ -158,6 +159,7 @@ in {
           require("full-border"):setup({
             type = ui.Border.ROUNDED,
           })
+
           require("starship"):setup()
 
           -- Utilities
@@ -168,16 +170,13 @@ in {
               { key = "h", path = "~",           desc = "Home"            },
               { key = "d", path = "~/Documents", desc = "Documents"       },
               -- Dynamically added hops from extraHops
-              ${lib.concatStringsSep "\n" (lib.map (hop: "{ key = \"${hop.key}\", path = \"${hop.path}\", desc = \"${hop.desc}\" },") selfConfig.extraHops)}
+              ${lib.concatStringsSep "\n" (lib.map (hop: "{ key = \"${hop.key}\", path = \"${hop.path}\", desc = \"${hop.desc}\" },") cfg.extraHops)}
             },
             notify = true,
           })
-          require("restore"):setup({
-            show_confirm = true,
-          })
-          require("copy-file-contents"):setup({
-            notification = true,
-          })
+
+          require("recycle-bin"):setup()
+          require("restore"):setup()
 
           -- Other
           Status:children_add(function()
@@ -248,14 +247,14 @@ in {
               desc = "Chmod selected files";
             }
             {
+              on = ["R" "b"];
+              run = "plugin recycle-bin";
+              desc = "Open Recycle Bin menu";
+            }
+            {
               on = "u";
               run = "plugin restore";
               desc = "Restore last deleted files/folders";
-            }
-            {
-              on = "<A-y>";
-              run = "plugin copy-file-contents";
-              desc = "Copy contents of file";
             }
             {
               on = ["c" "i"];
@@ -268,7 +267,7 @@ in {
           tasks.image_alloc = 1073741824;
         };
 
-        plugins = with pkgs.zeide.yazi-plugins; {
+        plugins = with pkgs.yaziPlugins; {
           # Previewers
           piper = piper;
           mediainfo = mediainfo;
@@ -280,10 +279,10 @@ in {
           starship = starship;
 
           # Utilities
-          bunny = bunny;
+          bunny = inputs.bunny-yazi;
           chmod = chmod;
+          recycle-bin = recycle-bin;
           restore = restore;
-          copy-file-contents = copy-file-contents;
           lazygit = lazygit;
         };
       };

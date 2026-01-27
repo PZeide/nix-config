@@ -52,9 +52,9 @@
   ];
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland;
+    cfg = config.zeide.graphical.hyprland;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = osConfig.zeide.graphical.hyprland.enable;
@@ -87,7 +87,7 @@
         portalPackage = osConfig.programs.hyprland.portalPackage;
 
         settings = {
-          monitor = selfConfig.monitors ++ [", highres, auto, 1"];
+          monitor = cfg.monitors ++ [", highres, auto, 1"];
 
           general = {
             border_size = 2;
@@ -146,8 +146,8 @@
           };
 
           input = {
-            kb_layout = selfConfig.keyboardLayout;
-            kb_variant = selfConfig.keyboardVariant;
+            kb_layout = cfg.keyboardLayout;
+            kb_variant = cfg.keyboardVariant;
             numlock_by_default = true;
             accel_profile = "flat";
             follow_mouse = 1;
@@ -159,7 +159,7 @@
             };
           };
 
-          device = selfConfig.perDeviceConfigurations;
+          device = cfg.perDeviceConfigurations;
 
           gestures = {
             workspace_swipe_distance = 400;

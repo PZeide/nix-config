@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.theme.gtk;
+    cfg = config.zeide.theme.gtk;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       gtk.enable = true;
 
       dconf.settings."org/gnome/desktop/interface" = let

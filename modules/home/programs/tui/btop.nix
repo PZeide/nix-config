@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.tui.lazygit;
+    cfg = config.zeide.programs.tui.lazygit;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.btop = {
         enable = true;
       };

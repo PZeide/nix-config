@@ -11,9 +11,9 @@
   imports = [inputs.zen-browser.homeModules.beta];
 
   config = let
-    selfConfig = config.zeide.programs.zen-browser;
+    cfg = config.zeide.programs.zen-browser;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.file.".zen/default/chrome/bubble-clean".source = "${inputs.bubble-clean-zen}/chrome/bubble-clean";
 
       programs.zen-browser = {
@@ -51,7 +51,6 @@
             "sponsorBlocker@ajay.app" = "sponsorblock";
             "search@kagi.com" = "kagi-search";
             "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" = "violentmonkey";
-            "companion@seelie.me" = "seelie-companion";
           };
 
           "3rdparty".Extensions."uBlock0@raymondhill.net" = {
@@ -97,6 +96,7 @@
             force = true;
             default = "Kagi";
             privateDefault = "Kagi";
+
             engines = {
               "Kagi" = {
                 urls = [{template = "https://kagi.com/search?q={searchTerms}";}];

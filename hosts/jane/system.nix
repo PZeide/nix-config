@@ -1,9 +1,4 @@
 {pkgs, ...}: {
-  # FIXME REMOVED WHEN UPDATED
-  nixpkgs.config.permittedInsecurePackages = [
-    "beekeeper-studio-5.5.3"
-  ];
-
   zeide = {
     user = "thibaud";
 
@@ -77,7 +72,8 @@
     gaming = {
       exposeNvidiaGpu = true;
 
-      aagl = {
+      gacha = {
+        enableElysia = true;
         enableGI = true;
         enableHSR = true;
         enableZZZ = true;
@@ -129,10 +125,6 @@
   powerManagement = {
     powerUpCommands = ''
       ${pkgs.util-linux}/bin/rfkill unblock bluetooth
-    '';
-
-    resumeCommands = ''
-      ${pkgs.kbd}/bin/setleds -D +num < /dev/tty1
     '';
   };
 }

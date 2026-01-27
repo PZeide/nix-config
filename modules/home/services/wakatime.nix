@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.wakatime;
+    cfg = config.zeide.services.wakatime;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.file.".wakatime.cfg".text = ''
         [settings]
         api_key_vault_cmd="cat ${secrets.wakatime-key.path}"

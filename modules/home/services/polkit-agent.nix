@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.polkit-agent;
+    cfg = config.zeide.services.polkit-agent;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       systemd.user.services.polkit-authentication-agent = {
         Unit = {
           Description = "polkit-authentication-agent";

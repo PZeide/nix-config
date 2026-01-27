@@ -12,9 +12,9 @@ in {
   };
 
   config = let
-    selfConfig = config.zeide.programs.tui.rustmission;
+    cfg = config.zeide.programs.tui.rustmission;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = osConfig.zeide.services.transmission.enable;

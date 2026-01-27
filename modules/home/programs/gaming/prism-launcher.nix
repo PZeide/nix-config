@@ -10,14 +10,14 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.gaming.prism-launcher;
+    cfg = config.zeide.programs.gaming.prism-launcher;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = with pkgs; [
         (prismlauncher.override {
           gamemodeSupport = true;
 
-          jdks = lib.optionals selfConfig.enableAllJdks [
+          jdks = lib.optionals cfg.enableAllJdks [
             zulu8
             zulu17
             zulu

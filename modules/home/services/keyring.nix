@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.keyring;
+    cfg = config.zeide.services.keyring;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = osConfig.zeide.services.keyring.enable;

@@ -12,9 +12,9 @@
   imports = [inputs.nix-gaming.nixosModules.platformOptimizations];
 
   config = let
-    selfConfig = config.zeide.gaming.optimizations;
+    cfg = config.zeide.gaming.optimizations;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.steam.platformOptimizations.enable = true;
 
       boot.kernelModules = ["ntsync"];

@@ -10,7 +10,7 @@
   };
 
   config = let
-    selfConfig = config.zeide.udev;
+    cfg = config.zeide.udev;
 
     keychronRules = ''
       # Allow all devices with idVendor=3434 (which is the case for Keychron Q1 HE)
@@ -28,9 +28,9 @@
     '';
   in {
     services.udev.extraRules = lib.concatStringsSep "\n" (
-      lib.optional selfConfig.keychron keychronRules
-      ++ lib.optional selfConfig.lamzu lamzuRules
-      ++ lib.optional selfConfig.heightbitdo heightbitdoRules
+      lib.optional cfg.keychron keychronRules
+      ++ lib.optional cfg.lamzu lamzuRules
+      ++ lib.optional cfg.heightbitdo heightbitdoRules
     );
   };
 }

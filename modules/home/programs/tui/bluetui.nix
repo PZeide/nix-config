@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.tui.bluetui;
+    cfg = config.zeide.programs.tui.bluetui;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = [pkgs.bluetui];
     };
 }

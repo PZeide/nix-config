@@ -33,10 +33,10 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.cli;
+    cfg = config.zeide.programs.cli;
   in
     lib.mkMerge [
-      (lib.mkIf selfConfig.essentials.enable {
+      (lib.mkIf cfg.essentials.enable {
         home = {
           packages = with pkgs; [
             grc
@@ -100,8 +100,8 @@
 
             settings = {
               user = {
-                name = selfConfig.essentials.gitName;
-                email = selfConfig.essentials.gitEmail;
+                name = cfg.essentials.gitName;
+                email = cfg.essentials.gitEmail;
               };
 
               alias = {
@@ -147,7 +147,7 @@
         };
       })
 
-      (lib.mkIf selfConfig.fastfetch.enable {
+      (lib.mkIf cfg.fastfetch.enable {
         programs.fastfetch = {
           enable = true;
 
@@ -257,7 +257,7 @@
         };
       })
 
-      (lib.mkIf selfConfig.development.enable {
+      (lib.mkIf cfg.development.enable {
         home.packages = with pkgs; [
           inputs.devenv.packages.${system}.default
           dive

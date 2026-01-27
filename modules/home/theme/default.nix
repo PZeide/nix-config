@@ -62,19 +62,19 @@
   ];
 
   config = let
-    selfConfig = config.zeide.theme;
+    cfg = config.zeide.theme;
   in {
     stylix = {
       enable = true;
       autoEnable = false;
       enableReleaseChecks = false;
 
-      image = selfConfig.wallpaper;
+      image = cfg.wallpaper;
 
       colorGeneration = {
-        polarity = selfConfig.polarity;
-        scheme = selfConfig.scheme;
-        contrast = selfConfig.contrast;
+        polarity = cfg.polarity;
+        scheme = cfg.scheme;
+        contrast = cfg.contrast;
       };
 
       # If system-wide fonts config is enabled, use the fonts from there.

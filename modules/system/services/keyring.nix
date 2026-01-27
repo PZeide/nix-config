@@ -15,10 +15,10 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.keyring;
+    cfg = config.zeide.services.keyring;
   in {
-    services.gnome.gnome-keyring.enable = selfConfig.enable;
-    security.pam.services = lib.genAttrs selfConfig.unlockServices (service: {
+    services.gnome.gnome-keyring.enable = cfg.enable;
+    security.pam.services = lib.genAttrs cfg.unlockServices (service: {
       name = service;
       enableGnomeKeyring = true;
     });

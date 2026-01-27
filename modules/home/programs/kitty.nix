@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.kitty;
+    cfg = config.zeide.programs.kitty;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.kitty = {
         enable = true;
 

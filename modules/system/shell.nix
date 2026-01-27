@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.shell;
+    cfg = config.zeide.shell;
   in {
     # Enable vendor completions provided by nixpkgs
-    programs.fish.enable = lib.mkIf selfConfig.fishIntegration true;
+    programs.fish.enable = lib.mkIf cfg.fishIntegration true;
   };
 }

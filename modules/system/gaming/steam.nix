@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.gaming.steam;
+    cfg = config.zeide.gaming.steam;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.steam = {
         enable = true;
 

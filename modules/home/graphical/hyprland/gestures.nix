@@ -14,14 +14,14 @@
   };
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland.gestures;
+    cfg = config.zeide.graphical.hyprland.gestures;
   in {
     wayland.windowManager.hyprland.settings = {
       gesture =
         [
           "3, horizontal, workspace"
         ]
-        ++ selfConfig.extra;
+        ++ cfg.extra;
     };
   };
 }

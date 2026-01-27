@@ -13,9 +13,9 @@
   ];
 
   config = let
-    selfConfig = config.zeide.programs.vesktop;
+    cfg = config.zeide.programs.vesktop;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.nixcord = {
         enable = true;
         discord.enable = false;

@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.gaming.mangohud;
+    cfg = config.zeide.programs.gaming.mangohud;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.mangohud = {
         enable = true;
 

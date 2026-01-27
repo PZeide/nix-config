@@ -30,9 +30,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.mpv;
+    cfg = config.zeide.programs.mpv;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.mpv = {
         enable = true;
 
@@ -54,7 +54,7 @@
           profile = "gpu-hq";
           vo = "gpu-next";
           gpu-api =
-            if selfConfig.useOpenGL
+            if cfg.useOpenGL
             then "opengl"
             else "vulkan";
 
@@ -71,8 +71,8 @@
           # Screenshot
           screenshot-format = "webp";
           screenshot-high-bit-depth = true;
-          screenshot-dir = "${selfConfig.screenshotSaveDir}";
-          screenshot-template = "${selfConfig.screenshotFileName}";
+          screenshot-dir = "${cfg.screenshotSaveDir}";
+          screenshot-template = "${cfg.screenshotFileName}";
         };
 
         bindings = {

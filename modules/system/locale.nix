@@ -36,13 +36,13 @@
   };
 
   config = let
-    selfConfig = config.zeide.locale;
+    cfg = config.zeide.locale;
   in
-    lib.mkIf selfConfig.enable {
-      console.keyMap = selfConfig.consoleKeyMap;
+    lib.mkIf cfg.enable {
+      console.keyMap = cfg.consoleKeyMap;
       i18n = {
-        defaultLocale = selfConfig.defaultLocale;
-        supportedLocales = selfConfig.supportedLocales;
+        defaultLocale = cfg.defaultLocale;
+        supportedLocales = cfg.supportedLocales;
       };
     };
 }

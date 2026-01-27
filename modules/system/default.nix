@@ -45,7 +45,7 @@
   ];
 
   config = let
-    selfConfig = config.zeide;
+    cfg = config.zeide;
   in {
     system.stateVersion = "24.05";
 
@@ -53,9 +53,9 @@
     hardware.enableRedistributableFirmware = true;
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    users.users.${selfConfig.user} = {
+    users.users.${cfg.user} = {
       isNormalUser = true;
-      description = selfConfig.description;
+      description = cfg.description;
       extraGroups = ["wheel"];
     };
 

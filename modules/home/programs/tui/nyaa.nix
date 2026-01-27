@@ -19,9 +19,9 @@ in {
   };
 
   config = let
-    selfConfig = config.zeide.programs.tui.nyaa;
+    cfg = config.zeide.programs.tui.nyaa;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = osConfig.zeide.services.transmission.enable;
@@ -38,7 +38,7 @@ in {
 
         client.transmission = {
           base_url = "http://localhost:9091/transmission/rpc";
-          download_dir = selfConfig.downloadDir;
+          download_dir = cfg.downloadDir;
           labels = ["Anime"];
         };
       };

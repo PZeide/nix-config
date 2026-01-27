@@ -26,9 +26,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.anime;
+    cfg = config.zeide.services.anime;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = config.zeide.services.transmission.enable;
@@ -54,10 +54,10 @@
 
               configure_series:
                 settings:
-                  quality: "${selfConfig.downloadQuality}"
+                  quality: "${cfg.downloadQuality}"
                 from:
                   anilist:
-                    username: "${selfConfig.anilistUsername}"
+                    username: "${cfg.anilistUsername}"
                     status:
                       - current
                       - repeating
@@ -73,6 +73,6 @@
         [
           "d /var/lib/transmission/Animes 0770 transmission transmission -"
         ]
-        ++ lib.optional selfConfig.symlinkAnimes "L+ /home/${config.zeide.user}/Animes - - - - /var/lib/transmission/Animes";
+        ++ lib.optional cfg.symlinkAnimes "L+ /home/${config.zeide.user}/Animes - - - - /var/lib/transmission/Animes";
     };
 }

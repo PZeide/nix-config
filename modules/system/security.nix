@@ -16,9 +16,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.security;
+    cfg = config.zeide.security;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       boot.kernel.sysctl = {
         # The Magic SysRq key is a key combo that allows users connected to the
         # system console of a Linux kernel to perform some low-level commands.
@@ -64,7 +64,7 @@
 
       security = {
         rtkit.enable = true;
-        sudo.wheelNeedsPassword = selfConfig.wheelNeedsPassword;
+        sudo.wheelNeedsPassword = cfg.wheelNeedsPassword;
       };
     };
 }

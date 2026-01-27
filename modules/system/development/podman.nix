@@ -10,9 +10,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.development.podman;
+    cfg = config.zeide.development.podman;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       virtualisation = {
         containers.enable = true;
 
@@ -21,7 +21,7 @@
           dockerCompat = true;
           defaultNetwork.settings.dns_enabled = true;
 
-          autoPrune = lib.mkIf selfConfig.enableAutoPrune {
+          autoPrune = lib.mkIf cfg.enableAutoPrune {
             enable = true;
             flags = ["--all"];
             dates = "weekly";

@@ -18,17 +18,17 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.easyeffects;
+    cfg = config.zeide.services.easyeffects;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services.easyeffects = {
         enable = true;
 
-        preset = lib.mkIf selfConfig.enableDefaultPreset "zeide-preset";
+        preset = lib.mkIf cfg.enableDefaultPreset "zeide-preset";
 
         extraPresets = {
           zeide-preset =
-            lib.mkIf selfConfig.enableDefaultPreset
+            lib.mkIf cfg.enableDefaultPreset
             (builtins.fromJSON (builtins.readFile (asset "easyeffects/zeide-preset.json")));
         };
       };

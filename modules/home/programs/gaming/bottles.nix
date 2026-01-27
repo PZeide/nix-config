@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.gaming.bottles;
+    cfg = config.zeide.programs.gaming.bottles;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = with pkgs; [bottles];
     };
 }

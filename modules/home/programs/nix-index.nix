@@ -11,9 +11,9 @@
   imports = [inputs.nix-index-database.homeModules.nix-index];
 
   config = let
-    selfConfig = config.zeide.programs.nix-index;
+    cfg = config.zeide.programs.nix-index;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs = {
         nix-index.enable = true;
         nix-index-database.comma.enable = true;

@@ -41,7 +41,7 @@ in {
   };
 
   config = let
-    selfConfig = config.zeide.services.xdg;
+    cfg = config.zeide.services.xdg;
 
     mimeMap = builtins.fromJSON (builtins.readFile (asset "xdg/mime-map.json"));
 
@@ -49,25 +49,25 @@ in {
       listToAttrs (
         flatten (
           mapAttrsToList (
-            key: map (type: attrsets.nameValuePair type selfConfig.defaultApps."${key}")
+            key: map (type: attrsets.nameValuePair type cfg.defaultApps."${key}")
           )
           mimeMap
         )
       );
   in {
-    home.packages = lib.optional (selfConfig.execTerminal != null) pkgs.xdg-terminal-exec;
+    home.packages = lib.optional (cfg.execTerminal != null) pkgs.xdg-terminal-exec;
 
     xdg.configFile."xdg-terminals.list" = {
-      enable = selfConfig.execTerminal != null;
-      text = "${selfConfig.execTerminal}";
+      enable = cfg.execTerminal != null;
+      text = "${cfg.execTerminal}";
     };
 
     dconf.settings."org/gnome/desktop/applications/terminal".exec =
-      lib.mkIf (selfConfig.execTerminal != null)
+      lib.mkIf (cfg.execTerminal != null)
       (lib.getExe pkgs.xdg-terminal-exec);
 
     xdg = {
-      userDirs = lib.mkIf selfConfig.enableUserDirs {
+      userDirs = lib.mkIf cfg.enableUserDirs {
         enable = true;
         createDirectories = true;
       };

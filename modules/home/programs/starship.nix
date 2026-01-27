@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.starship;
+    cfg = config.zeide.programs.starship;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.starship = {
         enable = true;
 

@@ -9,14 +9,14 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.location;
+    cfg = config.zeide.services.location;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       location.provider = "geoclue2";
 
       services.geoclue2 = {
         enable = true;
-        submitData = selfConfig.submitGeoData;
+        submitData = cfg.submitGeoData;
       };
 
       users.users.geoclue.extraGroups = ["networkmanager"];

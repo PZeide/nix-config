@@ -17,26 +17,23 @@
   ];
 
   config = let
-    selfConfig = config.zeide.nix;
+    cfg = config.zeide.nix;
   in {
     nixpkgs = {
       inherit system;
 
       config = {
         allowUnfree = true;
-        cudaSupport = selfConfig.enableCudaSupport;
-        rocmSupport = selfConfig.enableRocmSupport;
+        cudaSupport = cfg.enableCudaSupport;
+        rocmSupport = cfg.enableRocmSupport;
       };
 
-      overlays = [
-        inputs.nix4vscode.overlays.default
-        inputs.nix-webapps.overlays.lib
-      ];
+      overlays = [inputs.nix-webapps.overlays.lib];
     };
 
     nix = {
       settings = {
-        auto-optimise-store = selfConfig.autoOptimiseStore;
+        auto-optimise-store = cfg.autoOptimiseStore;
         builders-use-substitutes = true;
         experimental-features = ["nix-command" "flakes" "pipe-operators"];
 

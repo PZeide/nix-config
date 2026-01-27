@@ -45,9 +45,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.zed;
+    cfg = config.zeide.programs.zed;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.zed-editor = {
         enable = true;
 
@@ -97,8 +97,8 @@
             "gitignore-template"
             "mistral-vibe"
           ]
-          ++ (lib.optional (selfConfig.theme.extension != null) selfConfig.theme.extension)
-          ++ (lib.optional (selfConfig.iconTheme.extension != null) selfConfig.iconTheme.extension);
+          ++ (lib.optional (cfg.theme.extension != null) cfg.theme.extension)
+          ++ (lib.optional (cfg.iconTheme.extension != null) cfg.iconTheme.extension);
 
         userSettings = {
           auto_update = false;
@@ -116,8 +116,8 @@
           formatter = "language_server";
           features.edit_prediction_provider = "codestral";
 
-          theme = lib.mkForce selfConfig.theme.name;
-          icon_theme = lib.mkForce selfConfig.iconTheme.name;
+          theme = lib.mkForce cfg.theme.name;
+          icon_theme = lib.mkForce cfg.iconTheme.name;
 
           collaboration_panel.button = false;
 

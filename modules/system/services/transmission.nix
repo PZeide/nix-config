@@ -11,16 +11,16 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.transmission;
+    cfg = config.zeide.services.transmission;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services.transmission = {
         enable = true;
         package = pkgs.transmission_4;
         downloadDirPermissions = "770";
         settings = {
           # FIXME TEST SCRIPT TORRENT DONE
-          script-torrent-done-enabled = selfConfig.notifyOnDone;
+          script-torrent-done-enabled = cfg.notifyOnDone;
           script-torrent-done-filename = pkgs.writeShellScript "transmission-done" ''
             TR_TORRENT_DIR=''${TR_TORRENT_DIR:-$1}
             TR_TORRENT_NAME=''${TR_TORRENT_NAME:-$2}
@@ -36,7 +36,7 @@
         };
       };
 
-      systemd.tmpfiles.rules = lib.mkIf selfConfig.symlinkDownloads [
+      systemd.tmpfiles.rules = lib.mkIf cfg.symlinkDownloads [
         "L+ /home/${config.zeide.user}/Torrents - - - - /var/lib/transmission/Downloads"
       ];
 

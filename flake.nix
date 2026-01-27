@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     home-manager = {
@@ -13,11 +12,6 @@
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix4vscode = {
-      url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,7 +37,7 @@
 
     stylix = {
       # FIXME matugen branch
-      url = "github:nix-community/stylix/9f2f38b324caeca55c76b8767b30bd316e8f4597";
+      url = "github:nix-community/stylix/89d5e0bffe49c3fa285e93556159be5e27fd600a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -60,7 +54,7 @@
     };
 
     zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
+      url = "github:0xc000022070/zen-browser-flake/beta";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -71,6 +65,11 @@
 
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    elysia = {
+      url = "git+https://dawn.wine/foxtrottt/elysia-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -92,6 +91,11 @@
     librepods = {
       url = "github:Chrisbattarbee/librepods";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    bunny-yazi = {
+      url = "github:stelcodes/bunny.yazi";
+      flake = false;
     };
 
     shiny-shell = {

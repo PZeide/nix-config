@@ -18,9 +18,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.greeter;
+    cfg = config.zeide.greeter;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services.greetd = {
         enable = true;
 
@@ -30,8 +30,8 @@
             user = config.zeide.user;
           };
 
-          initial_session = lib.mkIf (selfConfig.initialSessionCommand != null) {
-            command = selfConfig.initialSessionCommand;
+          initial_session = lib.mkIf (cfg.initialSessionCommand != null) {
+            command = cfg.initialSessionCommand;
             user = config.zeide.user;
           };
         };

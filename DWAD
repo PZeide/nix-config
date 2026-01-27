@@ -1,0 +1,2 @@
+RENAME selfConfig to cfg
+yazi plugins from nixpkgs instead + add new maybe

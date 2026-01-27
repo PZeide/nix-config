@@ -100,7 +100,6 @@ in {
         teams = true;
         affinity = true;
         hoppscotch = true;
-        beekeeper-studio = true;
         librepods = true;
 
         webapps = {
@@ -164,7 +163,8 @@ in {
     shell.fish.enable = true;
 
     theme = {
-      wallpaper = asset "wallpapers/vaxry.png";
+      wallpaper = asset "wallpapers/fluorite.jpg";
+      scheme = "fruit-salad";
 
       gtk.enable = true;
       qt.enable = true;

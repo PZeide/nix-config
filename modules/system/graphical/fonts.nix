@@ -73,20 +73,20 @@ in {
   };
 
   config = let
-    selfConfig = config.zeide.graphical.fonts;
+    cfg = config.zeide.graphical.fonts;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       fonts = {
         enableDefaultPackages = false;
 
         packages =
           [
-            selfConfig.serif.package
-            selfConfig.sansSerif.package
-            selfConfig.monospace.package
-            selfConfig.emoji.package
+            cfg.serif.package
+            cfg.sansSerif.package
+            cfg.monospace.package
+            cfg.emoji.package
           ]
-          ++ selfConfig.extraFonts;
+          ++ cfg.extraFonts;
 
         fontconfig = {
           enable = true;
@@ -111,10 +111,10 @@ in {
           '';
 
           defaultFonts = {
-            serif = [selfConfig.serif.name];
-            sansSerif = [selfConfig.sansSerif.name];
-            monospace = [selfConfig.monospace.name];
-            emoji = [selfConfig.emoji.name];
+            serif = [cfg.serif.name];
+            sansSerif = [cfg.sansSerif.name];
+            monospace = [cfg.monospace.name];
+            emoji = [cfg.emoji.name];
           };
         };
       };

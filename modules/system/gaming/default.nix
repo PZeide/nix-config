@@ -12,16 +12,16 @@
   };
 
   imports = [
-    ./aagl.nix
+    ./gacha.nix
     ./gamemode.nix
     ./optimizations.nix
     ./steam.nix
   ];
 
   config = let
-    selfConfig = config.zeide.gaming;
+    cfg = config.zeide.gaming;
   in {
-    environment.variables = lib.mkIf selfConfig.exposeNvidiaGpu {
+    environment.variables = lib.mkIf cfg.exposeNvidiaGpu {
       WINE_HIDE_NVIDIA_GPU = 0;
       PROTON_HIDE_NVIDIA_GPU = 0;
     };

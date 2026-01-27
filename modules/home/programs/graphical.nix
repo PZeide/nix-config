@@ -16,7 +16,6 @@
     teams = mkEnableOption "teams-for-linux";
     affinity = mkEnableOption "affinity";
     hoppscotch = mkEnableOption "hoppscotch (api testing)";
-    beekeeper-studio = mkEnableOption "beekeeper-studio (sql client)";
     librepods = mkEnableOption "librepods";
 
     webapps = {
@@ -26,10 +25,10 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.graphical;
+    cfg = config.zeide.programs.graphical;
 
     mkPackageIf = name: pkg:
-      lib.mkIf (lib.attrByPath [name] false selfConfig) {
+      lib.mkIf (lib.attrByPath [name] false cfg) {
         home.packages = [pkg];
       };
 
@@ -39,7 +38,7 @@
       url,
       class,
     }:
-      lib.mkIf (lib.attrByPath ["webapps" name] false selfConfig) {
+      lib.mkIf (lib.attrByPath ["webapps" name] false cfg) {
         home.packages = [
           (pkgs.nix-webapps-lib.mkChromiumApp {
             appName = name;
@@ -57,7 +56,6 @@
       (mkPackageIf "teams" pkgs.teams-for-linux)
       (mkPackageIf "affinity" inputs.affinity-nix.packages.${system}.v3)
       (mkPackageIf "hoppscotch" pkgs.hoppscotch)
-      (mkPackageIf "beekeeper-studio" pkgs.beekeeper-studio)
       (mkPackageIf "librepods" inputs.librepods.packages.${system}.default)
 
       (mkWebAppIf "keychronLauncher" {

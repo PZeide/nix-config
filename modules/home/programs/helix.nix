@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.helix;
+    cfg = config.zeide.programs.helix;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.helix = {
         enable = true;
         defaultEditor = true;

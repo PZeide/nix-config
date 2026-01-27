@@ -15,7 +15,7 @@
   };
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland.binds;
+    cfg = config.zeide.graphical.hyprland.binds;
 
     workspaceDispatcher =
       if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
@@ -90,7 +90,7 @@
           "$mainMod, 0, ${workspaceDispatcher}, 10"
           "$mainMod SHIFT, 0, ${moveToWorkspaceSilentDispatcher}, 10"
         ]
-        ++ selfConfig.extra;
+        ++ cfg.extra;
 
       bindm = [
         "$mainMod, mouse:272, movewindow" # Move active window (left click)

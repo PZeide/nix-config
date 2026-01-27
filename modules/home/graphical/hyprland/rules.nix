@@ -30,7 +30,7 @@
   };
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland.rules;
+    cfg = config.zeide.graphical.hyprland.rules;
   in {
     wayland.windowManager.hyprland.settings = {
       windowrule =
@@ -56,11 +56,11 @@
           # Rules for games
           "match:tag game, render_unfocused on, fullscreen on, immediate on, idle_inhibit always"
         ]
-        ++ selfConfig.windows;
+        ++ cfg.windows;
 
-      layerrule = ["match:namespace ^(shiny:.*)$, blur on, ignore_alpha 0.6, no_anim on"] ++ selfConfig.layers;
+      layerrule = ["match:namespace ^(shiny:.*)$, blur on, ignore_alpha 0.6, no_anim on"] ++ cfg.layers;
 
-      workspace = selfConfig.workspaces;
+      workspace = cfg.workspaces;
     };
   };
 }

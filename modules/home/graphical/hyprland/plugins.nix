@@ -10,13 +10,13 @@
   };
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland.plugins;
+    cfg = config.zeide.graphical.hyprland.plugins;
   in {
     wayland.windowManager.hyprland = {
-      plugins = lib.optional selfConfig.hyprsplit.enable inputs.hyprsplit.packages.${system}.hyprsplit;
+      plugins = lib.optional cfg.hyprsplit.enable inputs.hyprsplit.packages.${system}.hyprsplit;
 
       settings.plugin = {
-        hyprsplit = lib.mkIf selfConfig.hyprsplit.enable {
+        hyprsplit = lib.mkIf cfg.hyprsplit.enable {
           num_workspaces = 10;
           persistent_workspaces = true;
         };

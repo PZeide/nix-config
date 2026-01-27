@@ -10,9 +10,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.tui.wifitui;
+    cfg = config.zeide.programs.tui.wifitui;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = [inputs.wifitui.packages.${system}.default];
     };
 }

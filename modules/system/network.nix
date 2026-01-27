@@ -18,11 +18,11 @@
   };
 
   config = let
-    selfConfig = config.zeide.network;
+    cfg = config.zeide.network;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       networking = {
-        nameservers = lib.optionals selfConfig.enableCloudflareDns [
+        nameservers = lib.optionals cfg.enableCloudflareDns [
           "1.1.1.1#one.one.one.one"
           "1.0.0.1#one.one.one.one"
         ];
@@ -33,7 +33,7 @@
         };
 
         firewall = {
-          enable = selfConfig.enableFirewall;
+          enable = cfg.enableFirewall;
           # Required by some VPN services
           checkReversePath = "loose";
         };
@@ -41,12 +41,15 @@
 
       services.resolved = {
         enable = true;
-        domains = ["~."];
 
-        dnsovertls =
-          if selfConfig.enableCloudflareDns
-          then "true"
-          else "opportunistic";
+        settings.Resolve = {
+          Domains = ["~."];
+
+          DNSOverTLS =
+            if cfg.enableCloudflareDns
+            then "true"
+            else "opportunistic";
+        };
       };
 
       users.users.${config.zeide.user} = {

@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.gaming.lunar-client;
+    cfg = config.zeide.programs.gaming.lunar-client;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = [pkgs.lunar-client];
     };
 }

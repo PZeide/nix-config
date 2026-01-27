@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.theme.qt;
+    cfg = config.zeide.theme.qt;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       stylix.targets.qt.enable = true;
     };
 }

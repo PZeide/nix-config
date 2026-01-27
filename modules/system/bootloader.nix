@@ -22,10 +22,10 @@
   imports = [inputs.lanzaboote.nixosModules.lanzaboote];
 
   config = let
-    selfConfig = config.zeide.bootloader;
+    cfg = config.zeide.bootloader;
   in
-    lib.mkIf selfConfig.enable {
-      environment.systemPackages = lib.optional selfConfig.enableSecureBoot pkgs.sbctl;
+    lib.mkIf cfg.enable {
+      environment.systemPackages = lib.optional cfg.enableSecureBoot pkgs.sbctl;
 
       boot = {
         loader = {
@@ -33,12 +33,12 @@
           timeout = 0;
 
           # Disable systemd-boot if using Lanzaboote
-          systemd-boot.enable = !selfConfig.enableSecureBoot;
+          systemd-boot.enable = !cfg.enableSecureBoot;
 
           efi.canTouchEfiVariables = true;
         };
 
-        lanzaboote = lib.mkIf selfConfig.enableSecureBoot {
+        lanzaboote = lib.mkIf cfg.enableSecureBoot {
           enable = true;
           pkiBundle = "/var/lib/sbctl";
         };
