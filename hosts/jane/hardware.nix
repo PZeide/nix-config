@@ -61,12 +61,14 @@
     ];
   };
 
+  /*
   fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/b17035bd-13ff-4864-88b7-03e21f34d603";
-    fsType = "btrfs";
-    options = [
-      "noatime"
-      "x-gvfs-show"
-    ];
+  device = "/dev/disk/by-uuid/b17035bd-13ff-4864-88b7-03e21f34d603";
+  fsType = "btrfs";
+  options = [
+    "noatime"
+    "x-gvfs-show"
+  ];
   };
+  */
 }

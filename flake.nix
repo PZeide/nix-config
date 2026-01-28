@@ -53,14 +53,14 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hypr-dynamic-cursors = {
+      url = "github:VirtCode/hypr-dynamic-cursors";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake/beta";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    bubble-clean-zen = {
-      url = "github:nieffka/bubble-clean-zen";
-      flake = false;
     };
 
     aagl = {

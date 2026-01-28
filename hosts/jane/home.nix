@@ -44,7 +44,10 @@ in {
           workspaces = ["special:cider, on-created-empty:${wrapAppUnit "cider"}"];
         };
 
-        plugins.hyprsplit.enable = true;
+        plugins = {
+          hyprsplit.enable = true;
+          hypr-dynamic-cursors.enable = true;
+        };
       };
     };
 
@@ -163,8 +166,8 @@ in {
     shell.fish.enable = true;
 
     theme = {
-      wallpaper = asset "wallpapers/fluorite.jpg";
-      scheme = "fruit-salad";
+      wallpaper = asset "wallpapers/fluorite/2.jpg";
+      #scheme = "fruit-salad";
 
       gtk.enable = true;
       qt.enable = true;

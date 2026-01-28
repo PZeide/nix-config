@@ -14,8 +14,6 @@
     cfg = config.zeide.programs.zen-browser;
   in
     lib.mkIf cfg.enable {
-      home.file.".zen/default/chrome/bubble-clean".source = "${inputs.bubble-clean-zen}/chrome/bubble-clean";
-
       programs.zen-browser = {
         enable = true;
 
@@ -80,8 +78,6 @@
           isDefault = true;
 
           userChrome = ''
-            @import "bubble-clean/bubble-clean.css";
-
             /* Disable close button */
             .titlebar-close {
               display: none !important;
@@ -89,8 +85,15 @@
           '';
 
           userContent = ''
-            @import "bubble-clean/bubble-content.css";
+
           '';
+
+          mods = [
+            "642854b5-88b4-4c40-b256-e035532109df" # zen transparent
+            "906c6915-5677-48ff-9bfc-096a02a72379" # floating status bar
+            "253a3a74-0cc4-47b7-8b82-996a64f030d5" # floating history
+            "a6335949-4465-4b71-926c-4a52d34bc9c0" # better find bar
+          ];
 
           search = {
             force = true;
@@ -112,28 +115,9 @@
             };
           };
 
-          containers = {
-            personal = {
-              id = 1;
-              name = "Personal";
-              color = "turquoise";
-              icon = "fingerprint";
-            };
-
-            work = {
-              id = 2;
-              name = "Work";
-              color = "yellow";
-              icon = "briefcase";
-            };
-          };
-
           settings = {
             #  Downloads first go to the operating system's temp directory before final location
             "browser.download.start_downloads_in_tmp_dir" = true;
-
-            # Allow transparent browser if no background is defined
-            "browser.tabs.allow_transparent_browser" = true;
 
             # Blank startup and new tab page
             "browser.newtabpage.enabled" = false;
@@ -157,15 +141,11 @@
 
             # Enable Linux transparency
             "zen.widget.linux.transparency" = true;
+            "browser.tabs.allow_transparent_browser" = true;
+            "widget.transparent-windows" = true;
 
             # Don't disable transparency if inactive
             "zen.view.grey-out-inactive-windows" = false;
-
-            # Enable and configure tab groups (experimental)
-            "browser.tabs.groups.enabled" = true;
-            "tab.groups.background" = true;
-            "tab.groups.borders" = true;
-            "tab.groups.theme-folders" = true;
 
             # Use FileChooser from XDG Desktop Portal
             "widget.use-xdg-desktop-portal.file-picker" = 1;
@@ -177,6 +157,16 @@
             "zen.urlbar.behavior" = "normal";
             "zen.view.use-single-toolbar" = false;
             "zen.urlbar.replace-newtab" = false;
+
+            # Transparent preferences
+            "mod.sameerasw.zen_transparent_sidebar_enabled" = true;
+            "mod.sameerasw.zen_transparent_glance_enabled" = true;
+            "mod.sameerasw.zen_bg_color_enabled" = true;
+            "mod.sameerasw_zen_empty_tab_logo" = 1;
+            "mod.sameerasw.zen_transparency_color" = "${base00}96";
+            "mod.sameerasw.zen_tab_switch_anim" = true;
+            "mod.sameerasw.zen_urlbar_zoom_anim" = true;
+            "mod.sameerasw.zen_trackpad_anim" = true;
           };
         };
       };
