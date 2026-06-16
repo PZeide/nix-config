@@ -10,7 +10,7 @@
     enable = mkEnableOption "home manager configuration of hyprland";
 
     monitors = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf attrs;
       default = [];
       description = ''
         Monitors configuration of Hyprland.
@@ -55,6 +55,26 @@
 
   config = let
     cfg = config.zeide.graphical.hyprland;
+
+    mkBezierCurve = name: first: second: {
+      _args = [
+        name
+        {
+          type = "bezier";
+          points = [
+            first
+            second
+          ];
+        }
+      ];
+    };
+
+    mkAnimation = leaf: speed: bezier: style:
+      {
+        inherit leaf speed bezier;
+        enabled = true;
+      }
+      // lib.optionalAttrs (style != null) {inherit style;};
   in
     lib.mkIf cfg.enable {
       assertions = [
@@ -100,126 +120,137 @@
         package = osConfig.programs.hyprland.package;
         portalPackage = osConfig.programs.hyprland.portalPackage;
 
+        configType = "lua";
+
         settings = {
-          monitor = cfg.monitors ++ [", preferred, auto, 1"];
-
-          general = {
-            border_size = 2;
-            gaps_in = 6;
-            gaps_out = 12;
-            resize_on_border = true;
-            hover_icon_on_border = false;
-            allow_tearing = true;
-          };
-
-          decoration = {
-            rounding = 8;
-            rounding_power = 3.5;
-
-            blur = {
-              enabled = true;
-              size = 3;
-              passes = 2;
-            };
-
-            shadow = {
-              enabled = true;
-              range = 20;
-              render_power = 2;
-            };
-          };
-
-          animations = {
-            enabled = true;
-
-            bezier = [
-              "expressiveFastSpatial, 0.42, 1.67, 0.21, 0.90"
-              "expressiveSlowSpatial, 0.39, 1.29, 0.35, 0.98"
-              "expressiveDefaultSpatial, 0.38, 1.21, 0.22, 1.00"
-              "emphasizedDecel, 0.05, 0.7, 0.1, 1"
-              "emphasizedAccel, 0.3, 0, 0.8, 0.15"
-              "standardDecel, 0, 0, 0, 1"
-              "menuDecel, 0.1, 1, 0, 1"
-              "menuAccel, 0.52, 0.03, 0.72, 0.08"
-              "stall, 1, -0.1, 0.7, 0.85"
+          monitor =
+            cfg.monitors
+            ++ [
+              {
+                output = "";
+                mode = "preferred";
+                position = "auto";
+                scale = 1;
+              }
             ];
 
-            animation = [
-              # Windows
-              "windowsIn, 1, 3, emphasizedDecel, popin 80%"
-              "fadeIn, 1, 3, emphasizedDecel"
-              "windowsOut, 1, 2, emphasizedDecel, popin 90%"
-              "fadeOut, 1, 2, emphasizedDecel"
-              "windowsMove, 1, 3, emphasizedDecel, slide"
-              "border, 1, 10, emphasizedDecel"
+          curve = [
+            (mkBezierCurve "expressiveFastSpatial" [0.42 1.67] [0.21 0.90])
+            (mkBezierCurve "expressiveSlowSpatial" [0.39 1.29] [0.35 0.98])
+            (mkBezierCurve "expressiveDefaultSpatial" [0.38 1.21] [0.22 1.00])
+            (mkBezierCurve "emphasizedDecel" [0.05 0.7] [0.1 1])
+            (mkBezierCurve "emphasizedAccel" [0.3 0] [0.8 0.15])
+            (mkBezierCurve "standardDecel" [0 0] [0 1])
+            (mkBezierCurve "menuDecel" [0.1 1] [0 1])
+            (mkBezierCurve "menuAccel" [0.52 0.03] [0.72 0.08])
+            (mkBezierCurve "stall" [1 (-0.1)] [0.7 0.85])
+          ];
 
-              # Layers
-              "layersIn, 1, 2.7, emphasizedDecel, popin 93%"
-              "layersOut, 1, 2.4, menuAccel, popin 94%"
+          animation = [
+            # Windows
+            (mkAnimation "windowsIn" 3 "emphasizedDecel" "popin 80%")
+            (mkAnimation "fadeIn" 3 "emphasizedDecel" null)
+            (mkAnimation "windowsOut" 2 "emphasizedDecel" "popin 90%")
+            (mkAnimation "fadeOut" 2 "emphasizedDecel" null)
+            (mkAnimation "windowsMove" 3 "emphasizedDecel" "slide")
+            (mkAnimation "border" 10 "emphasizedDecel" null)
 
-              # Fade
-              "fadeLayersIn, 1, 0.5, menuDecel"
-              "fadeLayersOut, 1, 2.7, stall"
-              "fadePopupsIn, 1, 0.5, menuDecel"
-              "fadePopupsOut, 1, 2.7, stall"
+            # Layers
+            (mkAnimation "layersIn" 2.7 "emphasizedDecel" "popin 93%")
+            (mkAnimation "layersOut" 2.4 "menuAccel" "popin 94%")
 
-              # Workspaces
-              "workspaces, 1, 7, menuDecel, slide"
+            # Fade
+            (mkAnimation "fadeLayersIn" 0.5 "menuDecel" null)
+            (mkAnimation "fadeLayersOut" 2.7 "stall" null)
+            (mkAnimation "fadePopupsIn" 0.5 "menuDecel" null)
+            (mkAnimation "fadePopupsOut" 2.7 "stall" null)
 
-              # Special workspaces
-              "specialWorkspaceIn, 1, 2.8, emphasizedDecel, slidevert"
-              "specialWorkspaceOut, 1, 1.2, emphasizedAccel, slidevert"
-            ];
-          };
+            # Workspaces
+            (mkAnimation "workspaces" 7 "menuDecel" "slide")
 
-          input = {
-            kb_layout = cfg.keyboardLayout;
-            kb_variant = cfg.keyboardVariant;
-            numlock_by_default = true;
-            accel_profile = "flat";
-            follow_mouse = 1;
-
-            touchpad = {
-              natural_scroll = true;
-              scroll_factor = 0.5;
-              clickfinger_behavior = true;
-            };
-          };
+            # Special workspaces
+            (mkAnimation "specialWorkspaceIn" 2.8 "emphasizedDecel" "slidevert")
+            (mkAnimation "specialWorkspaceOut" 1.2 "emphasizedAccel" "slidevert")
+          ];
 
           device = cfg.perDeviceConfigurations;
 
-          gestures = {
-            workspace_swipe_distance = 400;
-            workspace_swipe_cancel_ratio = 0.2;
-            workspace_swipe_min_speed_to_force = 5;
-          };
+          config = {
+            general = {
+              border_size = 2;
+              gaps_in = 6;
+              gaps_out = 12;
+              resize_on_border = true;
+              hover_icon_on_border = false;
+              allow_tearing = true;
+            };
 
-          group.auto_group = false;
+            decoration = {
+              rounding = 8;
+              rounding_power = 3.5;
 
-          misc = {
-            disable_hyprland_logo = true;
-            disable_splash_rendering = true;
-            vrr = 1;
-            disable_autoreload = true;
-            focus_on_activate = false;
-            session_lock_xray = true;
-          };
+              blur = {
+                enabled = true;
+                size = 3;
+                passes = 2;
+              };
 
-          xwayland = {
-            force_zero_scaling = true;
-          };
+              shadow = {
+                enabled = true;
+                range = 20;
+                render_power = 2;
+              };
+            };
 
-          render = {
-            direct_scanout = 1;
-          };
+            animations.enabled = true;
 
-          cursor = {
-            no_hardware_cursors = 1;
-          };
+            input = {
+              kb_layout = cfg.keyboardLayout;
+              kb_variant = cfg.keyboardVariant;
+              numlock_by_default = true;
+              accel_profile = "flat";
+              follow_mouse = 1;
 
-          ecosystem = {
-            no_update_news = true;
-            no_donation_nag = true;
+              touchpad = {
+                natural_scroll = true;
+                scroll_factor = 0.5;
+                clickfinger_behavior = true;
+              };
+            };
+
+            gestures = {
+              workspace_swipe_distance = 400;
+              workspace_swipe_cancel_ratio = 0.2;
+              workspace_swipe_min_speed_to_force = 5;
+            };
+
+            group.auto_group = false;
+
+            misc = {
+              disable_hyprland_logo = true;
+              disable_splash_rendering = true;
+              vrr = 1;
+              disable_autoreload = true;
+              focus_on_activate = false;
+              session_lock_xray = true;
+            };
+
+            xwayland = {
+              force_zero_scaling = true;
+            };
+
+            render = {
+              direct_scanout = 1;
+            };
+
+            cursor = {
+              no_hardware_cursors = 1;
+            };
+
+            ecosystem = {
+              no_update_news = true;
+              no_donation_nag = true;
+            };
           };
         };
       };

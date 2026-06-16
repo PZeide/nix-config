@@ -5,7 +5,7 @@
 }: {
   options.zeide.graphical.hyprland.gestures = with lib; {
     extra = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf attrs;
       default = [];
       description = ''
         Extra gestures.
@@ -19,7 +19,11 @@
     wayland.windowManager.hyprland.settings = {
       gesture =
         [
-          "3, horizontal, workspace"
+          {
+            fingers = 3;
+            direction = "horizontal";
+            action = "workspace";
+          }
         ]
         ++ cfg.extra;
     };

@@ -81,11 +81,20 @@
       enableReleaseChecks = false;
 
       image = cfg.wallpaper;
+      polarity = cfg.polarity;
 
-      colorGeneration = {
-        polarity = cfg.polarity;
-        scheme = cfg.scheme;
-        contrast = cfg.contrast;
+      palette = {
+        generators.semantic = config.stylix.lib.generators.semantic.matugen {
+          scheme = cfg.scheme;
+          contrast = cfg.contrast;
+          lightnessDark = -0.02;
+          lightnessLight = 0.0;
+        };
+
+        mappingFunction = lib.flip lib.pipe [
+          config.stylix.lib.mappings.semantic2base16
+          config.stylix.lib.mappings.base162base24
+        ];
       };
 
       # If system-wide fonts config is enabled, use the fonts from there.

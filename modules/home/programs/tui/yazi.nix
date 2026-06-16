@@ -89,14 +89,15 @@ in {
         shellWrapperName = "y";
 
         settings = {
-          show_hidden = false;
-          show_symlink = true;
-
-          mgr.ratio = [
-            1
-            3
-            4
-          ];
+          mgr = {
+            show_hidden = false;
+            show_symlink = true;
+            ratio = [
+              1
+              3
+              4
+            ];
+          };
 
           preview = {
             wrap = "yes";
@@ -118,7 +119,7 @@ in {
           };
 
           plugin = {
-            prepend-preloaders =
+            prepend_preloaders =
               [
                 {
                   mime = ["{audio,video,image}/*" "application/subrip" "application/postscript"];

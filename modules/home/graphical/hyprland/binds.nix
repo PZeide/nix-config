@@ -6,7 +6,7 @@
 }: {
   options.zeide.graphical.hyprland.binds = with lib; {
     extra = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf attrs;
       default = [];
       description = ''
         Extra binds.
@@ -17,100 +17,107 @@
   config = let
     cfg = config.zeide.graphical.hyprland.binds;
 
-    workspaceDispatcher =
-      if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
-      then "split:workspace"
-      else "workspace";
+    mkLua = lib.generators.mkLuaInline;
 
-    swapActiveWorkspacesDispatcher =
-      if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
-      then "split:swapactiveworkspaces"
-      else "swapactiveworkspaces";
+    exec = command: ''hl.dsp.exec_cmd(${builtins.toJSON command})'';
 
-    moveToWorkspaceSilentDispatcher =
+    bind = key: dispatcher: {
+      _args = [
+        key
+        (mkLua dispatcher)
+      ];
+    };
+
+    bindWith = opts: key: dispatcher: {
+      _args = [
+        key
+        (mkLua dispatcher)
+        opts
+      ];
+    };
+
+    workspace = target:
       if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
-      then "split:movetoworkspacesilent"
-      else "movetoworkspacesilent";
+      then ''hs.dsp.focus({ workspace = ${builtins.toJSON target} })''
+      else ''hl.dsp.focus({ workspace = ${builtins.toJSON target} })'';
+
+    moveToWorkspaceSilent = target:
+      if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
+      then ''hs.dsp.window.move({ workspace = ${builtins.toJSON target}, follow = false })''
+      else ''hl.dsp.window.move({ workspace = ${builtins.toJSON target}, follow = false })'';
+
+    swapActiveWorkspaces =
+      if config.zeide.graphical.hyprland.plugins.hyprsplit.enable
+      then ''hs.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "+1" })''
+      else exec "hyprctl dispatch swapactiveworkspaces current+1";
   in {
     wayland.windowManager.hyprland.settings = {
       bind =
         [
-          "SUPER, V, togglefloating," # Toggle floating of the active window
-          "SUPER, F, fullscreen," # Toggle fullscreen of the active window
-          "SUPER, A, layoutmsg, togglesplit" # Toggle split direction of the active window
-          "SUPER, C, killactive," # Close active window
-          "SUPER SHIFT, M, exec, uwsm stop" # Force quit Hyprland
+          (bind "SUPER + V" ''hl.dsp.window.float({ action = "toggle" })'')
+          (bind "SUPER + F" "hl.dsp.window.fullscreen()")
+          (bind "SUPER + A" ''hl.dsp.layout("togglesplit")'')
+          (bind "SUPER + C" "hl.dsp.window.close()")
+          (bind "SUPER + SHIFT + M" (exec "uwsm stop"))
 
-          "SUPER, left, movefocus, l" # Move focus left
-          "SUPER, right, movefocus, r" # Move focus right
-          "SUPER, up, movefocus, u" # Move focus up
-          "SUPER, down, movefocus, d" # Move focus down
+          (bind "SUPER + left" ''hl.dsp.focus({ direction = "left" })'')
+          (bind "SUPER + right" ''hl.dsp.focus({ direction = "right" })'')
+          (bind "SUPER + up" ''hl.dsp.focus({ direction = "up" })'')
+          (bind "SUPER + down" ''hl.dsp.focus({ direction = "down" })'')
 
-          "SUPER SHIFT, left, movewindow, l" # Move window to left
-          "SUPER SHIFT, right, movewindow, r" # Move active window to right
-          "SUPER SHIFT, up, movewindow, u" # Move active window up
-          "SUPER SHIFT, down, movewindow, d" # Move active window down
+          (bind "SUPER + SHIFT + left" ''hl.dsp.window.move({ direction = "left" })'')
+          (bind "SUPER + SHIFT + right" ''hl.dsp.window.move({ direction = "right" })'')
+          (bind "SUPER + SHIFT + up" ''hl.dsp.window.move({ direction = "up" })'')
+          (bind "SUPER + SHIFT + down" ''hl.dsp.window.move({ direction = "down" })'')
 
-          "SUPER mouse_down, ${workspaceDispatcher}, r+1" # Go to next workspace
-          "SUPER, mouse_up, ${workspaceDispatcher}, r-1" # Go to previous workspace
+          (bind "SUPER + mouse_down" (workspace "r+1"))
+          (bind "SUPER + mouse_up" (workspace "r-1"))
 
-          "SUPER, S, ${swapActiveWorkspacesDispatcher}, current+1" # Swap active workspaces
+          (bind "SUPER + S" swapActiveWorkspaces)
 
-          "SUPER, L, exec, shiny-shell ipc call session lock"
-          "SUPER, SPACE, exec, shiny-shell ipc call launcher toggle"
+          (bind "SUPER + L" (exec "shiny-shell ipc call session lock"))
+          (bind "SUPER + SPACE" (exec "shiny-shell ipc call launcher toggle"))
         ]
-        ++ map (i: "SUPER, ${toString i}, ${workspaceDispatcher}, ${toString i}") [
-          1
-          2
-          3
-          4
-          5
-          6
-          7
-          8
-          9
-        ]
-        ++ map (i: "SUPER SHIFT, ${toString i}, ${moveToWorkspaceSilentDispatcher}, ${toString i}") [
-          1
-          2
-          3
-          4
-          5
-          6
-          7
-          8
-          9
-        ]
+        ++ map (i: bind "SUPER + ${toString i}" (workspace (toString i))) [1 2 3 4 5 6 7 8 9]
+        ++ map (i: bind "SUPER + SHIFT + ${toString i}" (moveToWorkspaceSilent (toString i))) [1 2 3 4 5 6 7 8 9]
         ++ [
-          "SUPER, 0, ${workspaceDispatcher}, 10"
-          "SUPER SHIFT, 0, ${moveToWorkspaceSilentDispatcher}, 10"
+          (bind "SUPER + 0" (workspace "10"))
+          (bind "SUPER + SHIFT + 0" (moveToWorkspaceSilent "10"))
         ]
-        ++ cfg.extra;
+        ++ cfg.extra
+        ++ [
+          (bindWith {mouse = true;} "SUPER + mouse:272" "hl.dsp.window.drag()")
+          (bindWith {mouse = true;} "SUPER + mouse:273" "hl.dsp.window.resize()")
+        ]
+        ++ lib.optionals osConfig.zeide.audio.enable [
+          (bindWith {locked = true;} "XF86AudioMute" (exec "shiny-shell ipc call audio toggleOutputMute"))
+          (bindWith {locked = true;} "XF86AudioMicMute" (exec "shiny-shell ipc call audio toggleInputMute"))
 
-      bindm = [
-        "SUPER, mouse:272, movewindow" # Move active window (left click)
-        "SUPER, mouse:273, resizewindow" # Resize active window (right click)
-      ];
-
-      bindl = lib.optionals osConfig.zeide.audio.enable [
-        ", XF86AudioMute, exec, shiny-shell ipc call audio toggleOutputMute"
-        ", XF86AudioMicMute, exec, shiny-shell ipc call audio toggleInputMute"
-
-        ", XF86AudioPlay, exec, shiny-shell ipc call player playPause"
-        ", XF86AudioPause, exec, shiny-shell ipc call player playPause"
-        ", XF86AudioNext, exec, shiny-shell ipc call player next"
-        ", XF86AudioPrev, exec, shiny-shell ipc call player previous"
-        ", XF86AudioStop, exec, shiny-shell ipc call player stop"
-      ];
-
-      bindel =
-        lib.optionals osConfig.zeide.audio.enable [
-          ", XF86AudioRaiseVolume, exec, shiny-shell ipc call audio outputVolume +4%"
-          ", XF86AudioLowerVolume, exec, shiny-shell ipc call audio outputVolume -4%"
+          (bindWith {locked = true;} "XF86AudioPlay" (exec "shiny-shell ipc call player playPause"))
+          (bindWith {locked = true;} "XF86AudioPause" (exec "shiny-shell ipc call player playPause"))
+          (bindWith {locked = true;} "XF86AudioNext" (exec "shiny-shell ipc call player next"))
+          (bindWith {locked = true;} "XF86AudioPrev" (exec "shiny-shell ipc call player previous"))
+          (bindWith {locked = true;} "XF86AudioStop" (exec "shiny-shell ipc call player stop"))
+        ]
+        ++ lib.optionals osConfig.zeide.audio.enable [
+          (bindWith {
+            locked = true;
+            repeating = true;
+          } "XF86AudioRaiseVolume" (exec "shiny-shell ipc call audio outputVolume +4%"))
+          (bindWith {
+            locked = true;
+            repeating = true;
+          } "XF86AudioLowerVolume" (exec "shiny-shell ipc call audio outputVolume -4%"))
         ]
         ++ lib.optionals osConfig.zeide.laptop.enable [
-          ", XF86MonBrightnessUp, exec, shiny-shell ipc call brightness set %default% +4%"
-          ", XF86MonBrightnessDown, exec, shiny-shell ipc call brightness set %default% -4%"
+          (bindWith {
+            locked = true;
+            repeating = true;
+          } "XF86MonBrightnessUp" (exec "shiny-shell ipc call brightness set %default% +4%"))
+          (bindWith {
+            locked = true;
+            repeating = true;
+          } "XF86MonBrightnessDown" (exec "shiny-shell ipc call brightness set %default% -4%"))
         ];
     };
   };

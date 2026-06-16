@@ -21,8 +21,13 @@
       settings = {
         appearance = {
           color = let
-            colors = (lib.importJSON config.stylix.generated.json).colors;
-            color = name: "#${colors.${name}.${config.stylix.colorGeneration.polarity}}";
+            colors = lib.importJSON (
+              config.stylix.palette.generators.semantic
+              config.stylix.polarity
+              config.stylix.image
+            );
+
+            color = name: colors.${name};
           in {
             primary = color "primary";
             overPrimary = color "on_primary";

@@ -11,17 +11,14 @@
     cfg = config.zeide.theme.gtk;
   in
     lib.mkIf cfg.enable {
-      gtk = {
-        enable = true;
-        gtk4.theme = config.gtk.theme;
-      };
+      gtk.enable = true;
 
       dconf.settings."org/gnome/desktop/interface" = let
         fontSize = toString config.stylix.fonts.sizes.applications;
         documentFontSize = toString (config.stylix.fonts.sizes.applications - 1);
       in {
         color-scheme =
-          if config.stylix.colorGeneration.polarity == "dark"
+          if config.stylix.polarity == "dark"
           then "prefer-dark"
           else "default";
 

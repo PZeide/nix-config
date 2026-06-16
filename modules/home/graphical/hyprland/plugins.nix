@@ -14,18 +14,16 @@
     cfg = config.zeide.graphical.hyprland.plugins;
   in {
     wayland.windowManager.hyprland = {
-      configType = "lua";
-
       extraLuaFiles = {
         "hyprsplit/init" = lib.mkIf cfg.hyprsplit.enable {
           autoLoad = false;
           content = builtins.readFile "${inputs.hyprsplit}/init.lua";
         };
 
-        "hyprsplit_load" = lib.mkIf cfg.hyprsplit.enable {
+        "hyprsplit/load" = lib.mkIf cfg.hyprsplit.enable {
           autoLoad = true;
           content = ''
-            local hs = require("hyprsplit")
+            hs = require("hyprsplit")
 
             hs.config({
               num_workspaces = 10,
@@ -38,7 +36,7 @@
       plugins =
         lib.optional cfg.hypr-dynamic-cursors.enable inputs.hypr-dynamic-cursors.packages.${system}.hypr-dynamic-cursors;
 
-      settings.plugin = {
+      settings.config.plugin = {
         dynamic-cursors = lib.mkIf cfg.hypr-dynamic-cursors.enable {
           enable = true;
           mode = "tilt";

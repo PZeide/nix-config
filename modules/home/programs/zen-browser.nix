@@ -85,10 +85,7 @@
           isDefault = true;
 
           userChrome = ''
-            /* Disable close button */
-            .titlebar-close {
-              display: none !important;
-            }
+
           '';
 
           userContent = ''

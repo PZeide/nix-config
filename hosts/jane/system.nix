@@ -97,12 +97,6 @@
     };
 
     services = {
-      anime = {
-        enable = false; # FIXME NEED FIX ASAP DB ERROR
-        symlinkAnimes = true;
-        anilistUsername = "Zeide";
-      };
-
       ios.enable = true;
       gsr.enable = true;
       keyring.enable = true;

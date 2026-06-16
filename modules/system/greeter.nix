@@ -36,8 +36,14 @@
         hyprlandPackage = inputs.hyprland.packages.${system}.hyprland;
         user = cfg.user;
         session = cfg.session;
-        useShinyShellUserOptions = true;
-        useHyprlandUserOptions = true;
+        settings = config.home-manager.users.${cfg.user}.programs.shiny-shell.settings;
+        hyprlandSettings = let
+          hmHyprlandSettings = config.home-manager.users.${cfg.user}.wayland.windowManager.hyprland.settings;
+        in {
+          monitor = hmHyprlandSettings.monitor;
+          input = hmHyprlandSettings.config.input;
+          device = hmHyprlandSettings.device;
+        };
       };
     };
 }

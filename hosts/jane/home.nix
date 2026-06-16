@@ -1,10 +1,18 @@
 {
   asset,
+  lib,
   pkgs,
   ...
 }: let
   appLaunchPrefix = "${pkgs.app2unit}/bin/app2unit -s a --";
   wrapAppUnit = app: "${appLaunchPrefix} ${app}";
+
+  bind = key: dispatcher: {
+    _args = [
+      key
+      (lib.generators.mkLuaInline dispatcher)
+    ];
+  };
 in {
   home.sessionVariables = {
     # Temp fix for webkitgtk apps
@@ -15,7 +23,16 @@ in {
     graphical = {
       hyprland = {
         enable = true;
-        monitors = ["eDP-1, 1920x1080@144, 0x0, 1"];
+
+        monitors = [
+          {
+            output = "eDP-1";
+            mode = "1920x1080@144";
+            position = "0x0";
+            scale = 1;
+          }
+        ];
+
         keyboardLayout = "us";
         keyboardVariant = "intl";
 
@@ -32,16 +49,20 @@ in {
         ];
 
         binds.extra = [
-          "$mainMod, Q, exec, ${wrapAppUnit "kitty"}"
-          "$mainMod, E, exec, ${wrapAppUnit "kitty yazi"}"
-          "$mainMod, B, exec, ${wrapAppUnit "zen-beta"}"
+          (bind "SUPER + Q" ''hl.dsp.exec_cmd("${wrapAppUnit "kitty"}")'')
+          (bind "SUPER + E" ''hl.dsp.exec_cmd("${wrapAppUnit "kitty yazi"}")'')
+          (bind "SUPER + B" ''hl.dsp.exec_cmd("${wrapAppUnit "zen-beta"}")'')
 
-          "$mainMod, X, togglespecialworkspace, cider"
+          (bind "SUPER + X" ''hl.dsp.workspace.toggle_special("cider")'')
         ];
 
         rules = {
-          windows = ["match:class ^(Cider)$,"];
-          workspaces = ["special:cider, on-created-empty:${wrapAppUnit "cider"}"];
+          workspaces = [
+            {
+              workspace = "special:cider";
+              on_created_empty = wrapAppUnit "cider";
+            }
+          ];
         };
 
         plugins = {
@@ -168,9 +189,9 @@ in {
     shell.fish.enable = true;
 
     theme = {
-      face = asset "faces/zhuyuan.png";
-      wallpaper = asset "wallpapers/zhuyuan.jpg";
-      scheme = "tonal-spot";
+      face = asset "theme/denia/face.png";
+      wallpaper = asset "theme/denia/wallpaper.jpg";
+      scheme = "content";
 
       gtk.enable = true;
       qt.enable = true;

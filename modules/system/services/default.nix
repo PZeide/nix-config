@@ -1,6 +1,5 @@
 {
   imports = [
-    ./anime.nix
     ./gsr.nix
     ./ios.nix
     ./keyring.nix

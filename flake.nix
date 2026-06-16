@@ -38,7 +38,7 @@
 
     stylix = {
       # FIXME matugen branch
-      url = "github:nix-community/stylix/89d5e0bffe49c3fa285e93556159be5e27fd600a";
+      url = "github:make-42/stylix/step-2-inputmapping-clean-root";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -86,10 +86,7 @@
 
     shiny-shell = {
       url = "github:PZeide/shiny-shell";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     shiny-portal = {
