@@ -17,7 +17,8 @@
   config = let
     cfg = config.zeide.services.keyring;
   in {
-    #services.gnome.gnome-keyring.enable = cfg.enable;
+    services.gnome.gnome-keyring.enable = cfg.enable;
+
     security.pam.services = lib.genAttrs cfg.unlockServices (service: {
       name = service;
       enableGnomeKeyring = true;

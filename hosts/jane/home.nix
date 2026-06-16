@@ -121,7 +121,6 @@ in {
         bruno = true;
         dbeaver = true;
         onlyoffice = true;
-        #librepods = true;
 
         webapps = {
           keychronLauncher = true;
@@ -163,7 +162,6 @@ in {
 
     services = {
       clipboard.enable = true;
-      keyring.enable = true;
       udiskie.enable = true;
       wakatime.enable = true;
 
