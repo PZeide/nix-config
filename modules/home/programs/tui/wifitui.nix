@@ -1,8 +1,7 @@
 {
   config,
   lib,
-  inputs,
-  system,
+  pkgs,
   ...
 }: {
   options.zeide.programs.tui.wifitui = with lib; {
@@ -13,6 +12,6 @@
     cfg = config.zeide.programs.tui.wifitui;
   in
     lib.mkIf cfg.enable {
-      home.packages = [inputs.wifitui.packages.${system}.default];
+      home.packages = [pkgs.wifitui];
     };
 }

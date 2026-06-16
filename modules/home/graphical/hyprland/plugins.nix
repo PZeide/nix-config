@@ -14,20 +14,37 @@
     cfg = config.zeide.graphical.hyprland.plugins;
   in {
     wayland.windowManager.hyprland = {
-      plugins =
-        lib.optional cfg.hyprsplit.enable inputs.hyprsplit.packages.${system}.hyprsplit
-        ++ lib.optional cfg.hypr-dynamic-cursors.enable inputs.hypr-dynamic-cursors.packages.${system}.hypr-dynamic-cursors;
+      configType = "lua";
 
-      settings.plugin = {
-        hyprsplit = lib.mkIf cfg.hyprsplit.enable {
-          num_workspaces = 10;
-          persistent_workspaces = true;
+      extraLuaFiles = {
+        "hyprsplit/init" = lib.mkIf cfg.hyprsplit.enable {
+          autoLoad = false;
+          content = builtins.readFile "${inputs.hyprsplit}/init.lua";
         };
 
+        "hyprsplit_load" = lib.mkIf cfg.hyprsplit.enable {
+          autoLoad = true;
+          content = ''
+            local hs = require("hyprsplit")
+
+            hs.config({
+              num_workspaces = 10,
+              persistent_workspaces = true,
+            })
+          '';
+        };
+      };
+
+      plugins =
+        lib.optional cfg.hypr-dynamic-cursors.enable inputs.hypr-dynamic-cursors.packages.${system}.hypr-dynamic-cursors;
+
+      settings.plugin = {
         dynamic-cursors = lib.mkIf cfg.hypr-dynamic-cursors.enable {
           enable = true;
           mode = "tilt";
+
           hyprcursor.enabled = true;
+          shake.enabled = false;
         };
       };
     };

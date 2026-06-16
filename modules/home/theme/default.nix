@@ -8,9 +8,17 @@
   ...
 }: {
   options.zeide.theme = with lib; {
+    face = mkOption {
+      type = with types; coercedTo path (src: "${src}") pathInStore;
+      default = asset "faces/laevatain.png";
+      description = ''
+        User face image.
+      '';
+    };
+
     wallpaper = mkOption {
-      type = with types; coercedTo package toString path;
-      default = asset "wallpapers/rem.jpg";
+      type = with types; coercedTo path (src: "${src}") pathInStore;
+      default = asset "wallpapers/laevatain.jpg";
       description = ''
         Wallpaper image (will drive the generation of the color palette).
       '';
@@ -37,8 +45,9 @@
         "neutral"
         "rainbow"
         "tonal-spot"
+        "vibrant"
       ];
-      default = "tonal-spot";
+      default = "content";
       description = ''
         Color scheme type used to generate the colors from the wallpaper.
       '';
@@ -64,6 +73,8 @@
   config = let
     cfg = config.zeide.theme;
   in {
+    home.file.".face".source = cfg.face;
+
     stylix = {
       enable = true;
       autoEnable = false;

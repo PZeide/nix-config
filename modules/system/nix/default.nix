@@ -28,7 +28,15 @@
         rocmSupport = cfg.enableRocmSupport;
       };
 
-      overlays = [inputs.nix-webapps.overlays.lib];
+      overlays = [
+        inputs.nix-webapps.overlays.lib
+        inputs.nix-cachyos-kernel.overlays.pinned
+        (_: prev: {
+          openldap = prev.openldap.overrideAttrs {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          };
+        })
+      ];
     };
 
     nix = {

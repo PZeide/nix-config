@@ -2,6 +2,8 @@
   lib,
   config,
   osConfig,
+  inputs,
+  system,
   ...
 }: {
   options.zeide.graphical.hyprland = with lib; {
@@ -64,18 +66,30 @@
 
       stylix.targets.hyprland.enable = true;
 
-      xdg.configFile."uwsm/env-hyprland".text = ''
-        export GDK_BACKEND="wayland,x11,*"
-        export QT_QPA_PLATFORM="wayland;xcb"
-        export QT_AUTO_SCREEN_SCALE_FACTOR="1"
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        export SDL_VIDEODRIVER="wayland"
-        export CLUTTER_BACKEND="wayland"
-        export NIXOS_OZONE_WL="1"
+      xdg = {
+        configFile."uwsm/env-hyprland".text = ''
+          export GDK_BACKEND="wayland,x11,*"
+          export QT_QPA_PLATFORM="wayland;xcb"
+          export QT_AUTO_SCREEN_SCALE_FACTOR="1"
+          export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+          export SDL_VIDEODRIVER="wayland"
+          export CLUTTER_BACKEND="wayland"
+          export NIXOS_OZONE_WL="1"
 
-        export APP2UNIT_SLICES="a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice"
-        export APP2UNIT_TYPE="scope"
-      '';
+          export APP2UNIT_SLICES="a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice"
+          export APP2UNIT_TYPE="scope"
+        '';
+
+        portal = {
+          extraPortals = [inputs.shiny-portal.packages.${system}.default];
+          config.hyprland = {
+            "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+            "org.freedesktop.impl.portal.GlobalShortcuts" = "hyprland";
+            "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
+            #"org.freedesktop.impl.portal.ScreenCast" = ["shiny"];
+          };
+        };
+      };
 
       wayland.windowManager.hyprland = {
         enable = true;
@@ -87,7 +101,7 @@
         portalPackage = osConfig.programs.hyprland.portalPackage;
 
         settings = {
-          monitor = cfg.monitors ++ [", highres, auto, 1"];
+          monitor = cfg.monitors ++ [", preferred, auto, 1"];
 
           general = {
             border_size = 2;
@@ -112,7 +126,6 @@
               enabled = true;
               range = 20;
               render_power = 2;
-              ignore_window = true;
             };
           };
 
@@ -128,18 +141,32 @@
               "standardDecel, 0, 0, 0, 1"
               "menuDecel, 0.1, 1, 0, 1"
               "menuAccel, 0.52, 0.03, 0.72, 0.08"
+              "stall, 1, -0.1, 0.7, 0.85"
             ];
 
             animation = [
+              # Windows
               "windowsIn, 1, 3, emphasizedDecel, popin 80%"
+              "fadeIn, 1, 3, emphasizedDecel"
               "windowsOut, 1, 2, emphasizedDecel, popin 90%"
+              "fadeOut, 1, 2, emphasizedDecel"
               "windowsMove, 1, 3, emphasizedDecel, slide"
               "border, 1, 10, emphasizedDecel"
+
+              # Layers
               "layersIn, 1, 2.7, emphasizedDecel, popin 93%"
               "layersOut, 1, 2.4, menuAccel, popin 94%"
+
+              # Fade
               "fadeLayersIn, 1, 0.5, menuDecel"
-              "fadeLayersOut, 1, 2.7, menuAccel"
+              "fadeLayersOut, 1, 2.7, stall"
+              "fadePopupsIn, 1, 0.5, menuDecel"
+              "fadePopupsOut, 1, 2.7, stall"
+
+              # Workspaces
               "workspaces, 1, 7, menuDecel, slide"
+
+              # Special workspaces
               "specialWorkspaceIn, 1, 2.8, emphasizedDecel, slidevert"
               "specialWorkspaceOut, 1, 1.2, emphasizedAccel, slidevert"
             ];
@@ -184,6 +211,10 @@
 
           render = {
             direct_scanout = 1;
+          };
+
+          cursor = {
+            no_hardware_cursors = 1;
           };
 
           ecosystem = {

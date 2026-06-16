@@ -16,13 +16,8 @@
 
     greeter = {
       enable = true;
-      initialSessionCommand = let
-        script = pkgs.writeScript "greeter-hyprland-login" ''
-          if uwsm check may-start -i -v; then
-              exec uwsm start -eD Hyprland hyprland.desktop
-          fi
-        '';
-      in "${script}";
+      user = "thibaud";
+      session = "hyprland-uwsm";
     };
 
     laptop = {
@@ -70,10 +65,10 @@
     };
 
     gaming = {
+      useCachyKernel = true;
       exposeNvidiaGpu = true;
 
       gacha = {
-        enableElysia = true;
         enableGI = true;
         enableHSR = true;
         enableZZZ = true;
@@ -103,12 +98,13 @@
 
     services = {
       anime = {
-        enable = true;
+        enable = false; # FIXME NEED FIX ASAP DB ERROR
         symlinkAnimes = true;
         anilistUsername = "Zeide";
       };
 
       ios.enable = true;
+      gsr.enable = true;
       keyring.enable = true;
       location.enable = true;
       openssh.enable = true;
@@ -122,9 +118,15 @@
     };
   };
 
-  powerManagement = {
-    powerUpCommands = ''
-      ${pkgs.util-linux}/bin/rfkill unblock bluetooth
-    '';
+  systemd.services.rfkill-unblock-bluetooth = {
+    description = "Unblock Bluetooth on boot and resume";
+    after = ["multi-user.target"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
+      Restart = "no";
+    };
   };
 }

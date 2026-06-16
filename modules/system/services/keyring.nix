@@ -7,7 +7,7 @@
     enable = mkEnableOption "gnome keyring";
     unlockServices = mkOption {
       type = with types; listOf str;
-      default = [];
+      default = ["greetd"];
       description = ''
         List of PAM services that will automatically unlock gnome keyring.
       '';

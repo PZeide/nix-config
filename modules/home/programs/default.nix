@@ -5,6 +5,7 @@
     ./cli.nix
     ./graphical.nix
     ./helix.nix
+    ./jetbrains.nix
     ./kitty.nix
     ./mpv.nix
     ./nix-index.nix

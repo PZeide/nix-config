@@ -35,9 +35,11 @@
           quantum = 128;
         };
 
-        extraConfig.pipewire."clock-rates" = {
-          "context.properties" = {
-            "default.clock.allowed-rates" = [44100 48000 96000];
+        extraConfig.pipewire = {
+          "10-clock-rates" = {
+            "context.properties" = {
+              "default.clock.allowed-rates" = [44100 48000 96000];
+            };
           };
         };
       };

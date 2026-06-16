@@ -67,9 +67,12 @@ in {
       (lib.getExe pkgs.xdg-terminal-exec);
 
     xdg = {
+      portal.enable = true;
+
       userDirs = lib.mkIf cfg.enableUserDirs {
         enable = true;
         createDirectories = true;
+        setSessionVariables = true;
       };
 
       mime.enable = true;

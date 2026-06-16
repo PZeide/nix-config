@@ -3,7 +3,6 @@
   config,
   lib,
   inputs,
-  pkgs,
   ...
 }: {
   options.zeide.graphical.hyprland = with lib; {
@@ -18,13 +17,7 @@
         enable = true;
         package = inputs.hyprland.packages.${system}.hyprland;
         portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
-
-        # withUWSM is broken: https://github.com/hyprwm/Hyprland/discussions/12661
-        withUWSM = false;
+        withUWSM = true;
       };
-
-      environment.systemPackages = [pkgs.uwsm];
-      systemd.packages = [pkgs.uwsm];
-      environment.pathsToLink = ["/share/uwsm"];
     };
 }

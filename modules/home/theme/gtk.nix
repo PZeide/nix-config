@@ -11,7 +11,10 @@
     cfg = config.zeide.theme.gtk;
   in
     lib.mkIf cfg.enable {
-      gtk.enable = true;
+      gtk = {
+        enable = true;
+        gtk4.theme = config.gtk.theme;
+      };
 
       dconf.settings."org/gnome/desktop/interface" = let
         fontSize = toString config.stylix.fonts.sizes.applications;

@@ -39,7 +39,10 @@
           "match:class ^(kitty)$, opacity 1.0 override 0.8 override"
 
           # Zed opacity
-          "match:class ^(dev.zed.Zed)$, opacity 0.9 override 0.8 override"
+          "match:class ^(dev.zed.Zed)$, opacity 0.8 override 0.7 override"
+
+          # Jetbrains IDEs opacity
+          "match:class ^(jetbrains-.*)$, opacity 0.85 override 0.75 override"
 
           # Make PiP window flaoting and sticky
           "match:title ^(Picture-in-Picture)$, float on, pin on"
@@ -58,7 +61,12 @@
         ]
         ++ cfg.windows;
 
-      layerrule = ["match:namespace ^(shiny:.*)$, blur on, ignore_alpha 0.6, no_anim on"] ++ cfg.layers;
+      layerrule =
+        [
+          # Configuration for shiny-shell layers
+          "match:namespace ^(shiny:.*)$, no_anim on"
+        ]
+        ++ cfg.layers;
 
       workspace = cfg.workspaces;
     };

@@ -1,40 +1,43 @@
 {
   config,
   lib,
-  pkgs,
+  inputs,
+  system,
   ...
 }: {
   options.zeide.greeter = with lib; {
     enable = mkEnableOption "greeter service";
 
-    initialSessionCommand = mkOption {
-      type = with types; nullOr str;
-      default = null;
+    user = mkOption {
+      type = types.str;
+      default = "thibaud";
       description = ''
-        Command to run as an initial session.
-        Initial session will skip login prompt and will automatically run the command as the user.
+        User to run the greeter as.
+      '';
+    };
+
+    session = mkOption {
+      type = types.str;
+      default = "hyprland";
+      description = ''
+        Session entry to use for the greeter.
       '';
     };
   };
+
+  imports = [inputs.shiny-shell.nixosModules.greeter];
 
   config = let
     cfg = config.zeide.greeter;
   in
     lib.mkIf cfg.enable {
-      services.greetd = {
+      programs.shiny-shell-greeter = {
         enable = true;
-
-        settings = {
-          default_session = {
-            command = "${pkgs.greetd}/bin/agreety --cmd $SHELL";
-            user = config.zeide.user;
-          };
-
-          initial_session = lib.mkIf (cfg.initialSessionCommand != null) {
-            command = cfg.initialSessionCommand;
-            user = config.zeide.user;
-          };
-        };
+        hyprlandPackage = inputs.hyprland.packages.${system}.hyprland;
+        user = cfg.user;
+        session = cfg.session;
+        useShinyShellUserOptions = true;
+        useHyprlandUserOptions = true;
       };
     };
 }

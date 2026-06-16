@@ -17,7 +17,8 @@
   ];
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.bleeding_edge;
+
     modesetting.enable = true;
 
     powerManagement = {
@@ -47,28 +48,17 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/6c21f34c-10ed-4c3f-97d4-22aeae01b757";
+    device = "/dev/disk/by-label/root";
     fsType = "ext4";
     options = ["noatime"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0897-A178";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
     options = [
       "fmask=0077"
       "dmask=0077"
     ];
   };
-
-  /*
-  fileSystems."/mnt/data" = {
-  device = "/dev/disk/by-uuid/b17035bd-13ff-4864-88b7-03e21f34d603";
-  fsType = "btrfs";
-  options = [
-    "noatime"
-    "x-gvfs-show"
-  ];
-  };
-  */
 }

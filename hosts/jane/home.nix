@@ -46,15 +46,13 @@ in {
 
         plugins = {
           hyprsplit.enable = true;
-          hypr-dynamic-cursors.enable = true;
+          hypr-dynamic-cursors.enable = false;
         };
       };
     };
 
     programs = {
       gaming = {
-        bottles.enable = true;
-        lunar-client.enable = true;
         mangohud.enable = true;
         osu-lazer.enable = true;
 
@@ -62,6 +60,8 @@ in {
           enable = true;
           enableAllJdks = true;
         };
+
+        wine-utils.enable = true;
       };
 
       starship.enable = true;
@@ -77,21 +77,17 @@ in {
         yazi = {
           enable = true;
           enableFileChooser = true;
-
-          extraHops = [
-            {
-              key = "D";
-              path = "/mnt/data";
-              desc = "Data drive";
-            }
-          ];
         };
       };
 
       cli = {
         essentials.enable = true;
         fastfetch.enable = true;
-        development.enable = true;
+
+        development = {
+          enable = true;
+          enableAzureCli = true;
+        };
       };
 
       graphical = {
@@ -101,9 +97,10 @@ in {
         proton-pass = true;
         proton-vpn = true;
         teams = true;
-        affinity = true;
-        hoppscotch = true;
-        librepods = true;
+        bruno = true;
+        dbeaver = true;
+        onlyoffice = true;
+        #librepods = true;
 
         webapps = {
           keychronLauncher = true;
@@ -112,6 +109,12 @@ in {
       };
 
       helix.enable = true;
+
+      jetbrains = {
+        idea.enable = true;
+        datagrip.enable = true;
+      };
+
       kitty.enable = true;
 
       mpv = {
@@ -125,7 +128,13 @@ in {
 
       zed = {
         enable = true;
-        iconTheme.name = "Flow Dark";
+
+        theme = {
+          name = "Vitesse Refined Dark";
+          extension = "vitesse-theme-refined";
+        };
+
+        iconTheme.name = "Flow Deep";
       };
 
       zen-browser.enable = true;
@@ -133,14 +142,7 @@ in {
 
     services = {
       clipboard.enable = true;
-
-      easyeffects = {
-        enable = true;
-        enableDefaultPreset = true;
-      };
-
       keyring.enable = true;
-      polkit-agent.enable = true;
       udiskie.enable = true;
       wakatime.enable = true;
 
@@ -166,8 +168,9 @@ in {
     shell.fish.enable = true;
 
     theme = {
-      wallpaper = asset "wallpapers/fluorite/2.jpg";
-      #scheme = "fruit-salad";
+      face = asset "faces/zhuyuan.png";
+      wallpaper = asset "wallpapers/zhuyuan.jpg";
+      scheme = "tonal-spot";
 
       gtk.enable = true;
       qt.enable = true;

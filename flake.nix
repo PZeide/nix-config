@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -33,16 +34,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devenv.url = "github:cachix/devenv/v1.11.2";
+    devenv.url = "github:cachix/devenv/v2.1.2";
 
     stylix = {
       # FIXME matugen branch
       url = "github:nix-community/stylix/89d5e0bffe49c3fa285e93556159be5e27fd600a";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    affinity-nix = {
-      url = "github:mrshmllow/affinity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -68,11 +64,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    elysia = {
-      url = "git+https://dawn.wine/foxtrottt/elysia-on-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-webapps = {
       url = "github:TLATER/nix-webapps";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,13 +74,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wifitui = {
-      url = "github:shazow/wifitui";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     librepods = {
-      url = "github:Chrisbattarbee/librepods";
+      url = "github:kavishdevar/librepods/linux/rust";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -100,6 +86,14 @@
 
     shiny-shell = {
       url = "github:PZeide/shiny-shell";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
+    shiny-portal = {
+      url = "github:PZeide/shiny-portal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

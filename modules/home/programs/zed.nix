@@ -83,6 +83,7 @@
             "meson"
             "neocmake"
             "nix"
+            "oxc"
             "qml"
             "snippets"
             "sql"
@@ -95,7 +96,6 @@
 
             # Others
             "gitignore-template"
-            "mistral-vibe"
           ]
           ++ (lib.optional (cfg.theme.extension != null) cfg.theme.extension)
           ++ (lib.optional (cfg.iconTheme.extension != null) cfg.iconTheme.extension);
@@ -112,9 +112,9 @@
             yaml-language-server.settings.yaml.schemaStore.enable = true;
           };
 
+          agent_servers.codex-acp.type = "registry";
           format_on_save = "on";
           formatter = "language_server";
-          features.edit_prediction_provider = "codestral";
 
           theme = lib.mkForce cfg.theme.name;
           icon_theme = lib.mkForce cfg.iconTheme.name;
@@ -126,22 +126,12 @@
             metrics = false;
           };
 
-          languages = {
-            Nix = {
-              language_servers = ["nixd" "!nil"];
-              formatter.external = {
-                command = "alejandra";
-                arguments = ["--quiet" "--"];
-              };
+          languages.Nix = {
+            language_servers = ["nixd" "!nil"];
+            formatter.external = {
+              command = "alejandra";
+              arguments = ["--quiet" "--"];
             };
-
-            JavaScript.formatter.language_server.name = "biome";
-            TypeScript.formatter.language_server.name = "biome";
-            TSX.formatter.language_server.name = "biome";
-            JSON.formatter.language_server.name = "biome";
-            JSONC.formatter.language_server.name = "biome";
-            CSS.formatter.language_server.name = "biome";
-            GraphQL.formatter.language_server.name = "biome";
           };
         };
 

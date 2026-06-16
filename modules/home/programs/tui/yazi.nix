@@ -118,7 +118,7 @@ in {
           };
 
           plugin = {
-            prepend_preloaders =
+            prepend-preloaders =
               [
                 {
                   mime = ["{audio,video,image}/*" "application/subrip" "application/postscript"];
@@ -131,7 +131,7 @@ in {
             prepend_previewers =
               [
                 {
-                  name = ["*.md"];
+                  url = ["*.md"];
                   run = ["piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark \"$1\""];
                 }
                 {
@@ -145,7 +145,7 @@ in {
             append_previewers =
               [
                 {
-                  name = ["*"];
+                  url = ["*"];
                   run = ["piper -- hexyl --border=none --terminal-width=$w \"$1\""];
                 }
               ]

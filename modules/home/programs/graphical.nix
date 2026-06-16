@@ -14,9 +14,10 @@
     proton-pass = mkEnableOption "proton-pass (password manager)";
     proton-vpn = mkEnableOption "proton-vpn (VPN)";
     teams = mkEnableOption "teams-for-linux";
-    affinity = mkEnableOption "affinity";
-    hoppscotch = mkEnableOption "hoppscotch (api testing)";
-    librepods = mkEnableOption "librepods";
+    bruno = mkEnableOption "bruno (api testing)";
+    dbeaver = mkEnableOption "db administration tool";
+    onlyoffice = mkEnableOption "onlyoffice (office suite)";
+    librepods = mkEnableOption "librepods (airpods helper)";
 
     webapps = {
       keychronLauncher = mkEnableOption "keychron launcher";
@@ -52,10 +53,11 @@
       (mkPackageIf "papers" pkgs.papers)
       (mkPackageIf "cider" pkgs.zeide.cider)
       (mkPackageIf "proton-pass" pkgs.proton-pass)
-      (mkPackageIf "proton-vpn" pkgs.protonvpn-gui)
+      (mkPackageIf "proton-vpn" pkgs.proton-vpn)
       (mkPackageIf "teams" pkgs.teams-for-linux)
-      (mkPackageIf "affinity" inputs.affinity-nix.packages.${system}.v3)
-      (mkPackageIf "hoppscotch" pkgs.hoppscotch)
+      (mkPackageIf "bruno" pkgs.bruno)
+      (mkPackageIf "dbeaver" pkgs.dbeaver-bin)
+      (mkPackageIf "onlyoffice" pkgs.onlyoffice-desktopeditors)
       (mkPackageIf "librepods" inputs.librepods.packages.${system}.default)
 
       (mkWebAppIf "keychronLauncher" {

@@ -2,6 +2,7 @@
   config,
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   options.zeide.programs.zen-browser = with lib; {
@@ -14,6 +15,12 @@
     cfg = config.zeide.programs.zen-browser;
   in
     lib.mkIf cfg.enable {
+      home.packages = [
+        (pkgs.writeShellScriptBin "x-www-browser" ''
+          exec zen-beta "$@"
+        '')
+      ];
+
       programs.zen-browser = {
         enable = true;
 

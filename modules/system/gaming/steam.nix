@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: {
   options.zeide.gaming.steam = with lib; {
@@ -18,10 +17,6 @@
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
-
-        extraCompatPackages = with pkgs; [
-          proton-ge-bin
-        ];
       };
     };
 }

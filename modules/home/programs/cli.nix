@@ -29,7 +29,10 @@
 
     fastfetch.enable = mkEnableOption "fastfetch tool";
 
-    development.enable = mkEnableOption "misc development tools";
+    development = {
+      enable = mkEnableOption "misc development tools";
+      enableAzureCli = mkEnableOption "azure cli (with some extensions)";
+    };
   };
 
   config = let
@@ -135,6 +138,7 @@
             };
 
             signing = {
+              format = null;
               key = "~/.ssh/id_ed25519.pub";
               signByDefault = true;
             };
@@ -263,6 +267,14 @@
           dive
           kubectl
           hurl
+        ];
+      })
+
+      (lib.mkIf cfg.development.enableAzureCli {
+        home.packages = with pkgs; [
+          (azure-cli.withExtensions [
+            azure-cli.extensions.bastion
+          ])
         ];
       })
     ];
