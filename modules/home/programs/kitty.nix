@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.kitty;
+    cfg = config.zeide.programs.kitty;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.kitty = {
         enable = true;
 
@@ -20,13 +20,15 @@
           show_hyperlink_targets = true;
 
           background_opacity = lib.mkForce 0.65;
-          background_blur = lib.mkForce 0;
+          background_blur = 0;
 
           enable_audio_bell = false;
 
           remember_window_size = false;
           window_padding_width = 8;
           hide_window_decorations = true;
+          confirm_os_window_close = 0;
+          cursor_trail = 1;
         };
       };
 

@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.udiskie;
+    cfg = config.zeide.services.udiskie;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = osConfig.zeide.services.udisks2.enable;

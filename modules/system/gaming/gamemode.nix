@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.gaming.gamemode;
+    cfg = config.zeide.gaming.gamemode;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.gamemode = {
         enable = true;
         enableRenice = true;

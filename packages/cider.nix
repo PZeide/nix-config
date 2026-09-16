@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchzip,
+  fetchurl,
   zstd,
   makeWrapper,
   autoPatchelfHook,
@@ -15,7 +15,13 @@
   gtk3,
   pango,
   cairo,
-  xorg,
+  libx11,
+  libxcomposite,
+  libxdamage,
+  libxext,
+  libxfixes,
+  libxrandr,
+  libxcb,
   mesa,
   expat,
   libxkbcommon,
@@ -23,16 +29,15 @@
 }:
 stdenv.mkDerivation rec {
   pname = "cider";
-  version = "3.0.0";
+  version = "4.0.9.1";
 
-  src = fetchzip {
-    nativeBuildInputs = [zstd];
-    stripRoot = false;
+  src = fetchurl {
     url = "https://repo.cider.sh/arch/cider-v${version}-linux-x64.pkg.tar.zst";
-    hash = "sha256-6ax9Zl2/jc431erP9q0D7A+BDH5Qs05dPCsb+KM0YCE=";
+    hash = "sha256-qze3FsiDtunXFIJkF235OBK/PsfspGp4kKviovxXwWA=";
   };
 
   nativeBuildInputs = [
+    zstd
     makeWrapper
     autoPatchelfHook
   ];
@@ -47,15 +52,15 @@ stdenv.mkDerivation rec {
     gtk3 # libgtk-3.so.0
     pango # libpango-1.0.so.0
     cairo # libcairo.so.2
-    xorg.libX11 # libX11.so.6, libX11-xcb.so.1
-    xorg.libXcomposite # libXcomposite.so.1
-    xorg.libXdamage # libXdamage.so.1
-    xorg.libXext # libXext.so.6
-    xorg.libXfixes # libXfixes.so.3
-    xorg.libXrandr # libXrandr.so.2
+    libx11 # libX11.so.6, libX11-xcb.so.1
+    libxcomposite # libXcomposite.so.1
+    libxdamage # libXdamage.so.1
+    libxext # libXext.so.6
+    libxfixes # libXfixes.so.3
+    libxrandr # libXrandr.so.2
     mesa # libgbm.so.1
     expat # libexpat.so.1
-    xorg.libxcb # libxcb.so.1
+    libxcb # libxcb.so.1
     libxkbcommon # libxkbcommon.so.0
     alsa-lib # libasound.so.2
   ];
@@ -73,13 +78,13 @@ stdenv.mkDerivation rec {
 
     mkdir -p $out/{lib,share}
 
-    cp -r $src/usr/lib/cider $out/lib
+    cp -r lib/cider $out/lib
     chmod a+w $out/lib/cider
 
-    cp -r $src/usr/share/pixmaps $out/share
+    cp -r share/pixmaps $out/share
 
     mkdir -p $out/share/applications
-    install -m644 $src/usr/share/applications/cider.desktop $out/share/applications/cider.desktop
+    install -m644 share/applications/cider.desktop $out/share/applications/cider.desktop
 
     runHook postInstall
   '';
@@ -87,13 +92,14 @@ stdenv.mkDerivation rec {
   postInstall = ''
     wrapProgram $out/lib/cider/Cider \
        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
+       --add-flags "--no-sandbox --disable-gpu-sandbox"
 
     mkdir $out/bin
     ln -sf $out/lib/cider/Cider $out/bin/${pname}
   '';
 
   meta = {
-    description = "Powerful music player that allows you listen to your favorite tracks with style";
+    description = "A cross-platform Apple Music experience built on Vue.js and written from the ground up with performance in mind.";
     homepage = "https://cider.sh";
     mainProgram = "cider";
     license = lib.licenses.unfree;

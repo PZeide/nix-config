@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.clipboard;
+    cfg = config.zeide.services.clipboard;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = with pkgs; [wl-clipboard];
 
       systemd.user.services.wl-clip-persist = {

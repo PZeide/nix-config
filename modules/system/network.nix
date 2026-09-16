@@ -5,7 +5,8 @@
 }: {
   options.zeide.network = with lib; {
     enable = mkEnableOption "network config";
-    enableQuad9Dns = mkEnableOption "quad9 DNS with DoT and DNSSEC";
+    enableWireless = mkEnableOption "wireless (using wpa_supplicant)";
+    enableCloudflareDns = mkEnableOption "Cloudflare DNS with DoT";
     enableFirewall = mkOption {
       type = types.bool;
       default = false;
@@ -17,23 +18,22 @@
   };
 
   config = let
-    selfConfig = config.zeide.network;
+    cfg = config.zeide.network;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       networking = {
-        nameservers = lib.optionals selfConfig.enableQuad9Dns [
-          "9.9.9.9#dns.quad9.net"
-          "149.112.112.112#dns.quad9.net"
+        nameservers = lib.optionals cfg.enableCloudflareDns [
+          "1.1.1.1#one.one.one.one"
+          "1.0.0.1#one.one.one.one"
         ];
 
         networkmanager = {
           enable = true;
-          wifi.powersave = true;
           dns = "systemd-resolved";
         };
 
         firewall = {
-          enable = selfConfig.enableFirewall;
+          enable = cfg.enableFirewall;
           # Required by some VPN services
           checkReversePath = "loose";
         };
@@ -41,12 +41,15 @@
 
       services.resolved = {
         enable = true;
-        domains = ["~."];
 
-        dnsovertls =
-          if selfConfig.enableQuad9Dns
-          then "true"
-          else "opportunistic";
+        settings.Resolve = {
+          Domains = ["~."];
+
+          DNSOverTLS =
+            if cfg.enableCloudflareDns
+            then "true"
+            else "opportunistic";
+        };
       };
 
       users.users.${config.zeide.user} = {

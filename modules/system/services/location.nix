@@ -9,18 +9,16 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.location;
+    cfg = config.zeide.services.location;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       location.provider = "geoclue2";
 
       services.geoclue2 = {
         enable = true;
-
-        geoProviderUrl = "https://beacondb.net/v1/geolocate";
-        submissionUrl = "https://beacondb.net/v2/geosubmit";
-        submissionNick = "geoclue";
-        submitData = selfConfig.submitGeoData;
+        submitData = cfg.submitGeoData;
       };
+
+      users.users.geoclue.extraGroups = ["networkmanager"];
     };
 }

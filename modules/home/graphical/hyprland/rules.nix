@@ -5,63 +5,107 @@
 }: {
   options.zeide.graphical.hyprland.rules = with lib; {
     windows = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf attrs;
       default = [];
       description = ''
-        Extra window rules.
+        Extra anonymous window rules.
+      '';
+    };
+
+    layers = mkOption {
+      type = with types; listOf attrs;
+      default = [];
+      description = ''
+        Extra anonymous layer rules.
       '';
     };
 
     workspaces = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf attrs;
       default = [];
       description = ''
-        Extra workspace rules.
+        Extra anonymous workspace rules.
       '';
     };
   };
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland.rules;
+    cfg = config.zeide.graphical.hyprland.rules;
   in {
     wayland.windowManager.hyprland.settings = {
-      windowrule =
+      window_rule =
         [
-          # Use kitty native opacity instead
-          "opacity 1 override 0.8 override, class:^(kitty)$"
+          # Terminal opacity
+          {
+            match.class = "^(kitty)$";
+            opacity = "1.0 override 0.8 override";
+          }
+
+          # Zed opacity
+          {
+            match.class = "^(dev.zed.Zed)$";
+            opacity = "0.8 override 0.7 override";
+          }
+
+          # Jetbrains IDEs opacity
+          {
+            match.class = "^(jetbrains-.*)$";
+            opacity = "0.85 override 0.75 override";
+          }
 
           # Make PiP window flaoting and sticky
-          "float, title:^(Picture-in-Picture)$"
-          "pin, title:^(Picture-in-Picture)$"
+          {
+            match.title = "^(Picture-in-Picture)$";
+            float = true;
+            pin = true;
+          }
 
-          # Disable opacity for these apps
-          "opacity 0.999 override, class:^(zen-beta)$"
-          "opacity 1 override, class:^(mpv)$"
-          "opacity 1 override, class:^(org.gnome.Loupe)$"
-          "opacity 1 override, class:^(org.gnome.Papers)$"
-          "opacity 1 override, class:^(com.obsproject.Studio)$"
-          "opacity 1 override, class:^(Waydroid)$"
+          # Make xdg-termfilechooser floating
+          {
+            match.class = "^(xdg-termfilechooser-yazi)$";
+            float = true;
+          }
 
-          # Games
-          "tag +game, title:^(Wuthering Waves  )$" # Window name has two spaces at the end ?????
-          "tag +game, class:^(genshinimpact.exe)$"
-          "tag +game, class:^(starrail.exe)$"
-          "tag +game, class:^(zenlesszonezero.exe)$"
-          "tag +game, class:^(waydroid.com.YoStarEN.AzurLane)$"
+          # Add tag game to games
+          {
+            match.class = "^(genshinimpact\\.exe)$";
+            tag = "+game";
+          }
+          {
+            match.class = "^(starrail\\.exe)$";
+            tag = "+game";
+          }
+          {
+            match.class = "^(zenlesszonezero\\.exe)$";
+            tag = "+game";
+          }
+          {
+            match.class = "^(.*steam_app.*)$";
+            tag = "+game";
+          }
 
-          "opacity 1 override, tag:game"
-          "renderunfocused, tag:game"
-          "fullscreen, tag:game"
-          "immediate, tag:game"
+          # Rules for games
+          {
+            match.tag = "game";
+            render_unfocused = true;
+            fullscreen = true;
+            immediate = true;
+            idle_inhibit = "always";
+          }
         ]
-        ++ selfConfig.windows;
+        ++ cfg.windows;
 
-      layerrule = [
-        "blur, zs-.*"
-        "ignorezero, zs-.*"
-      ];
+      layer_rule =
+        [
+          # Configuration for shiny-shell layers
+          {
+            match.namespace = "^(shiny:.*)$";
+            no_anim = true;
+          }
+        ]
+        ++ cfg.layers;
 
-      workspace = selfConfig.workspaces;
+      workspace_rule = cfg.workspaces;
     };
   };
 }

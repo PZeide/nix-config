@@ -7,6 +7,15 @@
   options.zeide.programs.mpv = with lib; {
     enable = mkEnableOption "mpv video player";
 
+    useOpenGL = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Whether to use OpenGL instead of Vulkan as the GPU-API.
+        This can avoid the dGPU to be used instead of the iGPU on a hybrid-graphics laptop.
+      '';
+    };
+
     screenshotSaveDir = mkOption {
       type = types.str;
       default = "${config.home.homeDirectory}/Pictures/Screenshots";
@@ -21,9 +30,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.mpv;
+    cfg = config.zeide.programs.mpv;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.mpv = {
         enable = true;
 
@@ -44,7 +53,10 @@
           # Video
           profile = "gpu-hq";
           vo = "gpu-next";
-          gpu-api = "vulkan";
+          gpu-api =
+            if cfg.useOpenGL
+            then "opengl"
+            else "vulkan";
 
           # Audio
           alang = "ja,jp,jpn,en,eng,fr,fra,fre";
@@ -59,8 +71,8 @@
           # Screenshot
           screenshot-format = "webp";
           screenshot-high-bit-depth = true;
-          screenshot-dir = "${selfConfig.screenshotSaveDir}";
-          screenshot-template = "${selfConfig.screenshotFileName}";
+          screenshot-dir = "${cfg.screenshotSaveDir}";
+          screenshot-template = "${cfg.screenshotFileName}";
         };
 
         bindings = {

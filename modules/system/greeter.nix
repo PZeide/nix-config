@@ -1,40 +1,48 @@
 {
   config,
   lib,
-  pkgs,
+  inputs,
+  system,
   ...
 }: {
   options.zeide.greeter = with lib; {
     enable = mkEnableOption "greeter service";
 
-    initialSessionCommand = mkOption {
-      type = with types; nullOr str;
-      default = null;
+    user = mkOption {
+      type = types.str;
+      default = "thibaud";
       description = ''
-        Command to run as an initial session.
-        Initial session will skip login prompt and will automatically run the command as the user.
+        User to run the greeter as.
+      '';
+    };
+
+    session = mkOption {
+      type = types.str;
+      default = "hyprland";
+      description = ''
+        Session entry to use for the greeter.
       '';
     };
   };
 
+  imports = [inputs.shiny-shell.nixosModules.greeter];
+
   config = let
-    selfConfig = config.zeide.greeter;
+    cfg = config.zeide.greeter;
   in
-    lib.mkIf selfConfig.enable {
-      services.greetd = {
+    lib.mkIf cfg.enable {
+      programs.shiny-shell-greeter = {
         enable = true;
-        vt = 1;
-
-        settings = {
-          default_session = {
-            command = "${pkgs.greetd.greetd}/bin/agreety --cmd $SHELL";
-            user = config.zeide.user;
-          };
-
-          initial_session = lib.mkIf (selfConfig.initialSessionCommand != null) {
-            command = selfConfig.initialSessionCommand;
-            user = config.zeide.user;
-          };
+        hyprlandPackage = inputs.hyprland.packages.${system}.hyprland;
+        user = cfg.user;
+        session = cfg.session;
+        settings = config.home-manager.users.${cfg.user}.programs.shiny-shell.settings;
+        hyprlandSettings = let
+          hmHyprlandSettings = config.home-manager.users.${cfg.user}.wayland.windowManager.hyprland.settings;
+        in {
+          monitor = hmHyprlandSettings.monitor;
+          input = hmHyprlandSettings.config.input;
+          device = hmHyprlandSettings.device;
         };
       };
     };

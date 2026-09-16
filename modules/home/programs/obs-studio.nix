@@ -11,16 +11,16 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.obs-studio;
+    cfg = config.zeide.programs.obs-studio;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.obs-studio = {
         enable = true;
 
         package = pkgs.obs-studio.override {
           # cuda support is managed by config.cudaSupport (system wide)
-          alsaSupport = selfConfig.enableAlsaSupport;
-          pulseaudioSupport = selfConfig.enablePulseaudioSupport;
+          alsaSupport = cfg.enableAlsaSupport;
+          pulseaudioSupport = cfg.enablePulseaudioSupport;
         };
 
         plugins = with pkgs.obs-studio-plugins; [

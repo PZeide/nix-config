@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }: {
   options.zeide.programs.cli = with lib; {
@@ -27,16 +29,23 @@
 
     fastfetch.enable = mkEnableOption "fastfetch tool";
 
-    development.enable = mkEnableOption "misc development tools";
+    development = {
+      enable = mkEnableOption "misc development tools";
+      enableAzureCli = mkEnableOption "azure cli (with some extensions)";
+    };
   };
 
   config = let
-    selfConfig = config.zeide.programs.cli;
+    cfg = config.zeide.programs.cli;
   in
     lib.mkMerge [
-      (lib.mkIf selfConfig.essentials.enable {
+      (lib.mkIf cfg.essentials.enable {
         home = {
-          packages = with pkgs; [grc curl];
+          packages = with pkgs; [
+            grc
+            curl
+          ];
+
           shellAliases = {
             g = "git";
             mommy = "git";
@@ -61,38 +70,62 @@
             nix-direnv.enable = true;
           };
 
+          delta = {
+            enable = true;
+            enableGitIntegration = true;
+
+            options = {
+              navigate = true;
+              side-by-side = true;
+              true-color = "never";
+
+              features = "unobtrusive-line-numbers decorations";
+              unobtrusive-line-numbers = {
+                line-numbers = true;
+                line-numbers-left-format = "{nm:>4}│";
+                line-numbers-right-format = "{np:>4}│";
+                line-numbers-left-style = "grey";
+                line-numbers-right-style = "grey";
+              };
+
+              decorations = {
+                commit-decoration-style = "bold grey box ul";
+                file-style = "bold blue";
+                file-decoration-style = "ul";
+                hunk-header-decoration-style = "box";
+              };
+            };
+          };
+
           git = {
             enable = true;
 
-            userName = selfConfig.essentials.gitName;
-            userEmail = selfConfig.essentials.gitEmail;
+            settings = {
+              user = {
+                name = cfg.essentials.gitName;
+                email = cfg.essentials.gitEmail;
+              };
 
-            signing = {
-              key = "~/.ssh/id_ed25519.pub";
-              signByDefault = true;
-            };
+              alias = {
+                a = "add";
+                aa = "add -A";
+                b = "branch";
+                ba = "branch -a";
+                c = "commit -m";
+                ca = "commit -am";
+                pl = "pull";
+                ps = "push";
+                co = "checkout";
+                cob = "checkout -b";
+                contributors = "shortlog -nse";
+                d = "difftool";
+                ds = "difftool --staged";
+                lg = "log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'";
+                remotes = "remote -v";
+                s = "status -sb";
+                undo = "reset HEAD~1";
+              };
 
-            aliases = {
-              a = "add";
-              aa = "add -A";
-              b = "branch";
-              ba = "branch -a";
-              c = "commit -m";
-              ca = "commit -am";
-              pl = "pull";
-              ps = "push";
-              co = "checkout";
-              cob = "checkout -b";
-              contributors = "shortlog -nse";
-              d = "difftool";
-              ds = "difftool --staged";
-              lg = "log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'";
-              remotes = "remote -v";
-              s = "status -sb";
-              undo = "reset HEAD~1";
-            };
-
-            extraConfig = {
               gpg.format = "ssh";
               init.defaultBranch = "main";
               color.ui = true;
@@ -103,30 +136,10 @@
               };
             };
 
-            delta = {
-              enable = true;
-
-              options = {
-                navigate = true;
-                side-by-side = true;
-                true-color = "never";
-
-                features = "unobtrusive-line-numbers decorations";
-                unobtrusive-line-numbers = {
-                  line-numbers = true;
-                  line-numbers-left-format = "{nm:>4}│";
-                  line-numbers-right-format = "{np:>4}│";
-                  line-numbers-left-style = "grey";
-                  line-numbers-right-style = "grey";
-                };
-
-                decorations = {
-                  commit-decoration-style = "bold grey box ul";
-                  file-style = "bold blue";
-                  file-decoration-style = "ul";
-                  hunk-header-decoration-style = "box";
-                };
-              };
+            signing = {
+              format = null;
+              key = "~/.ssh/id_ed25519.pub";
+              signByDefault = true;
             };
           };
         };
@@ -137,7 +150,7 @@
         };
       })
 
-      (lib.mkIf selfConfig.fastfetch.enable {
+      (lib.mkIf cfg.fastfetch.enable {
         programs.fastfetch = {
           enable = true;
 
@@ -247,10 +260,20 @@
         };
       })
 
-      (lib.mkIf selfConfig.development.enable {
+      (lib.mkIf cfg.development.enable {
         home.packages = with pkgs; [
+          inputs.devenv.packages.${system}.default
           dive
           kubectl
+          hurl
+        ];
+      })
+
+      (lib.mkIf cfg.development.enableAzureCli {
+        home.packages = with pkgs; [
+          (azure-cli.withExtensions [
+            azure-cli.extensions.bastion
+          ])
         ];
       })
     ];

@@ -1,96 +1,30 @@
 {
-  asset,
   config,
   lib,
-  pkgs,
   ...
 }: {
   options.zeide.theme.gtk = with lib; {
     enable = mkEnableOption "gtk theming support";
-
-    overrideCss = mkOption {
-      type = types.bool;
-      default = true;
-      description = ''
-        Whether to override gtk3 and gtk4 css with theme colors.
-      '';
-    };
-
-    iconFlavor = mkOption {
-      type = types.enum [
-        "latte"
-        "frappe"
-        "macchiato"
-        "mocha"
-      ];
-      default = "mocha";
-      description = ''
-        Flavor of icon theme (applied to folders).
-      '';
-    };
-
-    iconAccent = mkOption {
-      type = types.enum [
-        "blue"
-        "flamingo"
-        "green"
-        "lavender"
-        "maroon"
-        "mauve"
-        "peach"
-        "pink"
-        "red"
-        "rosewater"
-        "sapphire"
-        "sky"
-        "teal"
-        "yellow"
-      ];
-      default = "blue";
-      description = ''
-        Accent color of icon theme (applied to folders).
-      '';
-    };
   };
 
   config = let
-    selfConfig = config.zeide.theme.gtk;
-
-    gtkCss = config.lib.stylix.colors {
-      template = asset "gtk/theme.mustache";
-      extension = "css";
-    };
+    cfg = config.zeide.theme.gtk;
   in
-    lib.mkIf selfConfig.enable {
-      gtk = {
-        enable = true;
-        iconTheme = {
-          package = pkgs.catppuccin-papirus-folders.override {
-            flavor = selfConfig.iconFlavor;
-            accent = selfConfig.iconAccent;
-          };
+    lib.mkIf cfg.enable {
+      gtk.enable = true;
 
-          name = "Papirus-Dark";
-        };
-      };
-
-      dconf.settings."org/gnome/desktop/interface" = {
+      dconf.settings."org/gnome/desktop/interface" = let
+        fontSize = toString config.stylix.fonts.sizes.applications;
+        documentFontSize = toString (config.stylix.fonts.sizes.applications - 1);
+      in {
         color-scheme =
           if config.stylix.polarity == "dark"
           then "prefer-dark"
           else "default";
-      };
 
-      xdg.configFile = {
-        "gtk-3.0/gtk.css" = {
-          enable = selfConfig.overrideCss;
-          source = lib.mkIf selfConfig.overrideCss (lib.mkForce gtkCss);
-        };
-
-        "gtk-4.0/gtk.css" = {
-          enable = selfConfig.overrideCss;
-          source = lib.mkIf selfConfig.overrideCss (lib.mkForce gtkCss);
-        };
+        font-name = "${config.stylix.fonts.sansSerif.name} ${fontSize}";
+        document-font-name = "${config.stylix.fonts.serif.name}  ${documentFontSize}";
+        monospace-font-name = "${config.stylix.fonts.monospace.name} ${fontSize}";
       };
 
       stylix.targets.gtk.enable = true;

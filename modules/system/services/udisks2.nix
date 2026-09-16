@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.udisks2;
+    cfg = config.zeide.services.udisks2;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services.udisks2.enable = true;
     };
 }

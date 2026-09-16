@@ -16,13 +16,8 @@
 
     greeter = {
       enable = true;
-      initialSessionCommand = let
-        script = pkgs.writeScript "greeter-hyprland-login" ''
-          if uwsm check may-start -i -v; then
-              exec uwsm start hyprland-uwsm.desktop
-          fi
-        '';
-      in "${script}";
+      user = "thibaud";
+      session = "hyprland-uwsm";
     };
 
     laptop = {
@@ -34,7 +29,8 @@
 
     network = {
       enable = true;
-      enableQuad9Dns = true;
+      enableWireless = true;
+      enableCloudflareDns = true;
       enableFirewall = true;
     };
 
@@ -46,7 +42,6 @@
     shell.fishIntegration = true;
 
     swap = {
-      # File swap is required for HybridSleep to work
       enableFile = true;
       enableZram = true;
     };
@@ -54,6 +49,12 @@
     time = {
       enable = true;
       enableAutomaticTimeZone = true;
+    };
+
+    udev = {
+      keychron = true;
+      lamzu = true;
+      heightbitdo = true;
     };
 
     development = {
@@ -64,9 +65,10 @@
     };
 
     gaming = {
+      useCachyKernel = true;
       exposeNvidiaGpu = true;
 
-      aagl = {
+      gacha = {
         enableGI = true;
         enableHSR = true;
         enableZZZ = true;
@@ -74,19 +76,8 @@
 
       gamemode.enable = true;
 
-      gamescope = {
-        enable = true;
-        enableMangoHud = true;
-        useNvidiaPrime = true;
-
-        gamescopeWidth = 1920;
-        gamescopeHeight = 1080;
-        gamescopeRefreshRate = 144;
-      };
-
       optimizations.enable = true;
       steam.enable = true;
-      #waydroid.enable = true;
     };
 
     graphical = {
@@ -95,8 +86,8 @@
     };
 
     nix = {
-      useLix = true;
       enableCudaSupport = true;
+      enableRocmSupport = true;
       autoOptimiseStore = true;
 
       nh = {
@@ -106,18 +97,30 @@
     };
 
     services = {
-      gnome = {
-        enableGvfs = true;
-        enablePolkit = true;
-        enableKeyring = true;
-        unlockKeyringServices = ["hyprlock"];
-        fixNautilusExtensions = true;
-      };
-
       ios.enable = true;
+      gsr.enable = true;
+      keyring.enable = true;
       location.enable = true;
       openssh.enable = true;
+
+      transmission = {
+        enable = true;
+        symlinkDownloads = true;
+      };
+
       udisks2.enable = true;
+    };
+  };
+
+  systemd.services.rfkill-unblock-bluetooth = {
+    description = "Unblock Bluetooth on boot and resume";
+    after = ["multi-user.target"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
+      Restart = "no";
     };
   };
 }

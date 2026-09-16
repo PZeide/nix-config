@@ -25,10 +25,11 @@
   };
 
   config = let
-    selfConfig = config.zeide.theme.cursor;
+    cfg = config.zeide.theme.cursor;
   in {
     home.pointerCursor = {
-      inherit (selfConfig) package name size;
+      enable = true;
+      inherit (cfg) package name size;
       x11.enable = true;
       gtk.enable = true;
       hyprcursor.enable = true;

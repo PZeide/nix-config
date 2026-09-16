@@ -10,9 +10,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.graphical.hyprland;
+    cfg = config.zeide.graphical.hyprland;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${system}.hyprland;

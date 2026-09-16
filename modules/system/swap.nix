@@ -9,9 +9,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.swap;
+    cfg = config.zeide.swap;
   in {
-    swapDevices = lib.mkIf selfConfig.enableFile [
+    swapDevices = lib.mkIf cfg.enableFile [
       {
         device = "/var/lib/swapfile";
         size = 4 * 1024;
@@ -19,7 +19,7 @@
       }
     ];
 
-    zramSwap = lib.mkIf selfConfig.enableZram {
+    zramSwap = lib.mkIf cfg.enableZram {
       enable = true;
       algorithm = "lz4";
       memoryPercent = 50;
@@ -27,7 +27,7 @@
     };
 
     # Recommended settings from https://wiki.archlinux.org/title/Zram
-    boot.kernel.sysctl = lib.mkIf selfConfig.enableZram {
+    boot.kernel.sysctl = lib.mkIf cfg.enableZram {
       "vm.swappiness" = 180;
       "vm.watermark_boost_factor" = 0;
       "vm.watermark_scale_factor" = 125;

@@ -1,0 +1,293 @@
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
+  hopType = lib.types.submodule {
+    options = {
+      key = lib.mkOption {
+        type = lib.types.str;
+        description = "The key to trigger the hop";
+      };
+      path = lib.mkOption {
+        type = lib.types.str;
+        description = "The path to hop to";
+      };
+      desc = lib.mkOption {
+        type = lib.types.str;
+        description = "A description for the hop";
+      };
+    };
+  };
+in {
+  options.zeide.programs.tui.yazi = with lib; {
+    enable = mkEnableOption "yazi (file manager)";
+    enableFileChooser = mkEnableOption "yazi file chooser";
+
+    extraHops = mkOption {
+      type = types.listOf hopType;
+      default = [];
+      description = "Additional 'hops' for the bunny plugin in Yazi";
+    };
+  };
+
+  config = let
+    cfg = config.zeide.programs.tui.yazi;
+  in
+    lib.mkIf cfg.enable {
+      assertions = [
+        {
+          assertion = cfg.enableFileChooser && config.zeide.programs.kitty.enable;
+          message = "config.zeide.programs.kitty.enable is required to enable terminal file chooser.";
+        }
+      ];
+
+      home.packages = with pkgs; [
+        ripdrag
+        wl-clipboard
+        glow
+        hexyl
+        mediainfo
+        ouch-rar
+        trash-cli
+      ];
+
+      xdg = {
+        desktopEntries.yazi-kitty = {
+          name = "Yazi (Kitty)";
+          comment = "Open Yazi in a Kitty terminal";
+          type = "Application";
+          exec = "kitty -e yazi %u";
+          terminal = false;
+          noDisplay = true;
+        };
+
+        configFile."xdg-desktop-portal-termfilechooser/config" = lib.mkIf cfg.enableFileChooser {
+          text = ''
+            [filechooser]
+            cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+            default_dir=$HOME
+            open_mode=suggested
+            save_mode=$HOME/Downloads
+            env=TERMCMD=${pkgs.kitty}/bin/kitty --class xdg-termfilechooser-yazi
+          '';
+
+          recursive = true;
+        };
+
+        portal = lib.mkIf cfg.enableFileChooser {
+          extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
+          config.hyprland."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+        };
+      };
+
+      programs.yazi = {
+        enable = true;
+        enableFishIntegration = true;
+        shellWrapperName = "y";
+
+        settings = {
+          mgr = {
+            show_hidden = false;
+            show_symlink = true;
+            ratio = [
+              1
+              3
+              4
+            ];
+          };
+
+          preview = {
+            wrap = "yes";
+            tab_size = 2;
+            max_width = 1000;
+            max_height = 1000;
+            image_delay = 0;
+            image_filter = "triangle";
+            image_quality = 75;
+          };
+
+          opener = {
+            extract = [
+              {
+                run = "ouch d -y \"$@\"";
+                desc = "Extract here with ouch";
+              }
+            ];
+          };
+
+          plugin = {
+            prepend_preloaders =
+              [
+                {
+                  mime = ["{audio,video,image}/*" "application/subrip" "application/postscript"];
+                  run = ["mediainfo"];
+                }
+              ]
+              |> map (lib.attrsets.cartesianProduct)
+              |> lib.lists.concatLists;
+
+            prepend_previewers =
+              [
+                {
+                  url = ["*.md"];
+                  run = ["piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark \"$1\""];
+                }
+                {
+                  mime = ["{audio,video,image}/*" "application/subrip" "application/postscript"];
+                  run = ["mediainfo"];
+                }
+              ]
+              |> map (lib.attrsets.cartesianProduct)
+              |> lib.lists.concatLists;
+
+            append_previewers =
+              [
+                {
+                  url = ["*"];
+                  run = ["piper -- hexyl --border=none --terminal-width=$w \"$1\""];
+                }
+              ]
+              |> map (lib.attrsets.cartesianProduct)
+              |> lib.lists.concatLists;
+          };
+        };
+
+        initLua = ''
+          -- Visual
+          require("full-border"):setup({
+            type = ui.Border.ROUNDED,
+          })
+
+          require("starship"):setup()
+
+          -- Utilities
+          require("bunny"):setup({
+            hops = {
+              { key = "/", path = "/",           desc = "System root"     },
+              { key = "t", path = "/tmp",        desc = "Temporary files" },
+              { key = "h", path = "~",           desc = "Home"            },
+              { key = "d", path = "~/Documents", desc = "Documents"       },
+              -- Dynamically added hops from extraHops
+              ${lib.concatStringsSep "\n" (lib.map (hop: "{ key = \"${hop.key}\", path = \"${hop.path}\", desc = \"${hop.desc}\" },") cfg.extraHops)}
+            },
+            notify = true,
+          })
+
+          require("recycle-bin"):setup()
+          require("restore"):setup()
+
+          -- Other
+          Status:children_add(function()
+            local h = cx.active.current.hovered
+            if not h or ya.target_family() ~= "unix" then
+              return ""
+            end
+
+            return ui.Line {
+              ui.Span(ya.user_name(h.cha.uid) or tostring(h.cha.uid)):fg("magenta"),
+              ":",
+              ui.Span(ya.group_name(h.cha.gid) or tostring(h.cha.gid)):fg("magenta"),
+              " ",
+            }
+          end, 500, Status.RIGHT)
+        '';
+
+        keymap = {
+          mgr.prepend_keymap = [
+            {
+              on = "y";
+              run = ["shell -- for path in \"$@\"; do echo \"file://$path\"; done | wl-copy -t text/uri-list" "yank"];
+              desc = "Yank and copy to system clipboard";
+            }
+            {
+              on = "x";
+              run = ["shell -- for path in \"$@\"; do echo \"file://$path\"; done | wl-copy -t text/uri-list" "yank --cut"];
+              desc = "Yank (cut) and copy to system clipboard";
+            }
+            {
+              on = "<Esc>";
+              run = "close";
+              desc = "Cancel input";
+            }
+            {
+              on = ["<C-n>"];
+              run = "shell 'ripdrag \"$@\" -x 2>/dev/null &' --confirm";
+            }
+            {
+              on = "!";
+              for = "unix";
+              run = "shell \"$SHELL\" --block";
+              desc = "Open $SHELL here";
+            }
+            {
+              on = "C";
+              run = "plugin ouch";
+              desc = "Compress select files/folders";
+            }
+            {
+              on = "T";
+              run = "plugin toggle-pane max-preview";
+              desc = "Maximize or restore the preview pane";
+            }
+            {
+              on = "b";
+              run = "plugin bunny";
+              desc = "Show hops";
+            }
+            {
+              on = ";";
+              run = "plugin bunny";
+              desc = "Show hops";
+            }
+            {
+              on = ["c" "m"];
+              run = "plugin chmod";
+              desc = "Chmod selected files";
+            }
+            {
+              on = ["R" "b"];
+              run = "plugin recycle-bin";
+              desc = "Open Recycle Bin menu";
+            }
+            {
+              on = "u";
+              run = "plugin restore";
+              desc = "Restore last deleted files/folders";
+            }
+            {
+              on = ["c" "i"];
+              run = "plugin lazygit";
+              desc = "Execute lazygit";
+            }
+          ];
+
+          # = 1024*1024*1024 = 1024MB (required for large files like Adobe Illustrator, Adobe Photoshop, etc)
+          tasks.image_alloc = 1073741824;
+        };
+
+        plugins = with pkgs.yaziPlugins; {
+          # Previewers
+          piper = piper;
+          mediainfo = mediainfo;
+          ouch = ouch;
+
+          # Visual
+          toggle-pane = toggle-pane;
+          full-border = full-border;
+          starship = starship;
+
+          # Utilities
+          bunny = inputs.bunny-yazi;
+          chmod = chmod;
+          recycle-bin = recycle-bin;
+          restore = restore;
+          lazygit = lazygit;
+        };
+      };
+
+      stylix.targets.yazi.enable = true;
+    };
+}

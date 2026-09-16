@@ -41,10 +41,11 @@
     ./shell.nix
     ./swap.nix
     ./time.nix
+    ./udev.nix
   ];
 
   config = let
-    selfConfig = config.zeide;
+    cfg = config.zeide;
   in {
     system.stateVersion = "24.05";
 
@@ -52,13 +53,16 @@
     hardware.enableRedistributableFirmware = true;
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    users.users.${selfConfig.user} = {
+    users.users.${cfg.user} = {
       isNormalUser = true;
-      description = selfConfig.description;
+      description = cfg.description;
       extraGroups = ["wheel"];
     };
 
     # git is required for flakes to work so here it is
     programs.git.enable = true;
+
+    # allow running non-nix binaries (useful for LSPs)
+    programs.nix-ld.enable = true;
   };
 }

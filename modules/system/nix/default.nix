@@ -2,21 +2,12 @@
   system,
   config,
   lib,
-  pkgs,
   inputs,
   ...
 }: {
   options.zeide.nix = with lib; {
-    useLix = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether to use Lix nix package manager.
-        See: https://lix.systems/
-      '';
-    };
-
-    enableCudaSupport = mkEnableOption "enable cuda support (required for NVENC on obs-studio)";
+    enableCudaSupport = mkEnableOption "enable cuda support";
+    enableRocmSupport = mkEnableOption "enable rocm support";
     autoOptimiseStore = mkEnableOption "nix store automatic optimisation";
   };
 
@@ -26,29 +17,40 @@
   ];
 
   config = let
-    selfConfig = config.zeide.nix;
+    cfg = config.zeide.nix;
   in {
     nixpkgs = {
       inherit system;
 
       config = {
         allowUnfree = true;
-        cudaSupport = selfConfig.enableCudaSupport;
+        cudaSupport = cfg.enableCudaSupport;
+        rocmSupport = cfg.enableRocmSupport;
       };
 
-      overlays = [inputs.nix-vscode-extensions.overlays.default];
+      overlays = [
+        inputs.nix-webapps.overlays.lib
+        inputs.nix-cachyos-kernel.overlays.pinned
+
+        # Fix for gnome-keyring crashing
+        # SEE: https://gitlab.gnome.org/GNOME/gnome-keyring/-/work_items/190
+        (_: prev: {
+          gnome-keyring = prev.gnome-keyring.overrideAttrs (old: {
+            patches =
+              (old.patches or [])
+              ++ [
+                ./patches/gnome-keyring-opensession.patch
+              ];
+          });
+        })
+      ];
     };
 
     nix = {
-      package =
-        if selfConfig.useLix
-        then pkgs.lix
-        else pkgs.nix;
-
       settings = {
-        auto-optimise-store = selfConfig.autoOptimiseStore;
+        auto-optimise-store = cfg.autoOptimiseStore;
         builders-use-substitutes = true;
-        experimental-features = ["nix-command" "flakes" "repl-flake"];
+        experimental-features = ["nix-command" "flakes" "pipe-operators"];
 
         trusted-users = ["root" "@wheel"];
       };

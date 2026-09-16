@@ -1,9 +1,16 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   options.zeide.gaming = with lib; {
+    useCachyKernel = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to use the CachyOS optimized kernel";
+    };
+
     exposeNvidiaGpu = mkOption {
       type = types.bool;
       default = false;
@@ -12,21 +19,19 @@
   };
 
   imports = [
-    ./aagl.nix
+    ./gacha.nix
     ./gamemode.nix
-    ./gamescope.nix
     ./optimizations.nix
     ./steam.nix
-    ./waydroid.nix
   ];
 
   config = let
-    selfConfig = config.zeide.gaming;
+    cfg = config.zeide.gaming;
   in {
-    environment.variables = lib.mkIf selfConfig.exposeNvidiaGpu {
-      VKD3D_CONFIG = "dxr11,dxr";
-      PROTON_ENABLE_NVAPI = 1;
-      PROTON_ENABLE_NGX_UPDATER = 1;
+    boot.kernelPackages = lib.mkIf cfg.useCachyKernel (lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest);
+
+    environment.variables = lib.mkIf cfg.exposeNvidiaGpu {
+      WINE_HIDE_NVIDIA_GPU = 0;
       PROTON_HIDE_NVIDIA_GPU = 0;
     };
   };

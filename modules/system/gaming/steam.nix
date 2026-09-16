@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: {
   options.zeide.gaming.steam = with lib; {
@@ -9,21 +8,15 @@
   };
 
   config = let
-    selfConfig = config.zeide.gaming.steam;
+    cfg = config.zeide.gaming.steam;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.steam = {
         enable = true;
 
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
-
-        gamescopeSession.enable = config.zeide.gaming.gamescope.enable;
-
-        extraCompatPackages = with pkgs; [
-          proton-ge-bin
-        ];
       };
     };
 }

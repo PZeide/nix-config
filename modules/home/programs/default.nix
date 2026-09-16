@@ -1,16 +1,18 @@
 {
   imports = [
     ./gaming
-    ./starship
-    ./anyrun.nix
+    ./tui
     ./cli.nix
-    ./daily.nix
+    ./graphical.nix
     ./helix.nix
+    ./jetbrains.nix
     ./kitty.nix
     ./mpv.nix
-    ./nautilus.nix
+    ./nix-index.nix
     ./obs-studio.nix
-    ./vscodium.nix
+    ./starship.nix
+    ./vesktop.nix
+    ./zed.nix
     ./zen-browser.nix
   ];
 }

@@ -8,9 +8,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.bluetooth;
+    cfg = config.zeide.bluetooth;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = true;

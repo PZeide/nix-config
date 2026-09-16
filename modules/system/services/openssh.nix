@@ -15,12 +15,12 @@
   };
 
   config = let
-    selfConfig = config.zeide.services.openssh;
+    cfg = config.zeide.services.openssh;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services.openssh = {
         enable = true;
-        openFirewall = selfConfig.openFirewall;
+        openFirewall = cfg.openFirewall;
       };
     };
 }

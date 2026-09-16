@@ -1,9 +1,7 @@
 {
-  system,
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   fontType = lib.types.submodule {
@@ -23,15 +21,6 @@ in {
   options.zeide.graphical.fonts = with lib; {
     enable = mkEnableOption "system-wide font config";
 
-    disableProblematicDefault = mkOption {
-      description = ''
-        Whether to disable the default DejaVu font.
-        This font can cause various issues with emojis or nerd fonts symbols.
-      '';
-      type = types.bool;
-      default = true;
-    };
-
     serif = mkOption {
       description = "Serif font to use throughout the system.";
       type = fontType;
@@ -45,8 +34,8 @@ in {
       description = "Sans-serif font to use throughout the system.";
       type = fontType;
       default = {
-        package = inputs.apple-fonts.packages.${system}.sf-pro;
-        name = "SF Pro Text";
+        package = pkgs.vegur;
+        name = "Vegur";
       };
     };
 
@@ -72,30 +61,40 @@ in {
       description = "Extra fonts to install for the system.";
       type = with types; listOf package;
       default = with pkgs; [
-        # Nerd fonts symbols
-        nerd-fonts.symbols-only
-
         # Various useful fonts
+        noto-fonts
         noto-fonts-cjk-sans
         roboto
+
+        # Nerd fonts symbols
+        nerd-fonts.symbols-only
       ];
     };
   };
 
   config = let
-    selfConfig = config.zeide.graphical.fonts;
+    cfg = config.zeide.graphical.fonts;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       fonts = {
         enableDefaultPackages = false;
-        enableGhostscriptFonts = false;
 
-        packages = selfConfig.extraFonts;
+        packages =
+          [
+            cfg.serif.package
+            cfg.sansSerif.package
+            cfg.monospace.package
+            cfg.emoji.package
+          ]
+          ++ cfg.extraFonts;
 
         fontconfig = {
           enable = true;
+          useEmbeddedBitmaps = true;
 
-          localConf = lib.mkIf selfConfig.disableProblematicDefault ''
+          # DejaVu Sans comes by default with fontconfig
+          # DejaVu Sans is interfering with a LOT of fonts including Nerd Fonts
+          localConf = ''
             <?xml version="1.0"?>
             <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
             <fontconfig>
@@ -112,10 +111,10 @@ in {
           '';
 
           defaultFonts = {
-            serif = [selfConfig.serif.name];
-            sansSerif = [selfConfig.sansSerif.name];
-            monospace = [selfConfig.monospace.name];
-            emoji = [selfConfig.emoji.name];
+            serif = [cfg.serif.name];
+            sansSerif = [cfg.sansSerif.name];
+            monospace = [cfg.monospace.name];
+            emoji = [cfg.emoji.name];
           };
         };
       };

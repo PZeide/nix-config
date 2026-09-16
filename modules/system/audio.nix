@@ -13,9 +13,9 @@
   imports = [inputs.nix-gaming.nixosModules.pipewireLowLatency];
 
   config = let
-    selfConfig = config.zeide.audio;
+    cfg = config.zeide.audio;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       environment.systemPackages = [pkgs.playerctl];
 
       services.pipewire = {
@@ -29,7 +29,19 @@
         };
 
         wireplumber.enable = true;
-        lowLatency.enable = selfConfig.enableLowLatency;
+
+        lowLatency = lib.mkIf cfg.enableLowLatency {
+          enable = true;
+          quantum = 128;
+        };
+
+        extraConfig.pipewire = {
+          "10-clock-rates" = {
+            "context.properties" = {
+              "default.clock.allowed-rates" = [44100 48000 96000];
+            };
+          };
+        };
       };
 
       services.pulseaudio.enable = lib.mkForce false;

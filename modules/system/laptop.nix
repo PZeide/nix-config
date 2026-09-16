@@ -9,19 +9,19 @@
   };
 
   config = let
-    selfConfig = config.zeide.laptop;
+    cfg = config.zeide.laptop;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       services = {
         # On laptop, short press on power key should suspend instead of shutdown
-        logind.powerKey = "suspend";
+        logind.settings.Login.HandlePowerKey = "suspend";
 
         upower = {
           enable = true;
           criticalPowerAction = "HybridSleep";
         };
 
-        tlp = lib.mkIf selfConfig.enableTlp {
+        tlp = lib.mkIf cfg.enableTlp {
           enable = true;
           settings = {
             RESTORE_DEVICE_STATE_ON_STARTUP = 1;

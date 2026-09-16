@@ -9,12 +9,12 @@
   };
 
   config = let
-    selfConfig = config.zeide.nix.nh;
+    cfg = config.zeide.nix.nh;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       programs.nh = {
         enable = true;
-        clean = lib.mkIf selfConfig.enableClean {
+        clean = lib.mkIf cfg.enableClean {
           enable = true;
           dates = "daily";
           extraArgs = "--keep-since 30d";

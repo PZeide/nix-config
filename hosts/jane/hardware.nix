@@ -1,7 +1,7 @@
 {
-  config,
   modulesPath,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -16,27 +16,24 @@
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
-  hardware = {
-    amdgpu.initrd.enable = false;
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.bleeding_edge;
 
-    # Love bleeding edge
-    nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+    modesetting.enable = true;
 
-    nvidia = {
-      modesetting.enable = true;
-      powerManagement.finegrained = true;
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
 
-      prime = {
-        amdgpuBusId = "PCI:6:0:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
+    prime = {
+      amdgpuBusId = "PCI:6:0:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
   };
 
   boot = {
     kernelModules = ["kvm-amd"];
-
-    kernelParams = ["mt7921e.disable_aspm=y"];
 
     initrd = {
       availableKernelModules = [
@@ -51,26 +48,17 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/6c21f34c-10ed-4c3f-97d4-22aeae01b757";
+    device = "/dev/disk/by-label/root";
     fsType = "ext4";
     options = ["noatime"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0897-A178";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
     options = [
       "fmask=0077"
       "dmask=0077"
-    ];
-  };
-
-  fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/b17035bd-13ff-4864-88b7-03e21f34d603";
-    fsType = "btrfs";
-    options = [
-      "noatime"
-      "x-gvfs-show"
     ];
   };
 }

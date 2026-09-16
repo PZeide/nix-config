@@ -10,9 +10,9 @@
   };
 
   config = let
-    selfConfig = config.zeide.programs.gaming.osu-lazer;
+    cfg = config.zeide.programs.gaming.osu-lazer;
   in
-    lib.mkIf selfConfig.enable {
+    lib.mkIf cfg.enable {
       home.packages = with inputs.nix-gaming.packages.${system}; [
         osu-lazer-bin
         osu-mime
