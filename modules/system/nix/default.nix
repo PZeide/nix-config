@@ -39,7 +39,7 @@
             patches =
               (old.patches or [])
               ++ [
-                ./patches/gnome-keyring-opensession-fix.patch
+                ./patches/gnome-keyring-opensession.patch
               ];
           });
         })
