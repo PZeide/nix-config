@@ -31,6 +31,18 @@
       overlays = [
         inputs.nix-webapps.overlays.lib
         inputs.nix-cachyos-kernel.overlays.pinned
+
+        # Fix for gnome-keyring crashing
+        # SEE: https://gitlab.gnome.org/GNOME/gnome-keyring/-/work_items/190
+        (_: prev: {
+          gnome-keyring = prev.gnome-keyring.overrideAttrs (old: {
+            patches =
+              (old.patches or [])
+              ++ [
+                ./patches/gnome-keyring-opensession-fix.patch
+              ];
+          });
+        })
       ];
     };
 

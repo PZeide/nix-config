@@ -71,8 +71,10 @@
             "env"
             "fish"
             "git-firefly"
+            "glsl"
             "golangci-lint"
             "graphql"
+            "hsls"
             "html"
             "hurl"
             "ini"
@@ -85,11 +87,13 @@
             "nix"
             "oxc"
             "qml"
+            "slang"
             "snippets"
             "sql"
             "svelte"
             "terraform"
             "toml"
+            "typespec"
             "vue"
             "xml"
             "zig"
@@ -99,6 +103,14 @@
           ]
           ++ (lib.optional (cfg.theme.extension != null) cfg.theme.extension)
           ++ (lib.optional (cfg.iconTheme.extension != null) cfg.iconTheme.extension);
+
+        userKeymaps = [
+          {
+            bindings = {
+              "ctrl-alt-i" = "project_panel::ToggleHideGitIgnore";
+            };
+          }
+        ];
 
         userSettings = {
           auto_update = false;
@@ -136,7 +148,7 @@
         };
 
         mutableUserKeymaps = false;
-        mutableUserSettings = false;
+        mutableUserSettings = true;
       };
 
       stylix.targets.zed.enable = true;

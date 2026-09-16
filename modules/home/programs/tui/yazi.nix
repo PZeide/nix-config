@@ -50,7 +50,7 @@ in {
         glow
         hexyl
         mediainfo
-        ouch
+        ouch-rar
         trash-cli
       ];
 
@@ -79,7 +79,7 @@ in {
 
         portal = lib.mkIf cfg.enableFileChooser {
           extraPortals = [pkgs.xdg-desktop-portal-termfilechooser];
-          config.common."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+          config.hyprland."org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
         };
       };
 

@@ -28,6 +28,7 @@
     cfg = config.zeide.theme.cursor;
   in {
     home.pointerCursor = {
+      enable = true;
       inherit (cfg) package name size;
       x11.enable = true;
       gtk.enable = true;

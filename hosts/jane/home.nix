@@ -14,11 +14,6 @@
     ];
   };
 in {
-  home.sessionVariables = {
-    # Temp fix for webkitgtk apps
-    WEBKIT_DISABLE_DMABUF_RENDERER = 1;
-  };
-
   zeide = {
     graphical = {
       hyprland = {
@@ -119,8 +114,8 @@ in {
         proton-vpn = true;
         teams = true;
         bruno = true;
-        dbeaver = true;
         onlyoffice = true;
+        krita = true;
 
         webapps = {
           keychronLauncher = true;
@@ -187,8 +182,8 @@ in {
     shell.fish.enable = true;
 
     theme = {
-      face = asset "theme/denia/face.png";
-      wallpaper = asset "theme/denia/wallpaper.jpg";
+      face = asset "theme/fefe/face.jpg";
+      wallpaper = asset "theme/fefe/wallpaper-alt.jpg";
       scheme = "content";
 
       gtk.enable = true;

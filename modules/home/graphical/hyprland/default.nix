@@ -100,13 +100,18 @@
           export APP2UNIT_TYPE="scope"
         '';
 
+        configFile."shiny/portal-config.toml".text = ''
+          max_fps = 0
+          allow_screencast_shm = false
+        '';
+
         portal = {
           extraPortals = [inputs.shiny-portal.packages.${system}.default];
           config.hyprland = {
             "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
             "org.freedesktop.impl.portal.GlobalShortcuts" = "hyprland";
-            "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
-            #"org.freedesktop.impl.portal.ScreenCast" = ["shiny"];
+            "org.freedesktop.impl.portal.ScreenCast" = "shiny";
+            "org.freedesktop.impl.portal.Screenshot" = "shiny";
           };
         };
       };

@@ -5,6 +5,7 @@
   lib,
   inputs,
   pkgs,
+  system,
   ...
 }: {
   options.zeide.theme = with lib; {
@@ -60,6 +61,15 @@
         Number from -1 (minimum contrast) to 1 (maximum contrast) used to generate colors.
       '';
     };
+
+    palette = mkOption {
+      type = types.attrsOf (types.nullOr (types.attrsOf types.str));
+      readOnly = true;
+      description = ''
+        Generated Base16, Base24, and semantic (Material You) color representations.
+        Colors are hexadecimal strings without a leading #.
+      '';
+    };
   };
 
   imports = [
@@ -72,8 +82,26 @@
 
   config = let
     cfg = config.zeide.theme;
+    spg = inputs.stylix-palette-generators.lib.${system};
   in {
     home.file.".face".source = cfg.face;
+
+    zeide.theme.palette = spg.mkExtraRepresentations {
+      image = config.stylix.image;
+      polarity = config.stylix.polarity;
+
+      generators.semantic = spg.generators.semantic.matugen {
+        scheme = cfg.scheme;
+        contrast = cfg.contrast;
+        lightnessDark = -0.02;
+        lightnessLight = 0.0;
+      };
+
+      mappingFunction = lib.flip lib.pipe [
+        spg.mappings.semantic2base16
+        spg.mappings.base162base24
+      ];
+    };
 
     stylix = {
       enable = true;
@@ -83,18 +111,8 @@
       image = cfg.wallpaper;
       polarity = cfg.polarity;
 
-      palette = {
-        generators.semantic = config.stylix.lib.generators.semantic.matugen {
-          scheme = cfg.scheme;
-          contrast = cfg.contrast;
-          lightnessDark = -0.02;
-          lightnessLight = 0.0;
-        };
-
-        mappingFunction = lib.flip lib.pipe [
-          config.stylix.lib.mappings.semantic2base16
-          config.stylix.lib.mappings.base162base24
-        ];
+      base16Scheme = spg.mkScheme {
+        manual.base16 = cfg.palette.base16;
       };
 
       # If system-wide fonts config is enabled, use the fonts from there.

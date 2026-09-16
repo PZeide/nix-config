@@ -34,11 +34,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devenv.url = "github:cachix/devenv/v2.1.2";
+    devenv.url = "github:cachix/devenv/v2.3.1";
 
     stylix = {
-      # FIXME matugen branch
-      url = "github:make-42/stylix/step-2-inputmapping-clean-root";
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix-palette-generators = {
+      url = "github:make-42/stylix-palette-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -71,11 +75,6 @@
 
     nixcord = {
       url = "github:kaylorben/nixcord";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    librepods = {
-      url = "github:kavishdevar/librepods/linux/rust";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

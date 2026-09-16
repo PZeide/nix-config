@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  requireFile,
+  fetchurl,
   zstd,
   makeWrapper,
   autoPatchelfHook,
@@ -29,12 +29,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "cider";
-  version = "4.0.0";
+  version = "4.0.9.1";
 
-  src = requireFile {
-    name = "cider-v4.0.0-linux-x86_64.pkg.tar.xz";
-    url = "https://discord.gg/applemusic";
-    hash = "sha256-eBqxjBZytpQTsmiHvRD238lC/v5ip2KBLv725xMpBtk=";
+  src = fetchurl {
+    url = "https://repo.cider.sh/arch/cider-v${version}-linux-x64.pkg.tar.zst";
+    hash = "sha256-qze3FsiDtunXFIJkF235OBK/PsfspGp4kKviovxXwWA=";
   };
 
   nativeBuildInputs = [

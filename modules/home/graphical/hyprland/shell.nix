@@ -1,33 +1,20 @@
 {
   config,
-  lib,
   inputs,
-  system,
   ...
 }: {
   imports = [inputs.shiny-shell.homeManagerModules.default];
 
   config = {
-    xdg.configFile."hypr/xdph.conf".text = ''
-      screencopy {
-        max_fps=0
-        custom_picker_binary=${inputs.shiny-shell.packages.${system}.default}/bin/shiny-hyprland-share-picker
-      }
-    '';
-
     programs.shiny-shell = {
       enable = true;
 
       settings = {
         appearance = {
           color = let
-            colors = lib.importJSON (
-              config.stylix.palette.generators.semantic
-              config.stylix.polarity
-              config.stylix.image
-            );
+            colors = config.zeide.theme.palette.semantic;
 
-            color = name: colors.${name};
+            color = name: "#${colors.${name}}";
           in {
             primary = color "primary";
             overPrimary = color "on_primary";
@@ -105,16 +92,23 @@
         };
 
         lockScreen.enabled = true;
-        overview.enabled = true;
+        osd.enabled = true;
         player.preferred = ["cider"];
         polkit.enabled = true;
+
+        screenRecorder = {
+          enabled = true;
+          videoCodec = "hevc";
+          fps = 60;
+        };
+
+        screenshot.enabled = true;
 
         session = {
           username = "Thibaud";
           facePath = "${config.zeide.theme.face}";
         };
 
-        sharePicker.enabled = true;
         wallpaper.path = "${config.stylix.image}";
       };
     };

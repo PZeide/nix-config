@@ -3,8 +3,6 @@
   config,
   lib,
   pkgs,
-  inputs,
-  system,
   ...
 }: {
   options.zeide.programs.graphical = with lib; {
@@ -15,9 +13,8 @@
     proton-vpn = mkEnableOption "proton-vpn (VPN)";
     teams = mkEnableOption "teams-for-linux";
     bruno = mkEnableOption "bruno (api testing)";
-    dbeaver = mkEnableOption "db administration tool";
     onlyoffice = mkEnableOption "onlyoffice (office suite)";
-    librepods = mkEnableOption "librepods (airpods helper)";
+    krita = mkEnableOption "krita (painting)";
 
     webapps = {
       keychronLauncher = mkEnableOption "keychron launcher";
@@ -56,9 +53,8 @@
       (mkPackageIf "proton-vpn" pkgs.proton-vpn)
       (mkPackageIf "teams" pkgs.teams-for-linux)
       (mkPackageIf "bruno" pkgs.bruno)
-      (mkPackageIf "dbeaver" pkgs.dbeaver-bin)
       (mkPackageIf "onlyoffice" pkgs.onlyoffice-desktopeditors)
-      (mkPackageIf "librepods" inputs.librepods.packages.${system}.default)
+      (mkPackageIf "krita" pkgs.krita)
 
       (mkWebAppIf "keychronLauncher" {
         desktopName = "Keychron Launcher";

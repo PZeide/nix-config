@@ -44,7 +44,6 @@
           packages = with pkgs; [
             grc
             curl
-            ouch
           ];
 
           shellAliases = {
